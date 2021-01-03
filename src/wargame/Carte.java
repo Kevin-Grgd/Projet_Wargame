@@ -149,6 +149,21 @@ public class Carte extends JPanel implements IConfig, ICarte{
      * @return La position trouvée
      */
     public Position trouvePositionVide(Position pos) {
+    	Position[] posAdjacentes = pos.getAdjacents();
+		int indiceAlea, vide = 0;
+		for(int i = 0 ; i < posAdjacentes.length ; i++)
+			if(posAdjacentes[i].getElement() == null)
+				vide++;
+				
+		if (vide == 0)//toutes les positions adjacentes sont pleines
+			return null;
+		
+		while(true) {
+			indiceAlea = (int) (Math.random()*posAdjacentes.length);
+			if(posAdjacentes[indiceAlea].getElement() == null)
+				return posAdjacentes[indiceAlea];
+		}
+		/*
        if (pos.getX() - 1 >= 0 && aMap[pos.getX() - 1][pos.getY()].getElement() == null) {
             return new Position(pos.getX() - 1, pos.getY());
         }
@@ -190,7 +205,7 @@ public class Carte extends JPanel implements IConfig, ICarte{
             }
         }
 
-        return null;
+        return null;*/
 
     }
 

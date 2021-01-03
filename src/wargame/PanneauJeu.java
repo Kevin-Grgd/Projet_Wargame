@@ -460,7 +460,6 @@ public class PanneauJeu extends JPanel implements IConfig {
                 }
             }
         }
-
         // Au tour des monstres de jouer
         for (int j = 0; j < NB_MONSTRES; j++) {
             if (listeMonstre[j] != null) {
