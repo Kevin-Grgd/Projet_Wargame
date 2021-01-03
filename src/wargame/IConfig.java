@@ -50,6 +50,9 @@ public interface IConfig {
 
 	public final int NB_TEXTURE_OBSTACLE = 2;
 
+	/* PARTIE COMBAT */
+	public final int MINIMAL_TIR_REQUIS = 5;
+	
 	public final Color COULEUR_VIDE = Color.white;
 	public final Color COULEUR_INCONNU = Color.lightGray;
 	public final Color COULEUR_TEXTE = Color.black;
