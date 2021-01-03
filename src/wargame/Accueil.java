@@ -204,7 +204,7 @@ public class Accueil extends JPanel implements IConfig, LineListener {
 			Clip audioClip;
 			
 			if(!playOnce) {
-				System.out.println("Choix music :"+choixMusic);
+				//System.out.println("Choix music :"+choixMusic);
 				switch(choixMusic) {
 				case MUSIC_1 : urlMusic = this.getClass().getResource("/resources/Music/music_1.wav");
 				//System.out.println("Music_1 played");
