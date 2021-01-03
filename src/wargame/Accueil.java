@@ -34,7 +34,6 @@ public class Accueil extends JPanel implements IConfig, LineListener {
 	private transient BoutonMenu aQuitter = null;
 	private transient BoutonMenu aCharger = null;
 	private transient int choixMusic;
-	private transient boolean playCompleted = false;
 	private transient boolean playOnce = false;
 	
 	public JPanel menu() {
@@ -127,7 +126,7 @@ public class Accueil extends JPanel implements IConfig, LineListener {
 		choixMusic = MUSIC_1;
 
 		try {
-			System.out.println("Try image");
+			//System.out.println("Try image");
 			URL url = this.getClass().getResource("/resources/accueil_background_2.jpg");
 			URL urlLogo = this.getClass().getResource("/resources/wargame_logo.png");
 			accueilBackground = ImageIO.read(url);
@@ -186,10 +185,10 @@ public class Accueil extends JPanel implements IConfig, LineListener {
 		LineEvent.Type type = e.getType();
 
 		if (type == LineEvent.Type.START) {
-			System.out.println("Music play");
+			//System.out.println("Music play");
 			playOnce = true;
 		} else if (type == LineEvent.Type.STOP) {
-			System.out.println("Music stop");
+			//System.out.println("Music stop");
 			playOnce = false;
 			playMusic();
 		}
@@ -197,7 +196,7 @@ public class Accueil extends JPanel implements IConfig, LineListener {
 
 	public void playMusic() {
 		try {
-			System.out.println("Try music");
+			//System.out.println("Try music");
 			URL urlMusic = null;
 			AudioInputStream stream; 
 			AudioFormat format;
@@ -208,10 +207,10 @@ public class Accueil extends JPanel implements IConfig, LineListener {
 				System.out.println("Choix music :"+choixMusic);
 				switch(choixMusic) {
 				case MUSIC_1 : urlMusic = this.getClass().getResource("/resources/Music/music_1.wav");
-				System.out.println("Music_1 played");
+				//System.out.println("Music_1 played");
 				break;
 				case MUSIC_2: urlMusic = this.getClass().getResource("/resources/Music/music_2.wav");
-				System.out.println("Music_2 played");
+				//System.out.println("Music_2 played");
 				break;
 				}
 					
@@ -228,7 +227,7 @@ public class Accueil extends JPanel implements IConfig, LineListener {
 					choixMusic = MUSIC_1;
 				}
 			}
-			System.out.println("Play Once :"+playOnce);
+			//System.out.println("Play Once :"+playOnce);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
