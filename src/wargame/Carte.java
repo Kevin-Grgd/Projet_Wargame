@@ -1,6 +1,7 @@
 package wargame;
 
 import java.awt.Polygon;
+import java.util.ArrayList;
 import java.awt.Graphics;
 import javax.swing.JPanel;
 
@@ -144,7 +145,7 @@ public class Carte extends JPanel implements IConfig, ICarte{
     // Trouve une position vide choisie
     // aléatoirement parmi les 6 positions adjacentes de pos
     /**
-     * Trouve une position vide adjacente
+     * Trouve une position vide adjacente aleatoirement
      * @param pos La position de base
      * @return La position trouvée
      */
@@ -163,50 +164,6 @@ public class Carte extends JPanel implements IConfig, ICarte{
 			if(posAdjacentes[indiceAlea].getElement() == null)
 				return posAdjacentes[indiceAlea];
 		}
-		/*
-       if (pos.getX() - 1 >= 0 && aMap[pos.getX() - 1][pos.getY()].getElement() == null) {
-            return new Position(pos.getX() - 1, pos.getY());
-        }
-
-        if (pos.getY() - 1 >= 0 && aMap[pos.getX()][pos.getY() - 1].getElement() == null) {
-            return new Position(pos.getX(), pos.getY() - 1);
-        }
-
-        if (pos.getX() + 1 < LARGEUR_CARTE && aMap[pos.getX() + 1][pos.getY()].getElement() == null) {
-            return new Position(pos.getX() + 1, pos.getY());
-
-        }
-
-        if (pos.getY() + 1 < HAUTEUR_CARTE && aMap[pos.getX()][pos.getY() + 1].getElement() == null) {
-            return new Position(pos.getX(), pos.getY() + 1);
-
-        }
-
-        if (pos.getY() % 2 != 0) { // Ligne impaire
-
-            if (pos.getX() + 1 < LARGEUR_CARTE && pos.getY() + 1 < HAUTEUR_CARTE
-                    && aMap[pos.getX() + 1][pos.getY() + 1].getElement() == null) {
-                return new Position(pos.getX() + 1, pos.getY() + 1);
-
-            }
-            if (pos.getX() + 1 < LARGEUR_CARTE && pos.getY() - 1 >= 0
-                    && aMap[pos.getX() + 1][pos.getY() - 1].getElement() == null) {
-                return new Position(pos.getX() + 1, pos.getY() - 1);
-
-            }
-        } else { // Ligne paire
-            if (pos.getX() - 1 >= 0 && pos.getY() + 1 < HAUTEUR_CARTE
-                    && aMap[pos.getX() - 1][pos.getY() + 1].getElement() == null) {
-                return new Position(pos.getX() - 1, pos.getY() + 1);
-            }
-            if (pos.getX() - 1 >= 0 && pos.getY() - 1 >= 0
-                    && aMap[pos.getX() - 1][pos.getY() - 1].getElement() == null) {
-                return new Position(pos.getX() - 1, pos.getY() - 1);
-            }
-        }
-
-        return null;*/
-
     }
 
     // Trouve aléatoirement un héros sur la carte
@@ -224,46 +181,17 @@ public class Carte extends JPanel implements IConfig, ICarte{
      * @return Le héros s'il existe
      */
     public Heros trouveHeros(Position pos) {
-        
-        if (pos.getX() - 1 >= 0 && aMap[pos.getX() - 1][pos.getY()].getElement() instanceof Heros) {
-            return (Heros) aMap[pos.getX() - 1][pos.getY()].getElement();
-        }
-        if (pos.getX() + 1 < LARGEUR_CARTE && aMap[pos.getX() + 1][pos.getY()].getElement() instanceof Heros) {
-            return (Heros) aMap[pos.getX() + 1][pos.getY()].getElement();
-
-        }
-        if (pos.getY() - 1 >= 0 && aMap[pos.getX()][pos.getY() - 1].getElement() instanceof Heros) {
-            return (Heros) aMap[pos.getX()][pos.getY() - 1].getElement();
-        }
-        if (pos.getY() + 1 < HAUTEUR_CARTE && aMap[pos.getX()][pos.getY() + 1].getElement() instanceof Heros) {
-            return (Heros) aMap[pos.getX()][pos.getY() + 1].getElement();
-
-        }
-
-        if (pos.getY() % 2 != 0) { // Ligne impaire
-
-            if (pos.getX() + 1 < LARGEUR_CARTE && pos.getY() + 1 < HAUTEUR_CARTE
-                    && aMap[pos.getX() + 1][pos.getY() + 1].getElement() instanceof Heros) {
-                return (Heros) aMap[pos.getX() + 1][pos.getY() + 1].getElement();
-
-            }
-            if (pos.getX() + 1 < LARGEUR_CARTE && pos.getY() - 1 >= 0
-                    && aMap[pos.getX() + 1][pos.getY() - 1].getElement() instanceof Heros) {
-                return (Heros) aMap[pos.getX() + 1][pos.getY() - 1].getElement();
-
-            }
-        } else { // Ligne paire
-            if (pos.getX() - 1 >= 0 && pos.getY() + 1 < HAUTEUR_CARTE
-                    && aMap[pos.getX() - 1][pos.getY() + 1].getElement() instanceof Heros) {
-                return (Heros) aMap[pos.getX() - 1][pos.getY() + 1].getElement();
-            }
-            if (pos.getX() - 1 >= 0 && pos.getY() - 1 >= 0
-                    && aMap[pos.getX() - 1][pos.getY() - 1].getElement() instanceof Heros) {
-                return (Heros) aMap[pos.getX() - 1][pos.getY() - 1].getElement();
-            }
-        }
-
-        return null; // On ne l'a pas trouvé on renvoie null
+    	ArrayList<Heros> herosAdjacents = new ArrayList<Heros>();
+		Position[] posAdjacentes = pos.getAdjacents();
+		for(int i = 0 ; i <  posAdjacentes.length ; i++) {
+			if(posAdjacentes[i].getElement() instanceof Heros) {
+				herosAdjacents.add((Heros) posAdjacentes[i].getElement());
+			}
+		}
+		if(herosAdjacents.size() == 0)
+			return null; //on n'a pas trouve de heros
+		else
+			return herosAdjacents.get((int) (Math.random()*herosAdjacents.size()));
     }
 
     public Heros trouveHerosTir(Monstre pMonstre){
