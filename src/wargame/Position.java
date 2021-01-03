@@ -83,7 +83,7 @@ public class Position implements IConfig {
 	/**
 	 * Indique si des positions sont voisines
 	 * @param pos Position supposée voisine
-	 * @return Si elles le sont
+	 * @return true Si elles le sont
 	 */
 	public boolean estVoisine(Position pos) {
 		if (pos.estValide()) {

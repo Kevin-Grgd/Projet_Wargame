@@ -149,8 +149,7 @@ public class Carte extends JPanel implements IConfig, ICarte{
      * @return La position trouvée
      */
     public Position trouvePositionVide(Position pos) {
-
-        if (pos.getX() - 1 >= 0 && aMap[pos.getX() - 1][pos.getY()].getElement() == null) {
+       if (pos.getX() - 1 >= 0 && aMap[pos.getX() - 1][pos.getY()].getElement() == null) {
             return new Position(pos.getX() - 1, pos.getY());
         }
 
