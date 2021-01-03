@@ -500,7 +500,7 @@ public class PanneauJeu extends JPanel implements IConfig {
      * Thread pour repaint plus vite
      */
     public void repaintThread() {
-        SwingWorker worker = new SwingWorker<Integer, Void>() {
+        SwingWorker<Integer, Void> worker = new SwingWorker<Integer, Void>() {
             @Override
             public Integer doInBackground() {
                 repaint();

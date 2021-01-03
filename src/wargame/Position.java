@@ -1,9 +1,11 @@
 package wargame;
 
+import java.util.ArrayList;
+
 public class Position implements IConfig {
 	private int x;
 	private int y;
-
+	private Element elem;
 	/**
 	 * Constructeur
 	 * @param x Coordonnée en abscisse
@@ -44,6 +46,24 @@ public class Position implements IConfig {
 	public void setY(int y) {
 		this.y = y;
 	}
+	
+	/**
+	 * 
+	 * @return Element de la position
+	 */
+	public Element getElement() {
+		return elem;
+	}
+	
+	/**
+	 * Definit l'element de la position
+	 * @param elem
+	 */
+	public void setElement(Element elem) {
+		this.elem = elem;
+		if(elem != null)
+			elem.setPosition(this);
+	}
 
 	/**
 	 * Indique si une position est valide
@@ -66,8 +86,10 @@ public class Position implements IConfig {
 	 * @return Si elles le sont
 	 */
 	public boolean estVoisine(Position pos) {
-		if (pos != null) {
+		if (pos.estValide()) {
 			// Elimination des cas non souhaités
+			if(x == pos.getX() && y == pos.getY()) return false; //coordonnees de pos
+			
 			if (y % 2 == 0) {
 				if (x == pos.getX() - 1 && y == pos.getY() - 1) {
 					return false;
@@ -99,5 +121,23 @@ public class Position implements IConfig {
 		double vX =  Math.pow((this.x - p.x), 2);
 		double vY =  Math.pow((this.y - p.y), 2);
 		return Math.sqrt(vX + vY);
+	}
+	
+	/**
+	 * Donne un tableau des cases adjacentes de cette position
+	 * @return Position[]
+	 */
+	public Position[] getAdjacents() { //retourne les 6 cases adjacentes
+		ArrayList<Position> posAdjacentes = new ArrayList<Position>();
+		Position pos;
+		for(int i = x-1 ; i <= x+1 ; i++) {
+			for(int j = y-1 ; j <= y+1 ; j++) {
+				pos = new Position(i, j);
+				if(estVoisine(pos)) {
+					posAdjacentes.add(pos);
+				}
+			}
+		}
+		return posAdjacentes.toArray(new Position[0]);
 	}
 }
