@@ -35,6 +35,7 @@ public class Accueil extends JPanel implements IConfig, LineListener {
 	private transient BoutonMenu aCharger = null;
 	private transient int choixMusic;
 	private transient boolean playOnce = false;
+	private transient Clip audioClip;
 	
 	public JPanel menu() {
 		
@@ -185,14 +186,13 @@ public class Accueil extends JPanel implements IConfig, LineListener {
 		LineEvent.Type type = e.getType();
 
 		if (type == LineEvent.Type.START) {
-			//System.out.println("Music play");
 			playOnce = true;
 		} else if (type == LineEvent.Type.STOP) {
-			//System.out.println("Music stop");
+			audioClip.close();
 			playOnce = false;
 			playMusic();
 		}
-	}
+	}}
 
 	public void playMusic() {
 		try {
