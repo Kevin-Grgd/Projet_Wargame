@@ -1,7 +1,6 @@
 package wargame;
 
 import java.awt.Polygon;
-import java.util.Random;
 import java.awt.Graphics;
 import javax.swing.JPanel;
 
