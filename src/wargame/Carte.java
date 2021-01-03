@@ -135,14 +135,11 @@ public class Carte extends JPanel implements IConfig, ICarte{
     public Position trouvePositionVide() {
         int x;
         int y;
-        Position vPos;
         do {
-            x = new Random().nextInt(aMap.length);
-            y = new Random().nextInt(aMap[0].length);
+            x = (int) (Math.random() * LARGEUR_CARTE);
+            y = (int) (Math.random() * HAUTEUR_CARTE);
         } while (aMap[x][y].getElement() != null);
-        vPos = new Position(x, y);
-
-        return vPos;
+        return aMap[x][y].getPos();
     }
 
     // Trouve une position vide choisie

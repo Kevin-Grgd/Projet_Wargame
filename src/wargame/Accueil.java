@@ -192,7 +192,7 @@ public class Accueil extends JPanel implements IConfig, LineListener {
 			playOnce = false;
 			playMusic();
 		}
-	}}
+	}
 
 	public void playMusic() {
 		try {
