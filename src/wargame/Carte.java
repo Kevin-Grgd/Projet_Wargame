@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 public class Carte extends JPanel implements IConfig, ICarte{
     private static final long serialVersionUID = 1L;
+    //public Position[][] Map;
     public Hexagone[][] aMap;
     private transient Heros[] armeeHeros;
     private transient Monstre[] armeeMonstre;
@@ -19,13 +20,15 @@ public class Carte extends JPanel implements IConfig, ICarte{
      * Constructeur de la carte
     */
     public Carte() {
-        this.aMap = new Hexagone[LARGEUR_CARTE][HAUTEUR_CARTE];
+        aMap = new Hexagone[LARGEUR_CARTE][HAUTEUR_CARTE];
+        //Map = new Position[LARGEUR_CARTE][HAUTEUR_CARTE];
         armeeHeros = new Heros[NB_HEROS];
         armeeMonstre = new Monstre[NB_MONSTRES];
         
-        for (int x = 0; x < LARGEUR_CARTE ; x++) {
+       for (int x = 0; x < LARGEUR_CARTE ; x++) {
             for (int y = 0; y < HAUTEUR_CARTE ; y++) {
             	aMap[x][y] = new Hexagone(new Position(x, y));
+            	//Map[x][y] = new Position(x, y);
             }
         }
         ajoutObstacle();
@@ -330,7 +333,11 @@ public class Carte extends JPanel implements IConfig, ICarte{
     }
 
     public void toutDessiner(Graphics g) {
-        // Insérer code dessin
+    	for (int x = 0; x < LARGEUR_CARTE ; x++) {
+            for (int y = 0; y < HAUTEUR_CARTE ; y++) {
+            	aMap[x][y].seDessiner(g);
+            }
+        }
     }
 
     /**

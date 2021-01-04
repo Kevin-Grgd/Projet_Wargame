@@ -1,11 +1,13 @@
 package wargame;
 
+//import java.awt.Graphics;
 import java.util.ArrayList;
 
 public class Position implements IConfig {
 	private int x;
 	private int y;
 	private Element elem;
+	private boolean isVisible;
 
 	/**
 	 * Constructeur
@@ -121,6 +123,19 @@ public class Position implements IConfig {
 		if(elem != null)
 			elem.setPosition(this);
 	}
+	
+	
+    public void setVisible(boolean bool){
+        this.isVisible = bool;
+    }
+
+    /**
+     * 
+     * @return Si la position est visible
+     */
+    public boolean getVisible(){
+        return this.isVisible;
+    }
 
 	/**
 	 * Donne un tableau des cases adjacentes de cette position
@@ -139,4 +154,9 @@ public class Position implements IConfig {
 		}
 		return posAdjacentes.toArray(new Position[0]);
 	}
+	
+	/*public void seDessiner(Graphics g) {
+		Hexagone hexa = new Hexagone(elem, isVisible, null, this);
+		hexa.seDessiner(g);
+	}*/
 }

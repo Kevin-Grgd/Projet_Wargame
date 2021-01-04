@@ -239,11 +239,7 @@ public class PanneauJeu extends JPanel implements IConfig {
 
         g.setColor(Color.WHITE);
 
-        for (int x = 0; x < this.aCarte.aMap.length; x++) {
-            for (int y = 0; y < this.aCarte.aMap[0].length; y++) {
-                this.aCarte.aMap[x][y].seDessiner(g);
-            }
-        }
+        aCarte.toutDessiner(g);
 
         if (this.aDraggedUnit != null) {
             new Hexagone(this.aCarte.aMap[this.aPressedPosition.getX()][this.aPressedPosition.getY()].getElement(),true, this.aDraggedUnit, null).seDessiner(g);
