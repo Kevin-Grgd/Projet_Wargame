@@ -1,9 +1,10 @@
 package wargame;
 
 import java.awt.Polygon;
-import java.util.ArrayList;
+import java.util.Random;
 import java.awt.Graphics;
 import javax.swing.JPanel;
+import java.util.ArrayList;
 
 public class Carte extends JPanel implements IConfig, ICarte{
     private static final long serialVersionUID = 1L;
@@ -135,23 +136,27 @@ public class Carte extends JPanel implements IConfig, ICarte{
     public Position trouvePositionVide() {
         int x;
         int y;
+        Position vPos;
         do {
-            x = (int) (Math.random() * LARGEUR_CARTE);
-            y = (int) (Math.random() * HAUTEUR_CARTE);
+            x = new Random().nextInt(aMap.length);
+            y = new Random().nextInt(aMap[0].length);
         } while (aMap[x][y].getElement() != null);
-        return aMap[x][y].getPos();
+        vPos = new Position(x, y);
+
+        return vPos;
     }
 
     // Trouve une position vide choisie
     // aléatoirement parmi les 6 positions adjacentes de pos
     /**
-     * Trouve une position vide adjacente aleatoirement
+     * Trouve une position vide adjacente
      * @param pos La position de base
      * @return La position trouvée
      */
     public Position trouvePositionVide(Position pos) {
-    	Position[] posAdjacentes = pos.getAdjacents();
-		int indiceAlea, vide = 0;
+        Position[] posAdjacentes = pos.getAdjacents();
+        int indiceAlea = 0;
+        int vide = 0;
 		for(int i = 0 ; i < posAdjacentes.length ; i++)
 			if(posAdjacentes[i].getElement() == null)
 				vide++;
@@ -181,17 +186,26 @@ public class Carte extends JPanel implements IConfig, ICarte{
      * @return Le héros s'il existe
      */
     public Heros trouveHeros(Position pos) {
-    	ArrayList<Heros> herosAdjacents = new ArrayList<Heros>();
-		Position[] posAdjacentes = pos.getAdjacents();
+        int x;
+        int y;
+        ArrayList<Heros> herosAdjacents = new ArrayList<>();
+        Position[] posAdjacentes = pos.getAdjacents();
+        System.out.println("" + posAdjacentes.length);
 		for(int i = 0 ; i <  posAdjacentes.length ; i++) {
-			if(posAdjacentes[i].getElement() instanceof Heros) {
-				herosAdjacents.add((Heros) posAdjacentes[i].getElement());
+			//if(posAdjacentes[i].getElement() instanceof Heros) {
+                x = posAdjacentes[i].getX();
+                y = posAdjacentes[i].getY();
+            if (aMap[x][y].getElement() instanceof Heros){
+                //herosAdjacents.add((Heros) posAdjacentes[i].getElement());
+				herosAdjacents.add((Heros) aMap[x][y].getElement());
 			}
-		}
-		if(herosAdjacents.size() == 0)
-			return null; //on n'a pas trouve de heros
-		else
-			return herosAdjacents.get((int) (Math.random()*herosAdjacents.size()));
+        }
+		if(herosAdjacents.isEmpty()){
+            return null; //on n'a pas trouve de heros
+        }
+		else{
+            return herosAdjacents.get((int) (Math.random()*herosAdjacents.size()));
+        }
     }
 
     public Heros trouveHerosTir(Monstre pMonstre){
