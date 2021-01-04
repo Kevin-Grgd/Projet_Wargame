@@ -186,7 +186,6 @@ public class PanneauJeu extends JPanel implements IConfig {
     public PanneauJeu() {
 
         this.aCarte = new Carte(LARGEUR_CARTE, HAUTEUR_CARTE, NB_PIX_CASE, NB_PIX_CASE);
-        ajout_obstacle(this.aCarte);
         ajout_soldat(this.aCarte);
 
         setLayout(new BorderLayout());
@@ -234,24 +233,6 @@ public class PanneauJeu extends JPanel implements IConfig {
      */
     public void setCarte(Carte pCarte){
         this.aCarte = pCarte;
-    }
-
-    /**
-     * Ajout des obstacles sur la carte
-     * @param pCarte Carte où ajouter les obstacles
-     */
-    public void ajout_obstacle(Carte pCarte) {
-        int x;
-        int y;
-        Obstacle vObstacle;
-        Position vPos;
-        for (int i = 0; i < NB_OBSTACLES; i++) {
-        	vPos = pCarte.trouvePositionVide();
-            x = vPos.getX();
-            y = vPos.getY();
-            vObstacle = new Obstacle(vPos, pCarte.aMap[x][y].getHexagone());
-            pCarte.aMap[x][y].setElement(vObstacle);
-        }
     }
 
     /**

@@ -60,8 +60,26 @@ public class Carte extends JPanel implements IConfig, ICarte{
             xCenter += hexaLargeur;
             yCenter = 50;
         }
+        ajoutObstacle();
     }
 
+    /**
+     * Ajout des obstacles sur la carte
+     * @param pCarte Carte où ajouter les obstacles
+     */
+    public void ajoutObstacle() {
+        int x;
+        int y;
+        Obstacle vObstacle;
+        Position vPos;
+        for (int i = 0; i < NB_OBSTACLES; i++) {
+        	vPos = trouvePositionVide();
+            x = vPos.getX();
+            y = vPos.getY();
+            vObstacle = new Obstacle(vPos, aMap[x][y].getHexagone());
+            aMap[x][y].setElement(vObstacle);
+        }
+    }
     
     /**
      * @return Tous les polygones de la carte
