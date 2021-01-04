@@ -35,10 +35,6 @@ public abstract class Soldat extends Element implements ISoldat {
 		this.points = points;
 	}
 
-	public int getTour() {
-		return 0;
-	}
-
 	/**
 	 * @return La portée de vision et de tir
 	 */
