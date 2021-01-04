@@ -9,7 +9,7 @@ public interface IConfig {
 	public final int HAUTEUR_FENETRE = (HAUTEUR_CARTE+1)*NB_PIX_CASE;
 	public final int POSITION_X = 100; 
 	public final int POSITION_Y = 50; // Position de la fen�tre
-	public final int NB_HEROS = 1; 
+	public final int NB_HEROS = 6; 
 	public final int NB_MONSTRES = 15; 
 	public final int NB_OBSTACLES = 20;
 	public final int HAUTEUR_BARRE_OUTIL = 50;
@@ -68,5 +68,4 @@ public interface IConfig {
 	public final int MUSIC_2 = 2;
 	
 }
-	
 	
