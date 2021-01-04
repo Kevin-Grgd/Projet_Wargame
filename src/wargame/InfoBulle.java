@@ -53,11 +53,12 @@ public class InfoBulle implements IConfig{
         g.drawPolygon(vLifePolys[0]);
 
         g.setColor(Color.WHITE);
-        g.drawString("PV ", x + offsetXInfoCalculed, y + OFFSET_Y_INFO);
-        g.drawString(""+ aSoldat.getPoints() + "/" + aSoldat.getTypeSoldat().getPoints(), x + offsetXCalculed + ((LARGEUR_BARRE_PV)/2)-20 , y + OFFSET_Y_INFO);
-        g.drawString("Vision :" + aSoldat.getTypeSoldat().getPortee(), x + offsetXInfoCalculed, y + OFFSET_Y_INFO + ECART_INFO);
-        g.drawString("Puissance Frappe : " + aSoldat.getTypeSoldat().getPuissance(), x + offsetXInfoCalculed, y +OFFSET_Y_INFO + 2*(ECART_INFO));
-        g.drawString("Puissance Tir : " + aSoldat.getTypeSoldat().getTir(), x + offsetXInfoCalculed, y + OFFSET_Y_INFO + 3*(ECART_INFO));
+        g.drawString(aSoldat.toString() ,x + offsetXInfoCalculed, y + OFFSET_Y_INFO);
+        g.drawString("PV ", x + offsetXInfoCalculed, y + OFFSET_Y_INFO + ECART_INFO);
+        g.drawString(""+ aSoldat.getPoints() + "/" + aSoldat.getTypeSoldat().getPoints(), x + offsetXCalculed + ((LARGEUR_BARRE_PV)/2)-20 , y + OFFSET_Y_INFO + ECART_INFO);
+        g.drawString("Vision :" + aSoldat.getTypeSoldat().getPortee(), x + offsetXInfoCalculed, y + OFFSET_Y_INFO + 2*ECART_INFO);
+        g.drawString("Puissance Frappe : " + aSoldat.getTypeSoldat().getPuissance(), x + offsetXInfoCalculed, y +OFFSET_Y_INFO + 3*(ECART_INFO));
+        g.drawString("Puissance Tir : " + aSoldat.getTypeSoldat().getTir(), x + offsetXInfoCalculed, y + OFFSET_Y_INFO + 4*(ECART_INFO));
         g.setColor(Color.black);
         g.drawPolygon(vPoly);
 
@@ -68,13 +69,13 @@ public class InfoBulle implements IConfig{
      */
     private Polygon[] getPolyLife() {
         int[] xPoly = { x + offsetXCalculed, x + offsetXCalculed + LARGEUR_BARRE_PV, x + offsetXCalculed + LARGEUR_BARRE_PV, x + offsetXCalculed };
-        int[] yPoly = { y + OFFSET_Y_SUP, y + OFFSET_Y_SUP, y + OFFSET_Y_INF, y + OFFSET_Y_INF };
+        int[] yPoly = { y + OFFSET_Y_SUP+ ECART_INFO, y + OFFSET_Y_SUP+ ECART_INFO, y + OFFSET_Y_INF+ ECART_INFO, y + OFFSET_Y_INF+ ECART_INFO };
         Polygon vLifeFull = new Polygon(xPoly, yPoly, xPoly.length);
 
         int xoffset = (aSoldat.getPoints() * LARGEUR_BARRE_PV) / aSoldat.type.getPoints();
 
         xPoly = new int[] { x + offsetXCalculed, x + offsetXCalculed + xoffset, x + offsetXCalculed + xoffset, x + offsetXCalculed };
-        yPoly = new int[] { y + OFFSET_Y_SUP, y + OFFSET_Y_SUP, y + OFFSET_Y_INF, y + OFFSET_Y_INF };
+        yPoly = new int[] { y + OFFSET_Y_SUP+ ECART_INFO, y + OFFSET_Y_SUP+ ECART_INFO, y + OFFSET_Y_INF+ ECART_INFO, y + OFFSET_Y_INF+ ECART_INFO };
         Polygon vLife = new Polygon(xPoly, yPoly, xPoly.length);
 
         return new Polygon[] { vLifeFull, vLife };
