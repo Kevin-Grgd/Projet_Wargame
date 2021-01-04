@@ -48,17 +48,19 @@ public class Accueil extends JPanel implements IConfig, LineListener {
 		this.addMouseListener( new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-            	//System.out.println("Coordoonee :"+e.getPoint());
+
 				if(aJouer.getBounds().contains(e.getPoint())){
 					aJouer.setFocus(false);
 					aJouer.setTarget(true);
 					repaint();
 				}
+
 				if(aCharger.getBounds().contains(e.getPoint())){
 					aCharger.setFocus(false);
 					aCharger.setTarget(true);
 					repaint();
 				}
+
 				if(aQuitter.getBounds().contains(e.getPoint())){
 					aQuitter.setFocus(false);
 					aQuitter.setTarget(true);
@@ -68,6 +70,7 @@ public class Accueil extends JPanel implements IConfig, LineListener {
             
             @Override
             public void mouseReleased(MouseEvent e) {
+				
             	if (aJouer.getTarget() ) {
             		try {
 						Thread.sleep(50);
@@ -78,7 +81,8 @@ public class Accueil extends JPanel implements IConfig, LineListener {
             		aWindow.add(aGame);
             		aWindow.repaint();
             		aWindow.pack();
-            	}
+				}
+				
             	if (aCharger.getTarget()) {
 					try {
 						Thread.sleep(50);
@@ -87,6 +91,7 @@ public class Accueil extends JPanel implements IConfig, LineListener {
 					}
 					aCharger.setTarget(false);
 				}
+
             	if (aQuitter.getTarget()) {
             		try {
 						Thread.sleep(50);
@@ -101,7 +106,6 @@ public class Accueil extends JPanel implements IConfig, LineListener {
 		this.addMouseMotionListener(new MouseAdapter() {
 			@Override
 			public void mouseMoved(MouseEvent e) {
-				//System.out.println("Coordoonee :"+e.getPoint());
 				boutonHover(e);
 				repaint();
 			}
@@ -127,7 +131,6 @@ public class Accueil extends JPanel implements IConfig, LineListener {
 		choixMusic = MUSIC_1;
 
 		try {
-			//System.out.println("Try image");
 			URL url = this.getClass().getResource("/resources/accueil_background_2.jpg");
 			URL urlLogo = this.getClass().getResource("/resources/wargame_logo.png");
 			accueilBackground = ImageIO.read(url);
@@ -196,24 +199,21 @@ public class Accueil extends JPanel implements IConfig, LineListener {
 
 	public void playMusic() {
 		try {
-			//System.out.println("Try music");
 			URL urlMusic = null;
 			AudioInputStream stream; 
 			AudioFormat format;
 			DataLine.Info info;
-			Clip audioClip;
-			
 			if(!playOnce) {
-				//System.out.println("Choix music :"+choixMusic);
 				switch(choixMusic) {
-				case MUSIC_1 : urlMusic = this.getClass().getResource("/resources/Music/music_1.wav");
-				//System.out.println("Music_1 played");
-				break;
-				case MUSIC_2: urlMusic = this.getClass().getResource("/resources/Music/music_2.wav");
-				//System.out.println("Music_2 played");
-				break;
-				default : System.out.println("Erreur switch choixMusic");
-				System.exit(0);
+				case MUSIC_1 :
+					 urlMusic = this.getClass().getResource("/resources/Music/music_1.wav");
+					break;
+				case MUSIC_2: 
+					urlMusic = this.getClass().getResource("/resources/Music/music_2.wav");
+					break;
+				default : 
+					System.out.println("Erreur switch choixMusic");
+					System.exit(0);
 				}
 					
 				stream = AudioSystem.getAudioInputStream(urlMusic);
@@ -223,13 +223,13 @@ public class Accueil extends JPanel implements IConfig, LineListener {
 				audioClip.addLineListener(this);
 				audioClip.open(stream);
 				audioClip.start();
+
 				if (choixMusic == MUSIC_1) {
 					choixMusic = MUSIC_2;
 				} else {
 					choixMusic = MUSIC_1;
 				}
 			}
-			//System.out.println("Play Once :"+playOnce);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
