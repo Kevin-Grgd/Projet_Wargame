@@ -117,7 +117,7 @@ public class Position implements IConfig {
 	 * @return Position[]
 	 */
 	public Position[] getAdjacents() { //retourne les 6 cases adjacentes
-		ArrayList<Position> posAdjacentes = new ArrayList<Position>();
+		ArrayList<Position> posAdjacentes = new ArrayList<>();
 		Position pos;
 		for(int i = x-1 ; i <= x+1 ; i++) {
 			for(int j = y-1 ; j <= y+1 ; j++) {
