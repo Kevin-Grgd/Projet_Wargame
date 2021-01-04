@@ -23,7 +23,7 @@ public class Monstre extends Soldat {
 	}
 
 	public String toString() {
-		return getPosition() + " " + type.toString() + " " + ID_MONSTRE + " PV:" + getPoints() + '/' + type.getPoints();
+		return type.toString() + " " +ID_MONSTRE;
 	}
 
 	@Override

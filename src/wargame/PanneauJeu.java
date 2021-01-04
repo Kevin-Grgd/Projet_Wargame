@@ -246,11 +246,9 @@ public class PanneauJeu extends JPanel implements IConfig {
         Obstacle vObstacle;
         Position vPos;
         for (int i = 0; i < NB_OBSTACLES; i++) {
-            do {
-                x = new Random().nextInt(pCarte.aMap.length);
-                y = new Random().nextInt(pCarte.aMap[0].length);
-                vPos = new Position(x, y);
-            } while (pCarte.aMap[x][y].getElement() != null);
+        	vPos = pCarte.trouvePositionVide();
+            x = vPos.getX();
+            y = vPos.getY();
             vObstacle = new Obstacle(vPos, pCarte.aMap[x][y].getHexagone());
             pCarte.aMap[x][y].setElement(vObstacle);
         }
@@ -504,7 +502,7 @@ public class PanneauJeu extends JPanel implements IConfig {
      * Thread pour repaint plus vite
      */
     public void repaintThread() {
-        SwingWorker worker = new SwingWorker<Integer, Void>() {
+        SwingWorker<Integer, Void> worker = new SwingWorker<Integer, Void>() {
             @Override
             public Integer doInBackground() {
                 repaint();

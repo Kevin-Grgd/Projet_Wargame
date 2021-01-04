@@ -26,7 +26,7 @@ public class Heros extends Soldat {
 	}
 
 	public String toString() {
-		return getPosition() + " " + type.toString() + " " + ID_HEROS + " PV:" + getPoints() + '/' + type.getPoints();
+		return type.toString() + " " + ID_HEROS;
 	}
 
 	@Override
