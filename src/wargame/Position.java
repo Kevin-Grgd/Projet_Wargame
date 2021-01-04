@@ -6,6 +6,7 @@ public class Position implements IConfig {
 	private int x;
 	private int y;
 	private Element elem;
+
 	/**
 	 * Constructeur
 	 * @param x Coordonnée en abscisse
@@ -46,24 +47,6 @@ public class Position implements IConfig {
 	public void setY(int y) {
 		this.y = y;
 	}
-	
-	/**
-	 * 
-	 * @return Element de la position
-	 */
-	public Element getElement() {
-		return elem;
-	}
-	
-	/**
-	 * Definit l'element de la position
-	 * @param elem
-	 */
-	public void setElement(Element elem) {
-		this.elem = elem;
-		if(elem != null)
-			elem.setPosition(this);
-	}
 
 	/**
 	 * Indique si une position est valide
@@ -83,13 +66,11 @@ public class Position implements IConfig {
 	/**
 	 * Indique si des positions sont voisines
 	 * @param pos Position supposée voisine
-	 * @return true Si elles le sont
+	 * @return Si elles le sont
 	 */
 	public boolean estVoisine(Position pos) {
-		if (pos.estValide()) {
+		if (pos != null) {
 			// Elimination des cas non souhaités
-			if(x == pos.getX() && y == pos.getY()) return false; //coordonnees de pos
-			
 			if (y % 2 == 0) {
 				if (x == pos.getX() - 1 && y == pos.getY() - 1) {
 					return false;
@@ -122,7 +103,15 @@ public class Position implements IConfig {
 		double vY =  Math.pow((this.y - p.y), 2);
 		return Math.sqrt(vX + vY);
 	}
-	
+
+	/**
+	 * 
+	 * @return Element de la position
+	 */
+	public Element getElement() {
+		return elem;
+	}
+
 	/**
 	 * Donne un tableau des cases adjacentes de cette position
 	 * @return Position[]
@@ -133,7 +122,7 @@ public class Position implements IConfig {
 		for(int i = x-1 ; i <= x+1 ; i++) {
 			for(int j = y-1 ; j <= y+1 ; j++) {
 				pos = new Position(i, j);
-				if(estVoisine(pos)) {
+				if(estVoisine(pos) && i > 0 && i < LARGEUR_CARTE && j > 0 && j < HAUTEUR_CARTE) {
 					posAdjacentes.add(pos);
 				}
 			}
