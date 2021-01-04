@@ -13,7 +13,6 @@ public class Carte extends JPanel implements IConfig, ICarte{
     private transient Monstre[] armeeMonstre;
     private transient int heros_restant;
     private transient int monstre_restant;
-    private transient Polygon aPolybig;
 
 
     /**
@@ -341,7 +340,7 @@ public class Carte extends JPanel implements IConfig, ICarte{
                  int[] xPoly = {xCenter, xCenter, (int)(hexaLargeur*0.50) + xCenter,hexaLargeur+xCenter, hexaLargeur+xCenter, (int)(hexaLargeur*0.50)+xCenter};
                  int[] yPoly = {(int)(hexaHauteur*0.75) + yCenter, (int)(hexaHauteur*0.25) + yCenter, yCenter, (int)(hexaHauteur*0.25)+ yCenter, (int)(hexaHauteur*0.75)+yCenter, yCenter+hexaHauteur}; 
                  Polygon vPoly = new Polygon(xPoly, yPoly,xPoly.length);
-                 this.aPolybig = vPoly;
+                 
 
                  
                  for(int x = 0; x < this.aMap.length; x++){ 
@@ -355,9 +354,7 @@ public class Carte extends JPanel implements IConfig, ICarte{
         }
     }
 
-    public void seDessine(Graphics g){
-        g.drawPolygon(this.aPolybig);
-    }
+    
 
     /**
      * Fonction subsidiaire récursive pour donner/retirer la vision aux héros

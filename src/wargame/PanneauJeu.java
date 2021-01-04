@@ -317,7 +317,7 @@ public class PanneauJeu extends JPanel implements IConfig {
             this.aInfo.paintComponent(g);
         }
 
-        aCarte.seDessine(g);
+        
 
     }
 
@@ -436,10 +436,12 @@ public class PanneauJeu extends JPanel implements IConfig {
             Heros[] vArmee = aCarte.getArmeeHeros();
             // Récupération du soldat souhaité
             for (int i = 0; i < NB_HEROS; i++) {
-                if (vArmee[i].getPosition().getX() == vPos.getX() && vArmee[i].getPosition().getY() == vPos.getY()
+                if (vArmee[i] != null){
+                    if (vArmee[i].getPosition().getX() == vPos.getX() && vArmee[i].getPosition().getY() == vPos.getY()
                         && vArmee[i] != null && !(vArmee[i].getJoue())) {
-                    vArmee[i].seRepose();
-                    vArmee[i].setJoue(true);
+                        vArmee[i].seRepose();
+                        vArmee[i].setJoue(true);
+                    }
                 }
             }
         }
@@ -452,6 +454,7 @@ public class PanneauJeu extends JPanel implements IConfig {
         Heros[] listeHeros = aCarte.getArmeeHeros();
         Monstre[] listeMonstre = aCarte.getArmeeMonstre();
         Heros vHerosTarget;
+       
         // Les héros qui n'ont pas joué ce repose
         for (int i = 0; i < NB_HEROS; i++) {
             if (listeHeros[i] != null){
@@ -460,6 +463,7 @@ public class PanneauJeu extends JPanel implements IConfig {
                 }
             }
         }
+
         // Au tour des monstres de jouer
         for (int j = 0; j < NB_MONSTRES; j++) {
             if (listeMonstre[j] != null) {
@@ -477,7 +481,8 @@ public class PanneauJeu extends JPanel implements IConfig {
                         Position vNextPos = aCarte.trouvePositionVide(listeMonstre[j].getPosition());
                         aCarte.deplaceSoldat(vNextPos, listeMonstre[j]);
                     }
-                } else { // Si on a trouvé un héros non loin on l'affronte
+                } 
+                else { // Si on a trouvé un héros non loin on l'affronte
                     listeMonstre[j].combat(vHerosTarget);
                     if (vHerosTarget.getPoints() <= 0){
                         aCarte.mort(vHerosTarget);
@@ -499,7 +504,7 @@ public class PanneauJeu extends JPanel implements IConfig {
      * Thread pour repaint plus vite
      */
     public void repaintThread() {
-        SwingWorker<Integer, Void> worker = new SwingWorker<Integer, Void>() {
+        SwingWorker worker = new SwingWorker<Integer, Void>() {
             @Override
             public Integer doInBackground() {
                 repaint();
