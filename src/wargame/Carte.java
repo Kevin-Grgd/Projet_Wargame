@@ -11,54 +11,22 @@ public class Carte extends JPanel implements IConfig, ICarte{
     public Hexagone[][] aMap;
     private transient Heros[] armeeHeros;
     private transient Monstre[] armeeMonstre;
-    private transient int heros_restant;
-    private transient int monstre_restant;
+    private transient int heros_restant = NB_HEROS;
+    private transient int monstre_restant = NB_MONSTRES;
 
 
     /**
-    * @param nbCasesLargeur Nombre de case en largeur
-    * @param nbCasesHauteur Nombre de case en hauteur
-    * @param hexaLargeur Taille de l'hexagone en largeur
-    * @param hexaHauteur Taille de l'hexagone en hauteur
-    * @return La carte du jeu
+     * Constructeur de la carte
     */
-    public Carte(int nbCasesLargeur, int nbCasesHauteur, int hexaLargeur, int hexaHauteur) {
-        this.aMap = new Hexagone[nbCasesLargeur][nbCasesHauteur];
+    public Carte() {
+        this.aMap = new Hexagone[LARGEUR_CARTE][HAUTEUR_CARTE];
         armeeHeros = new Heros[NB_HEROS];
         armeeMonstre = new Monstre[NB_MONSTRES];
-        heros_restant = NB_HEROS;
-        monstre_restant = NB_MONSTRES;
-
-        int xCenter = 5;
-        int yCenter = 50;
-        int xOffSet = hexaLargeur / 2;
-        Polygon vPoly;
-        for (int x = 0; x < nbCasesLargeur; x++) {
-            for (int y = 0; y < nbCasesHauteur; y++) {
-                if (y % 2 == 0) {
-                    int[] xPoly = { xCenter, xCenter, (int) (hexaLargeur * 0.5) + xCenter, hexaLargeur + xCenter,
-                            hexaLargeur + xCenter, (int) (hexaLargeur * 0.5) + xCenter };
-                    int[] yPoly = { (int) (hexaHauteur * 0.75) + yCenter, (int) (hexaHauteur * 0.25) + yCenter, yCenter,
-                            (int) (hexaHauteur * 0.25) + yCenter, (int) (hexaHauteur * 0.75) + yCenter,
-                            yCenter + hexaHauteur };
-                    vPoly = new Polygon(xPoly, yPoly, xPoly.length);
-                    aMap[x][y] = new Hexagone(vPoly, new Position(x, y));
-                }
-
-                else {
-                    int[] xPoly = { xCenter + xOffSet, xCenter + xOffSet, (int) (hexaLargeur * 0.5) + xCenter + xOffSet,
-                            hexaLargeur + xCenter + xOffSet, hexaLargeur + xCenter + xOffSet,
-                            (int) (hexaLargeur * 0.5) + xCenter + xOffSet };
-                    int[] yPoly = { (int) (hexaHauteur * 0.75) + yCenter, (int) (hexaHauteur * 0.25) + yCenter, yCenter,
-                            (int) (hexaHauteur * 0.25) + yCenter, (int) (hexaHauteur * 0.75) + yCenter,
-                            yCenter + hexaHauteur };
-                    vPoly = new Polygon(xPoly, yPoly, xPoly.length);
-                    aMap[x][y] = new Hexagone(vPoly, new Position(x, y));
-                }
-                yCenter += (int) (hexaHauteur * 0.75);
+        
+        for (int x = 0; x < LARGEUR_CARTE ; x++) {
+            for (int y = 0; y < HAUTEUR_CARTE ; y++) {
+            	aMap[x][y] = new Hexagone(new Position(x, y));
             }
-            xCenter += hexaLargeur;
-            yCenter = 50;
         }
         ajoutObstacle();
         ajoutSoldat();
@@ -455,32 +423,6 @@ public class Carte extends JPanel implements IConfig, ICarte{
                 aMap[vPos.getX() - 1][vPos.getY() - 1].setVisible(pSet);
                 visionOne(new Position(vPos.getX() - 1, vPos.getY() - 1), pSet, pVision - 1);
 
-            }
-        }
-    }
-
-    /**
-     * Ajout un héros dans l'armée
-     * @param pHeros Ajoute ce héros à l'armée
-     */
-    public void appendHeros(Heros pHeros) {
-        for (int i = 0; i < NB_HEROS; i++) {
-            if (this.armeeHeros[i] == null) {
-                this.armeeHeros[i] = pHeros;
-                return;
-            }
-        }
-    }
-
-    /**
-     * Ajout d'un monstre dans l'armée
-     * @param pMonstre Ajoute ce monstre à l'armée
-     */
-    public void appendMonstre(Monstre pMonstre) {
-        for (int i = 0; i < NB_MONSTRES; i++) {
-            if (this.armeeMonstre[i] == null) {
-                this.armeeMonstre[i] = pMonstre;
-                return;
             }
         }
     }

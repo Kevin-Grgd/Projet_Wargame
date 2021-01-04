@@ -184,7 +184,7 @@ public class PanneauJeu extends JPanel implements IConfig {
      */
     public PanneauJeu() {
 
-        this.aCarte = new Carte(LARGEUR_CARTE, HAUTEUR_CARTE, NB_PIX_CASE, NB_PIX_CASE);
+        this.aCarte = new Carte();
 
         setLayout(new BorderLayout());
         JToolBar outil = toolBar();

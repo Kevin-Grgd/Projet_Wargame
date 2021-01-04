@@ -111,6 +111,16 @@ public class Position implements IConfig {
 	public Element getElement() {
 		return elem;
 	}
+	
+	/**
+	 * Modifie l'element si l'element n'est pas null on lui donne cette position
+	 * @param elem
+	 */
+	public void setElement(Element elem) {
+		this.elem = elem;
+		if(elem != null)
+			elem.setPosition(this);
+	}
 
 	/**
 	 * Donne un tableau des cases adjacentes de cette position

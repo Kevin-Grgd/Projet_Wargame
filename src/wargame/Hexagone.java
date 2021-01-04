@@ -12,7 +12,7 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 
-public class Hexagone extends JComponent{
+public class Hexagone extends JComponent implements IConfig{
     private static final long serialVersionUID = 1905122041950251207L;
 
     private transient Element aElement;
@@ -31,13 +31,53 @@ public class Hexagone extends JComponent{
      * @param pHexa Le polygone concerné
      * @param pPos Sa position
      */
-    public Hexagone(Element pElement, boolean pVisible, Polygon pHexa,Position pPos) {
-        this.isVisible = pVisible;
-        this.Hexa = pHexa;
-        this.aElement = pElement;
-        this.aImage = null;
-        this.aPosition = pPos;
-        this.isTarget = false;
+    public Hexagone(Element pElement, boolean pVisible, Polygon pHexa, Position pPos) {
+        int xCenter = 5;
+        int yCenter = 50;
+        int xOffSet = NB_PIX_CASE / 2;//decalage pour les lignes impaires
+        int[] xPoly;
+        int[] yPoly;
+    	isVisible = pVisible;
+        aElement = pElement;
+        aImage = null;
+        aPosition = pPos;
+        isTarget = false;
+        
+        if(pHexa == null) {
+        	int decalageX = NB_PIX_CASE * pPos.getX(); //decalage en fonction pPos
+        	int decalageY = ((int) (NB_PIX_CASE * 0.75)) * pPos.getY();
+        	if(pPos.getY() % 2 == 0) {
+        		xPoly = new int[] { xCenter + decalageX, 
+        						xCenter + decalageX,
+        						(int) (NB_PIX_CASE * 0.5) + xCenter + decalageX,
+        						NB_PIX_CASE + xCenter + decalageX,
+        						NB_PIX_CASE + xCenter + decalageX,
+        						(int) (NB_PIX_CASE * 0.5) + xCenter + decalageX 
+        					  	};
+        	}
+        	else {
+        		xPoly = new int[] { xCenter + xOffSet + decalageX, 
+        						xCenter + xOffSet + decalageX, 
+        						(int) (NB_PIX_CASE * 0.5) + xCenter + xOffSet + decalageX,
+        						NB_PIX_CASE + xCenter + xOffSet + decalageX, 
+        						NB_PIX_CASE + xCenter + xOffSet + decalageX,
+        						(int) (NB_PIX_CASE * 0.5) + xCenter + xOffSet + decalageX 
+        						};
+        	}
+        	yPoly = new int[] { (int) (NB_PIX_CASE * 0.75) + yCenter + decalageY, 
+							(int) (NB_PIX_CASE * 0.25) + yCenter + decalageY, 
+							yCenter + decalageY,
+							(int) (NB_PIX_CASE * 0.25) + yCenter + decalageY,
+							(int) (NB_PIX_CASE * 0.75) + yCenter + decalageY,
+							yCenter + NB_PIX_CASE + decalageY 
+							};
+        
+        	Hexa = new Polygon(xPoly, yPoly, xPoly.length);
+        }
+        else {
+        	Hexa = pHexa;
+        }
+        	
         try {
             int vRand = new Random().nextInt(IConfig.NB_TEXTURE_OBSTACLE)+1;
             String vUrlString = "/resources/grass#.png".replace('#',  Integer.toString(vRand).charAt(0));
@@ -46,6 +86,15 @@ public class Hexagone extends JComponent{
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    
+    /**
+     * Constructeur de l'hexagone juste avec un polygone et une position
+     * @param pHexa Le polygone a dessiné
+     * @param pPos Sa position
+     */
+    public Hexagone(Position pPos){
+        this(null, false, null, pPos);        
     }
 
     /**
@@ -62,15 +111,6 @@ public class Hexagone extends JComponent{
      */
     public void setaImage(Image pImage) {
         this.aImage = pImage;
-    }
-
-    /**
-     * Constructeur de l'hexagone juste avec un polygone et une position
-     * @param pHexa Le polygone a dessiné
-     * @param pPos Sa position
-     */
-    public Hexagone(Polygon pHexa,Position pPos){
-        this(null,false,pHexa,pPos);        
     }
     
     /**
