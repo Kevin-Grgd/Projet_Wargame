@@ -30,6 +30,7 @@ public class Accueil extends JPanel implements IConfig, LineListener {
 	private transient int lancer = 0;
 	private transient PanneauJeu aGame;
 	private transient JFrame aWindow;
+	private transient EndGame aEndGame;
 	private transient BoutonMenu aJouer = null;
 	private transient BoutonMenu aQuitter = null;
 	private transient BoutonMenu aCharger = null;
@@ -45,6 +46,8 @@ public class Accueil extends JPanel implements IConfig, LineListener {
 		menu.setPreferredSize(new Dimension(LARGEUR_FENETRE, HAUTEUR_FENETRE));
 		menu.setLayout(null);
 		Accueil vTemp = this;
+		aEndGame = new EndGame(aGame,aWindow,vTemp,false);
+		
 		this.addMouseListener( new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -93,6 +96,10 @@ public class Accueil extends JPanel implements IConfig, LineListener {
 						Thread.currentThread().interrupt();
 					}
 					aCharger.setTarget(false);
+					aWindow.remove(vTemp);
+					aWindow.add(aEndGame);
+					aWindow.repaint();
+					aWindow.pack();
 				}
 
             	if (aQuitter.getTarget()) {
