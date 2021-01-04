@@ -121,20 +121,35 @@ public class Accueil extends JPanel implements IConfig, LineListener {
 	public Accueil(PanneauJeu pGame,JFrame pWindow) {
 		this.aGame = pGame;
 		this.aWindow = pWindow;
+		
 		/*
-		aJouer = new BoutonMenu(LARGEUR_FENETRE/2, 300, "Jouer");
-		aCharger = new BoutonMenu(LARGEUR_FENETRE/2, 375, "Charger une partie");
-		aQuitter = new BoutonMenu(LARGEUR_FENETRE/2, 450, "Quitter");
+		//Background : Aragorn
+		aJouer = new BoutonMenu(LARGEUR_FENETRE/2, 500, "Jouer");
+		aCharger = new BoutonMenu(LARGEUR_FENETRE/2, 575, "Charger une partie");
+		aQuitter = new BoutonMenu(LARGEUR_FENETRE/2, 650, "Quitter");
+		String urlBackground = "/resources/accueil_background.jpg";
 		*/
 
+		/*
+		//Background : Gollum
 		aJouer = new BoutonMenu(375, 500, "Jouer");
 		aCharger = new BoutonMenu(375, 575, "Charger une partie");
 		aQuitter = new BoutonMenu(375, 650, "Quitter");
+		String urlBackground = "/resources/accueil_background_2.jpg";
+		*/
+		
+		
+		//Backgroung : Village
+		aJouer = new BoutonMenu(950, 550, "Jouer");
+		aCharger = new BoutonMenu(950, 625, "Charger une partie");
+		aQuitter = new BoutonMenu(950, 700, "Quitter");
+		String urlBackground = "/resources/accueil_background_3.jpg";
+		
 		
 		choixMusic = MUSIC_1;
 
 		try {
-			URL url = this.getClass().getResource("/resources/accueil_background_2.jpg");
+			URL url = this.getClass().getResource(urlBackground);
 			URL urlLogo = this.getClass().getResource("/resources/wargame_logo.png");
 			accueilBackground = ImageIO.read(url);
 			logoJeu = ImageIO.read(urlLogo);			
