@@ -49,22 +49,25 @@ public class Accueil extends JPanel implements IConfig, LineListener {
             @Override
             public void mousePressed(MouseEvent e) {
 
-				if(aJouer.getBounds().contains(e.getPoint())){
-					aJouer.setFocus(false);
-					aJouer.setTarget(true);
-					repaint();
-				}
+				if (e.getButton() == MouseEvent.BUTTON1) {
+					
+					if(aJouer.getBounds().contains(e.getPoint())){
+						aJouer.setFocus(false);
+						aJouer.setTarget(true);
+						repaint();
+					}
 
-				if(aCharger.getBounds().contains(e.getPoint())){
-					aCharger.setFocus(false);
-					aCharger.setTarget(true);
-					repaint();
-				}
+					if(aCharger.getBounds().contains(e.getPoint())){
+						aCharger.setFocus(false);
+						aCharger.setTarget(true);
+						repaint();
+					}
 
-				if(aQuitter.getBounds().contains(e.getPoint())){
-					aQuitter.setFocus(false);
-					aQuitter.setTarget(true);
-					repaint();
+					if(aQuitter.getBounds().contains(e.getPoint())){
+						aQuitter.setFocus(false);
+						aQuitter.setTarget(true);
+						repaint();
+					}
 				}
 			}
             
