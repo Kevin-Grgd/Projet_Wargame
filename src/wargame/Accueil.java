@@ -27,7 +27,6 @@ public class Accueil extends JPanel implements IConfig, LineListener {
 	private static final long serialVersionUID = 1L;
 	private transient Image accueilBackground;
 	private transient Image logoJeu;
-	private transient int lancer = 0;
 	private transient PanneauJeu aGame;
 	private transient JFrame aWindow;
 	private transient EndGame aEndGame;
@@ -38,9 +37,14 @@ public class Accueil extends JPanel implements IConfig, LineListener {
 	private transient boolean playOnce = false;
 	private transient Clip audioClip;
 	
+	/**
+	 * 	
+	 * @return Le menu d'accueil
+	 */
 	public JPanel menu() {
 		
 		JPanel menu = new JPanel();
+		
 		
 		menu.setOpaque(false);
 		menu.setPreferredSize(new Dimension(LARGEUR_FENETRE, HAUTEUR_FENETRE));
@@ -48,6 +52,7 @@ public class Accueil extends JPanel implements IConfig, LineListener {
 		Accueil vTemp = this;
 		aEndGame = new EndGame(aGame,aWindow,vTemp,false);
 		
+		//Gestion dynamique des boutons
 		this.addMouseListener( new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -83,6 +88,7 @@ public class Accueil extends JPanel implements IConfig, LineListener {
 					} catch(InterruptedException ex) {
 					    Thread.currentThread().interrupt();
 					}
+					aJouer.setTarget(false);
             		aWindow.remove(vTemp);
             		aWindow.add(aGame);
             		aWindow.repaint();
@@ -108,6 +114,7 @@ public class Accueil extends JPanel implements IConfig, LineListener {
 					} catch(InterruptedException ex) {
 					    Thread.currentThread().interrupt();
 					}
+					aQuitter.setTarget(false);
             		System.exit(0);
             	}
             }
@@ -124,7 +131,11 @@ public class Accueil extends JPanel implements IConfig, LineListener {
 		return menu;		
 	}
 
-	
+	/**
+	 * Constructeur Accueil
+	 * @param pGame
+	 * @param pWindow
+	 */
 	public Accueil(PanneauJeu pGame,JFrame pWindow) {
 		this.aGame = pGame;
 		this.aWindow = pWindow;
@@ -154,7 +165,8 @@ public class Accueil extends JPanel implements IConfig, LineListener {
 		
 		
 		choixMusic = MUSIC_1;
-
+		
+		//Chargement des  images
 		try {
 			URL url = this.getClass().getResource(urlBackground);
 			URL urlLogo = this.getClass().getResource("/resources/wargame_logo.png");
@@ -182,15 +194,11 @@ public class Accueil extends JPanel implements IConfig, LineListener {
 		aQuitter.paintComponent(g);
 		aCharger.paintComponent(g);
 	}
-
-	public int getLancer(){
-		return this.lancer;
-	}
-
-	public void setLancer(int pLancer){
-		this.lancer = pLancer;
-	}
 	
+	/**
+	 * Gestion dynamique des boutons au passage de la souris
+	 * @param e
+	 */
 	private void boutonHover(MouseEvent e) {
 		if (this.aJouer.getBounds().contains(e.getX(),e.getY())) {
 			this.aJouer.setFocus(true);
@@ -209,6 +217,9 @@ public class Accueil extends JPanel implements IConfig, LineListener {
 		}
 	}
 	
+	/**
+	 * Détection musique fini
+	 */
 	@Override
 	public void update(LineEvent e) {
 		LineEvent.Type type = e.getType();
@@ -222,13 +233,18 @@ public class Accueil extends JPanel implements IConfig, LineListener {
 		}
 	}
 
+	/**
+	 * Joue la musique en fonction de la précédente
+	 * (principe d'une playlist en boucle)
+	 */
 	public void playMusic() {
 		try {
 			URL urlMusic = null;
 			AudioInputStream stream; 
 			AudioFormat format;
 			DataLine.Info info;
-			if(!playOnce) {
+			
+			if(!playOnce) { //Lance la musique une seule foi
 				switch(choixMusic) {
 				case MUSIC_1 :
 					 urlMusic = this.getClass().getResource("/resources/Music/music_1.wav");

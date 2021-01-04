@@ -17,11 +17,16 @@ public class BoutonMenu extends JComponent implements IConfig{
 	public int heightBouton;
 	public int posX;
 	public int posY;
+	private int widthTexte;
+	private int heightTexte;
+	private int midTexte;
 	private String texte;
 	private boolean isTarget = false;
 	private boolean isFocus = false;
 	private Font boutonFont;
 	
+
+
 	public BoutonMenu( int pX, int pY,  String txt) {
 		posX = pX;
 		posY = pY;
@@ -75,10 +80,6 @@ public class BoutonMenu extends JComponent implements IConfig{
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-
-		int widthTexte;
-		int heightTexte;
-		int midTexte;
 		//Recuperation taille texte
 		FontMetrics metrics = g.getFontMetrics(boutonFont);
 		widthTexte = metrics.stringWidth(texte);
