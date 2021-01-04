@@ -190,7 +190,6 @@ public class Carte extends JPanel implements IConfig, ICarte{
         int y;
         ArrayList<Heros> herosAdjacents = new ArrayList<>();
         Position[] posAdjacentes = pos.getAdjacents();
-        System.out.println("" + posAdjacentes.length);
 		for(int i = 0 ; i <  posAdjacentes.length ; i++) {
 			//if(posAdjacentes[i].getElement() instanceof Heros) {
                 x = posAdjacentes[i].getX();
