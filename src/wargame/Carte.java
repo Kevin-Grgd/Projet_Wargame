@@ -61,6 +61,7 @@ public class Carte extends JPanel implements IConfig, ICarte{
             yCenter = 50;
         }
         ajoutObstacle();
+        ajoutSoldat();
     }
 
     /**
@@ -78,6 +79,36 @@ public class Carte extends JPanel implements IConfig, ICarte{
             y = vPos.getY();
             vObstacle = new Obstacle(vPos, aMap[x][y].getHexagone());
             aMap[x][y].setElement(vObstacle);
+        }
+    }
+    
+    /**
+     * Ajout des soldats sur la carte
+     * @param pCarte Carte où ajouter les soldats
+     */
+    public void ajoutSoldat() {
+        int x, y, i;
+        // Ajout des héros sur le côté gauche de la map
+        for (i = 0; i < NB_HEROS; i++) {
+            do {
+                x = (int) (Math.random() * (LARGEUR_CARTE / 2)); // Côté gauche de la carte
+                y = (int) (Math.random() * HAUTEUR_CARTE); // De bas en haut
+            } while (aMap[x][y].getElement() != null); // Tant que il y a un obstacle on prend une autre position
+            
+            armeeHeros[i] = new Heros(new Position(x, y)); // Création du héros
+            aMap[x][y].setElement(armeeHeros[i]); // Ajout du héros dans la map
+            herosVision(true);
+        }
+
+        // Ajout des monstres sur le côté droit de la map
+        for (i = 0; i < NB_MONSTRES; i++) {
+            do {
+                x = LARGEUR_CARTE / 2 + (int) (Math.random() * (LARGEUR_CARTE - LARGEUR_CARTE / 2)); // Côté droit de la carte
+                y = (int) (Math.random() * HAUTEUR_CARTE); // De bas en haut
+            } while (aMap[x][y].getElement() != null); // Tant que il y a un obstacle on prend une autre position
+           
+            armeeMonstre[i] = new Monstre(new Position(x, y));// Création du monstre
+            aMap[x][y].setElement(armeeMonstre[i]); // Ajout du monstre dans la map
         }
     }
     

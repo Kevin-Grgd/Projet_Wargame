@@ -9,7 +9,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Random;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -186,7 +185,6 @@ public class PanneauJeu extends JPanel implements IConfig {
     public PanneauJeu() {
 
         this.aCarte = new Carte(LARGEUR_CARTE, HAUTEUR_CARTE, NB_PIX_CASE, NB_PIX_CASE);
-        ajout_soldat(this.aCarte);
 
         setLayout(new BorderLayout());
         JToolBar outil = toolBar();
@@ -233,47 +231,6 @@ public class PanneauJeu extends JPanel implements IConfig {
      */
     public void setCarte(Carte pCarte){
         this.aCarte = pCarte;
-    }
-
-    /**
-     * Ajout des soldats sur la carte
-     * @param pCarte Carte où ajouter les soldats
-     */
-    public void ajout_soldat(Carte pCarte) {
-        int x;
-        int y;
-        Position vPos;
-        Heros vHeroes;
-        Monstre vMonstre;
-        // Ajout des héros sur le côté gauche de la map
-        for (int i = 0; i < NB_HEROS; i++) {
-            do {
-                x = new Random().nextInt(LARGEUR_CARTE / 2); // Côté gauche de la carte
-                y = new Random().nextInt(HAUTEUR_CARTE); // De bas en haut
-                vPos = new Position(x, y);
-            } while (pCarte.aMap[x][y].getElement() != null); // Tant que il y a un obstacle on prend une autre position
-
-            vHeroes = new Heros(vPos); // Création du héros
-            vHeroes.setPoints(new Random().nextInt(vHeroes.type.getPoints()));
-            pCarte.aMap[x][y].setElement(vHeroes); // Ajout du héros dans la map
-            pCarte.appendHeros(vHeroes);
-            pCarte.herosVision(true);
-        }
-
-        // Ajout des monstres sur le côté droit de la map
-        for (int j = 0; j < NB_MONSTRES; j++) {
-            do {
-                x = new Random().nextInt(LARGEUR_CARTE); // Côté droit de la carte
-                y = new Random().nextInt(HAUTEUR_CARTE); // De bas en haut
-                vPos = new Position(x, y);
-            } while (pCarte.aMap[x][y].getElement() != null || x < LARGEUR_CARTE / 2); // Tant que il y a un obstacle on
-                                                                                       // prend une autre position
-
-            vMonstre = new Monstre(vPos); // Création du monstre
-            vMonstre.setPoints(new Random().nextInt(vMonstre.type.getPoints()));
-            pCarte.aMap[x][y].setElement(vMonstre); // Ajout du monstre dans la map
-            pCarte.appendMonstre(vMonstre);
-        }
     }
 
     @Override
