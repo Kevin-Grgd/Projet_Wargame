@@ -212,6 +212,8 @@ public class Accueil extends JPanel implements IConfig, LineListener {
 				case MUSIC_2: urlMusic = this.getClass().getResource("/resources/Music/music_2.wav");
 				//System.out.println("Music_2 played");
 				break;
+				default : System.out.println("Erreur switch choixMusic");
+				System.exit(0);
 				}
 					
 				stream = AudioSystem.getAudioInputStream(urlMusic);
