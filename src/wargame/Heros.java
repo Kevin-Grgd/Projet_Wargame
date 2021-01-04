@@ -1,7 +1,6 @@
 package wargame;
 import java.awt.Polygon;
 import java.awt.image.BufferedImage;
-import java.awt.Color;
 import java.awt.Graphics;
 
 public class Heros extends Soldat {
