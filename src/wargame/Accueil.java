@@ -137,8 +137,8 @@ public class Accueil extends JPanel implements IConfig, LineListener {
 	 * @param pWindow
 	 */
 	public Accueil(PanneauJeu pGame,JFrame pWindow) {
-		this.aGame = pGame;
-		this.aWindow = pWindow;
+		aGame = pGame;
+		aWindow = pWindow;
 		
 		/*
 		//Background : Aragorn
@@ -218,7 +218,7 @@ public class Accueil extends JPanel implements IConfig, LineListener {
 	}
 	
 	/**
-	 * D�tection musique fini
+	 * Dï¿½tection musique fini
 	 */
 	@Override
 	public void update(LineEvent e) {
@@ -234,7 +234,7 @@ public class Accueil extends JPanel implements IConfig, LineListener {
 	}
 
 	/**
-	 * Joue la musique en fonction de la pr�c�dente
+	 * Joue la musique en fonction de la prï¿½cï¿½dente
 	 * (principe d'une playlist en boucle)
 	 */
 	public void playMusic() {
@@ -244,7 +244,7 @@ public class Accueil extends JPanel implements IConfig, LineListener {
 			AudioFormat format;
 			DataLine.Info info;
 			
-			if(!playOnce) { //Lance la musique une seule foi
+			if(!playOnce) { //Lance la musique une seule fois
 				switch(choixMusic) {
 				case MUSIC_1 :
 					 urlMusic = this.getClass().getResource("/resources/Music/music_1.wav");
@@ -275,7 +275,4 @@ public class Accueil extends JPanel implements IConfig, LineListener {
 			e.printStackTrace();
 		}
 	}
-
-	
-
 }
