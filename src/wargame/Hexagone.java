@@ -17,7 +17,7 @@ public class Hexagone extends JComponent implements IConfig{
 
     private transient Element aElement;
     private boolean isVisible;
-    private Polygon Hexa;
+    private Polygon Hexa = new Polygon();
     private boolean aFocus = false;
     private boolean isTarget = false;
     private transient Image aImage;
@@ -32,11 +32,9 @@ public class Hexagone extends JComponent implements IConfig{
      * @param pPos Sa position
      */
     public Hexagone(Element pElement, boolean pVisible, Polygon pHexa, Position pPos) {
-        int xCenter = 5;
-        int yCenter = 50;
+        int xCenter = LARGEUR_FENETRE - (LARGEUR_CARTE+1) * NB_PIX_CASE + NB_PIX_CASE/4;//Pour centrer la carte dans la fenetre
+        int yCenter = HAUTEUR_BARRE_OUTIL + HAUTEUR_FENETRE/2 - (HAUTEUR_CARTE/2)*NB_PIX_CASE + NB_PIX_CASE/2;
         int xOffSet = NB_PIX_CASE / 2;//decalage pour les lignes impaires
-        int[] xPoly;
-        int[] yPoly;
     	isVisible = pVisible;
         aElement = pElement;
         aImage = null;
@@ -44,35 +42,23 @@ public class Hexagone extends JComponent implements IConfig{
         isTarget = false;
         
         if(pHexa == null) {
-        	int decalageX = NB_PIX_CASE * pPos.getX(); //decalage en fonction pPos
+        	int x, y;
+        	int decalageX = NB_PIX_CASE * pPos.getX(); //decalage des cases en fonction de x depPos
         	int decalageY = ((int) (NB_PIX_CASE * 0.75)) * pPos.getY();
         	if(pPos.getY() % 2 == 0) {
-        		xPoly = new int[] { xCenter + decalageX, 
-        						xCenter + decalageX,
-        						(int) (NB_PIX_CASE * 0.5) + xCenter + decalageX,
-        						NB_PIX_CASE + xCenter + decalageX,
-        						NB_PIX_CASE + xCenter + decalageX,
-        						(int) (NB_PIX_CASE * 0.5) + xCenter + decalageX 
-        					  	};
+        		for(int i = 0 ; i < 6 ; i++) {
+        			x = (int) ((xCenter + decalageX) + (NB_PIX_CASE/2+4) * Math.sin(i*2*Math.PI/6));
+        			y = (int) ((yCenter + decalageY) + (NB_PIX_CASE/2) * Math.cos(i*2*Math.PI/6));
+        			Hexa.addPoint(x, y);
+        		}
         	}
         	else {
-        		xPoly = new int[] { xCenter + xOffSet + decalageX, 
-        						xCenter + xOffSet + decalageX, 
-        						(int) (NB_PIX_CASE * 0.5) + xCenter + xOffSet + decalageX,
-        						NB_PIX_CASE + xCenter + xOffSet + decalageX, 
-        						NB_PIX_CASE + xCenter + xOffSet + decalageX,
-        						(int) (NB_PIX_CASE * 0.5) + xCenter + xOffSet + decalageX 
-        						};
+        		for(int i = 0 ; i < 6 ; i++) {
+        			x = (int) ((xCenter + decalageX + xOffSet) + (NB_PIX_CASE/2+4) * Math.sin(i*2*Math.PI/6));
+        			y = (int) ((yCenter + decalageY) + (NB_PIX_CASE/2) * Math.cos(i*2*Math.PI/6));
+        			Hexa.addPoint(x, y);
+        		}	
         	}
-        	yPoly = new int[] { (int) (NB_PIX_CASE * 0.75) + yCenter + decalageY, 
-							(int) (NB_PIX_CASE * 0.25) + yCenter + decalageY, 
-							yCenter + decalageY,
-							(int) (NB_PIX_CASE * 0.25) + yCenter + decalageY,
-							(int) (NB_PIX_CASE * 0.75) + yCenter + decalageY,
-							yCenter + NB_PIX_CASE + decalageY 
-							};
-        
-        	Hexa = new Polygon(xPoly, yPoly, xPoly.length);
         }
         else {
         	Hexa = pHexa;
@@ -221,7 +207,7 @@ public class Hexagone extends JComponent implements IConfig{
      */
     public void seDessiner(Graphics g){
         super.paintComponent(g);
-
+        
         if(!(isVisible)){
             g.setColor(Color.darkGray);
             g.fillPolygon(this.Hexa);

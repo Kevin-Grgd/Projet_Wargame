@@ -16,9 +16,12 @@ public class InfoBulle implements IConfig{
      * @param pY Coordonnée en ordonné
      */
     public InfoBulle(Soldat pElement, int pX, int pY){
+    	aSoldat = pElement;
         x = pX;
-        y = pY;
-        aSoldat = pElement;
+        if(pElement.getPosition().getY() == HAUTEUR_CARTE-1)
+        	y = pY - HAUTEUR_INFO_BULLE;
+        else
+        	y = pY;
     }
 
     protected void paintComponent(Graphics g) {
