@@ -218,7 +218,7 @@ public class Accueil extends JPanel implements IConfig, LineListener {
 	}
 	
 	/**
-	 * Dï¿½tection musique fini
+	 * Detection musique finie
 	 */
 	@Override
 	public void update(LineEvent e) {
@@ -234,7 +234,7 @@ public class Accueil extends JPanel implements IConfig, LineListener {
 	}
 
 	/**
-	 * Joue la musique en fonction de la prï¿½cï¿½dente
+	 * Joue la musique en fonction de la precedente
 	 * (principe d'une playlist en boucle)
 	 */
 	public void playMusic() {
