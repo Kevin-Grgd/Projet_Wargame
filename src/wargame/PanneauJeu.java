@@ -49,8 +49,8 @@ public class PanneauJeu extends JPanel implements IConfig {
         JButton button_fin_tour = Bouton("Fin du Tour");
         JButton repos = Bouton("Se reposer");
         
-        JLabel label = new JLabel();
-        label.setText("Tour "+nb_tour);
+        JLabel tour = new JLabel();
+        tour.setText("Tour "+nb_tour);
         
         // Action des boutons
         button_fin_tour.addActionListener(new ActionListener() {
@@ -58,7 +58,7 @@ public class PanneauJeu extends JPanel implements IConfig {
             @Override
             public void actionPerformed(final ActionEvent e) {
                 nb_tour++;
-                label.setText("Tour "+nb_tour); // Fin du tour, on incrémente de 1
+                tour.setText("Tour "+nb_tour); // Fin du tour, on incrémente de 1
                 joueIA(); // A l'IA de jouer
                 repaintThread();
             }
@@ -78,7 +78,7 @@ public class PanneauJeu extends JPanel implements IConfig {
         barreoutil.addSeparator(); // Sépare les deux boutons
         barreoutil.add(repos);
         barreoutil.addSeparator(new Dimension(400, 0));
-        barreoutil.add(label);
+        barreoutil.add(tour);
         barreoutil.setFloatable(false); // Rend possible le déplacement de la barre d'outils
         return barreoutil;
     }
@@ -98,7 +98,8 @@ public class PanneauJeu extends JPanel implements IConfig {
                     for (int y = 0; y < aCarte.aMap[0].length; y++) {
                         if (aCarte.aMap[x][y].isContain(e.getX(), e.getY())
                                 && aCarte.aMap[x][y].getElement() instanceof Heros) {
-                            aPressedPosition = new Position(x, y);
+                        	if(!((Heros) aCarte.aMap[x][y].getElement()).getJoue())
+                        		aPressedPosition = new Position(x, y);
                         }
                     }
                 }

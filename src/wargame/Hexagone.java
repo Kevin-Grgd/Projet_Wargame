@@ -43,7 +43,7 @@ public class Hexagone extends JComponent implements IConfig{
         
         if(pHexa == null) {
         	int x, y;
-        	int decalageX = NB_PIX_CASE * pPos.getX(); //decalage des cases en fonction de x depPos
+        	int decalageX = NB_PIX_CASE * pPos.getX(); //decalage des cases en fonction pPos
         	int decalageY = ((int) (NB_PIX_CASE * 0.75)) * pPos.getY();
         	if(pPos.getY() % 2 == 0) {
         		for(int i = 0 ; i < 6 ; i++) {
@@ -220,7 +220,16 @@ public class Hexagone extends JComponent implements IConfig{
             if(Boolean.TRUE.equals(this.hasElement())){
                 this.getElement().renderElement(g, this.Hexa);
             }
-
+            
+            if(aElement instanceof Heros) {
+            	Heros heros = (Heros) aElement;
+            	if(heros.getJoue()) {
+            		 Color vWhiteOpa = new Color(0,0,0,180);
+            		 g.setColor(vWhiteOpa);
+            		 g.fillPolygon(this.Hexa);
+            	}
+            }
+      
             g.setColor(Color.BLACK);
             g.drawPolygon(this.Hexa);
         }

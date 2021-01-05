@@ -260,7 +260,7 @@ public class Accueil extends JPanel implements IConfig, LineListener {
 				stream = AudioSystem.getAudioInputStream(urlMusic);
 				format = stream.getFormat();
 				info = new DataLine.Info(Clip.class, format);
-				audioClip = (Clip)AudioSystem.getLine(info);
+				audioClip = (Clip) AudioSystem.getLine(info);
 				audioClip.addLineListener(this);
 				audioClip.open(stream);
 				audioClip.start();

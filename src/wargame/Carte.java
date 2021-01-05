@@ -12,8 +12,8 @@ public class Carte extends JPanel implements IConfig, ICarte{
     public Hexagone[][] aMap;
     private transient Heros[] armeeHeros;
     private transient Monstre[] armeeMonstre;
-    private transient int heros_restant = NB_HEROS;
-    private transient int monstre_restant = NB_MONSTRES;
+    private transient int heros_restant;
+    private transient int monstre_restant;
 
 
     /**
@@ -24,8 +24,9 @@ public class Carte extends JPanel implements IConfig, ICarte{
         //Map = new Position[LARGEUR_CARTE][HAUTEUR_CARTE];
         armeeHeros = new Heros[NB_HEROS];
         armeeMonstre = new Monstre[NB_MONSTRES];
-        
-       for (int x = 0; x < LARGEUR_CARTE ; x++) {
+        heros_restant = NB_HEROS;
+        monstre_restant = NB_MONSTRES;
+        for (int x = 0; x < LARGEUR_CARTE ; x++) {
             for (int y = 0; y < HAUTEUR_CARTE ; y++) {
             	aMap[x][y] = new Hexagone(new Position(x, y));
             	//Map[x][y] = new Position(x, y);
@@ -307,8 +308,9 @@ public class Carte extends JPanel implements IConfig, ICarte{
      * @return Booléen si il peut jouer ou non
      */
     public boolean actionHeros(Heros pHeros, Position pos2) {
-        if (!(pHeros.getJoue())) { // S'il n'a pas déjà joué
-
+    	if(pHeros.getJoue())
+    		return false;
+    	else { // S'il n'a pas déjà joué
             if (aMap[pos2.getX()][pos2.getY()].getElement() == null) { // Pas d'éléments on se déplace
                 deplaceSoldat(pos2, pHeros);
                 pHeros.setJoue(true);
@@ -325,11 +327,9 @@ public class Carte extends JPanel implements IConfig, ICarte{
                     }
                     return true;
                 }
+                return false;
             }
         }
-        // Sinon on retourne faux
-        return false;
-        
     }
 
     public void toutDessiner(Graphics g) {
