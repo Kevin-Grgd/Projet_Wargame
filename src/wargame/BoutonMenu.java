@@ -80,6 +80,7 @@ public class BoutonMenu extends JComponent implements IConfig{
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
+
 		//Recuperation taille texte
 		FontMetrics metrics = g.getFontMetrics(boutonFont);
 		widthTexte = metrics.stringWidth(texte);
@@ -89,32 +90,40 @@ public class BoutonMenu extends JComponent implements IConfig{
 		
 		this.setBounds((posX-(widthBouton/2)-3), (posY-(heightBouton/2)-3), widthBouton, heightBouton);
 		
-		if (getFocus()) {
+		if (getFocus()) { //Bouton survole
+
 			//Affichage des boutons
 			g.setColor(BOUTON_CONTOUR_SURVOLE); //Couleur Contour Bouton
 			g.fillRoundRect( (posX-(widthBouton/2)-3) , (posY-(heightBouton/2)-3), (widthBouton+6), (heightBouton+6),12,12);
 			g.setColor(BOUTON_SURVOLE); //Couleur Bouton
 			g.fillRoundRect( (posX-(widthBouton/2)) , (posY-(heightBouton/2)), widthBouton, heightBouton,10,10);
+
 			//Affichage texte
 			g.setColor(TEXTE_NORMAL);
 			g.setFont(boutonFont);
 			g.drawString(texte,(posX-(widthTexte/2)),(posY+midTexte));
-		} else if (getTarget()) {
+
+		} else if (getTarget()) { //Bouton selectionne
+
 			//Affichage des boutons
 			g.setColor(BOUTON_CONTOUR_SELECTIONNE); //Couleur Contour Bouton
 			g.fillRoundRect( (posX-(widthBouton/2)-3) , (posY-(heightBouton/2)-3), (widthBouton+6), (heightBouton+6),12,12);
 			g.setColor(BOUTON_SELECTIONNE); //Couleur Bouton
 			g.fillRoundRect( (posX-(widthBouton/2)) , (posY-(heightBouton/2)), widthBouton, heightBouton,10,10);
+			
 			//Affichage texte
 			g.setColor(TEXTE_SELECTIONNE);
 			g.setFont(boutonFont);
 			g.drawString(texte,(posX-(widthTexte/2)),(posY+midTexte));
-		} else {
+		
+		} else { //Bouton normal
+			
 			//Affichage des boutons
 			g.setColor(BOUTON_CONTOUR); //Couleur Contour Bouton
 			g.fillRoundRect( (posX-(widthBouton/2)-3) , (posY-(heightBouton/2)-3), (widthBouton+6), (heightBouton+6),12,12);
 			g.setColor(BOUTON_NORMAL); //Couleur Bouton
 			g.fillRoundRect( (posX-(widthBouton/2)) , (posY-(heightBouton/2)), widthBouton, heightBouton,10,10);
+			
 			//Affichage texte
 			g.setColor(TEXTE_NORMAL);
 			g.setFont(boutonFont);
