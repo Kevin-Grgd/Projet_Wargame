@@ -26,6 +26,7 @@ public class Carte extends JPanel implements IConfig, ICarte{
         armeeMonstre = new Monstre[NB_MONSTRES];
         heros_restant = NB_HEROS;
         monstre_restant = NB_MONSTRES;
+        
         for (int x = 0; x < LARGEUR_CARTE ; x++) {
             for (int y = 0; y < HAUTEUR_CARTE ; y++) {
             	aMap[x][y] = new Hexagone(new Position(x, y));
