@@ -15,14 +15,14 @@ import javax.swing.JComponent;
 public class Hexagone extends JComponent implements IConfig{
     private static final long serialVersionUID = 1905122041950251207L;
 
-    private transient Element aElement;
+    private Element aElement;
     private boolean isVisible;
     private Polygon Hexa = new Polygon();
     private boolean aFocus = false;
     private boolean isTarget = false;
     private transient Image aImage;
     private transient BufferedImage aBackground;
-    private transient Position aPosition;
+    private Position aPosition;
 
     /**
      * Constructeur de l'hexagone
@@ -252,6 +252,18 @@ public class Hexagone extends JComponent implements IConfig{
                 g.fillPolygon(this.Hexa);
             }
         }
+    }
+
+    public void reloadData(){
+        try {
+            int vRand = new Random().nextInt(IConfig.NB_TEXTURE_OBSTACLE)+1;
+            String vUrlString = "/resources/grass#.png".replace('#',  Integer.toString(vRand).charAt(0));
+            URL url = this.getClass().getResource(vUrlString);
+            this.aBackground = ImageIO.read(url);         
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if(hasElement()) this.aElement.reloadData();
     }
 
 

@@ -9,7 +9,9 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 
-public class Obstacle extends Element {
+public class Obstacle extends Element{
+
+	private static final long serialVersionUID = 2366130874018569732L;
 	private Position pos;
 	
 	public enum TypeObstacle implements IConfig  {
@@ -51,7 +53,7 @@ public class Obstacle extends Element {
 	}
 	
 	private TypeObstacle TYPE;
-	private Image aImage;
+	private transient Image aImage;
 	
 	/**
 	 * Constructeur
@@ -72,11 +74,11 @@ public class Obstacle extends Element {
 		super(vPos);
 		TYPE = TypeObstacle.getObstacleAlea();
 		this.aBufferedImage = TYPE.getImage();
-		this.aImage = new Image(this.aBufferedImage,p);
 	}
 
 	@Override
 	public void renderElement(Graphics g,Polygon p){
+		this.aImage = new Image(this.aBufferedImage,p);
         this.aImage.drawHexa(g);
 	}
 
@@ -90,6 +92,12 @@ public class Obstacle extends Element {
 
 	public String toString() {
 		return ""+TYPE;
+	}
+
+	@Override
+	public void reloadData() {
+		TYPE = TypeObstacle.getObstacleAlea();
+		this.aBufferedImage = TYPE.getImage();
 	}
 
 	

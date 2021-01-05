@@ -3,7 +3,9 @@ import java.awt.Polygon;
 import java.awt.image.BufferedImage;
 import java.awt.Graphics;
 
-public class Heros extends Soldat {
+public class Heros extends Soldat{
+
+	private static final long serialVersionUID = -7002420395707777840L;
 	private static int numHeros = 64;
 	private final char ID_HEROS;
 	private boolean aSelected;
@@ -70,6 +72,11 @@ public class Heros extends Soldat {
 	public BufferedImage getEnumImage() {
 		//Not used
 		return null;
+	}
+
+	@Override
+	public void reloadData() {
+		this.aBufferedImage = this.type.getEnumImage();
 	}
 
 }

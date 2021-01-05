@@ -4,11 +4,15 @@ import java.awt.Graphics;
 import java.awt.Polygon;
 
 public abstract class Soldat extends Element implements ISoldat {
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
 	private int points;
 	private int portee;
 	private int puissance;
 	private int tir;
-	protected ISoldat type;
+	protected transient ISoldat type;
 
 	public abstract void renderElement(Graphics g, Polygon p);
 
@@ -138,4 +142,6 @@ public abstract class Soldat extends Element implements ISoldat {
 	public void est_elu() {
 
 	}
+
+
 }

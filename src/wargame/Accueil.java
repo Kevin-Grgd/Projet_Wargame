@@ -90,7 +90,8 @@ public class Accueil extends JPanel implements IConfig, LineListener {
 					}
 					aJouer.setTarget(false);
             		aWindow.remove(vTemp);
-            		aWindow.add(aGame);
+					aWindow.add(aGame);
+					aGame.focusPanel();
             		aWindow.repaint();
             		aWindow.pack();
 				}

@@ -4,6 +4,8 @@ import java.awt.Polygon;
 import java.awt.image.BufferedImage;
 
 public class Monstre extends Soldat {
+
+	private static final long serialVersionUID = 6283620803486426654L;
 	private static int numMonstre = 0;
 	private final int ID_MONSTRE;
 
@@ -37,5 +39,10 @@ public class Monstre extends Soldat {
 	public BufferedImage getEnumImage() {
 		// Never go here
 		return null;
+	}
+
+	@Override
+	public void reloadData() {
+		this.aBufferedImage = this.type.getEnumImage();
 	}
 }

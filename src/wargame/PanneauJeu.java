@@ -7,8 +7,10 @@ import java.awt.Graphics;
 import java.awt.Polygon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -26,10 +28,10 @@ public class PanneauJeu extends JPanel implements IConfig {
     private transient Position aPressedTarget;
     private transient Polygon aDraggedUnit;
     public transient int nb_tour = 1;
-   
 
     /**
      * Création de boutons
+     * 
      * @param s Chaine à afficher sur le bouton
      * @return Un bouton
      */
@@ -48,17 +50,17 @@ public class PanneauJeu extends JPanel implements IConfig {
         // Ajout des boutons
         JButton button_fin_tour = Bouton("Fin du Tour");
         JButton repos = Bouton("Se reposer");
-        
+
         JLabel tour = new JLabel();
-        tour.setText("Tour "+nb_tour);
-        
+        tour.setText("Tour " + nb_tour);
+
         // Action des boutons
         button_fin_tour.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(final ActionEvent e) {
                 nb_tour++;
-                tour.setText("Tour "+nb_tour); // Fin du tour, on incrémente de 1
+                tour.setText("Tour " + nb_tour); // Fin du tour, on incrémente de 1
                 joueIA(); // A l'IA de jouer
                 repaintThread();
             }
@@ -90,7 +92,7 @@ public class PanneauJeu extends JPanel implements IConfig {
     public JPanel plateau() {
         JPanel plat = new JPanel();
         plat.setLocation(0, HAUTEUR_BARRE_OUTIL);
-        
+
         addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -98,8 +100,8 @@ public class PanneauJeu extends JPanel implements IConfig {
                     for (int y = 0; y < aCarte.aMap[0].length; y++) {
                         if (aCarte.aMap[x][y].isContain(e.getX(), e.getY())
                                 && aCarte.aMap[x][y].getElement() instanceof Heros) {
-                        	if(!((Heros) aCarte.aMap[x][y].getElement()).getJoue())
-                        		aPressedPosition = new Position(x, y);
+                            if (!((Heros) aCarte.aMap[x][y].getElement()).getJoue())
+                                aPressedPosition = new Position(x, y);
                         }
                     }
                 }
@@ -192,29 +194,37 @@ public class PanneauJeu extends JPanel implements IConfig {
         this.add(outil, BorderLayout.NORTH);
         this.add(plateau(), BorderLayout.SOUTH);
         this.addKeyListener(new Clavier());
-       
+
         repaintThread();
-        /*
-         * addKeyListener(new KeyAdapter(){
-         * 
-         * @Override public void keyTyped(KeyEvent e) { // TODO Auto-generated method
-         * stub int key = e.getKeyChar(); System.out.println(key); if (key == 'a') {
-         * System.out.println("Test"); }
-         * 
-         * }
-         * 
-         * @Override public void keyPressed(KeyEvent e) { // TODO Auto-generated method
-         * stub int key = e.getKeyCode(); if (key == KeyEvent.VK_E) {
-         * System.out.println("Réussite"); }
-         * 
-         * }
-         * 
-         * @Override public void keyReleased(KeyEvent e) { // TODO Auto-generated method
-         * stub int key = e.getKeyCode(); System.out.print(key); if (key ==
-         * KeyEvent.VK_B) { System.out.println("Zoulou"); }
-         * 
-         * } });
-         */
+        this.addKeyListener(new KeyListener() {
+			 
+            @Override 
+            public void keyTyped(KeyEvent e) { 
+                int key = e.getKeyChar(); 
+                System.out.println(key); 
+                if (key == 'a') {
+                    System.out.println("Test"); 
+                }
+            }
+            
+            @Override 
+            public void keyPressed(KeyEvent e) { 
+                int key = e.getKeyCode(); 
+                System.out.println(key); 
+                if (key == KeyEvent.VK_E) {
+                   System.out.println("Réussite"); 
+                } 
+            }
+            
+            @Override 
+            public void keyReleased(KeyEvent e) { 
+                int key = e.getKeyCode(); 
+                System.out.print(key); 
+                if (key == KeyEvent.VK_B) { 
+                    System.out.println("Zoulou"); 
+                }
+            } 
+        });
 
     }
 
@@ -445,5 +455,10 @@ public class PanneauJeu extends JPanel implements IConfig {
             }
         };
         worker.execute();
+    }
+
+    public void focusPanel(){
+        this.setFocusable(true);
+        this.requestFocusInWindow();
     }
 }

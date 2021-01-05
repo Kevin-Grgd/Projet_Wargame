@@ -1,19 +1,25 @@
 package wargame;
 
 import java.awt.Polygon;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Random;
 import java.awt.Graphics;
 import javax.swing.JPanel;
 import java.util.ArrayList;
 
 public class Carte extends JPanel implements IConfig, ICarte{
-    private static final long serialVersionUID = 1L;
-    //public Position[][] Map;
+   
+    private static final long serialVersionUID = 1972732166617015332L;
     public Hexagone[][] aMap;
-    private transient Heros[] armeeHeros;
-    private transient Monstre[] armeeMonstre;
-    private transient int heros_restant;
-    private transient int monstre_restant;
+    private Heros[] armeeHeros;
+    private Monstre[] armeeMonstre; 
+    private int heros_restant;
+    private int monstre_restant;
 
 
     /**
@@ -34,6 +40,7 @@ public class Carte extends JPanel implements IConfig, ICarte{
         }
         ajoutObstacle();
         ajoutSoldat();
+                
     }
 
     /**
@@ -457,5 +464,56 @@ public class Carte extends JPanel implements IConfig, ICarte{
                 armeeMonstre[j].combat(vHerosTarget);
             }
         }
+    }
+
+    public void Sauvegarde(){
+        //Save
+
+        SaveFile vFile = new SaveFile(1);
+        vFile.setArmeeHeros(armeeHeros);
+        vFile.setArmeeMonstre(armeeMonstre);
+        vFile.setHeros_restant(heros_restant);
+        vFile.setMonstre_restant(monstre_restant);
+        vFile.setaMap(aMap);
+
+        try {
+           FileOutputStream fileOut = new FileOutputStream(vFile.getFileName());
+           ObjectOutputStream out = new ObjectOutputStream(fileOut);
+           out.writeObject(vFile);
+           out.close();
+           fileOut.close();
+           System.out.printf("Serialized data is saved in carte.ser");
+        } catch (IOException i) {
+           i.printStackTrace();
+        }
+    }
+
+    public void Recharger(){
+    //Load
+    SaveFile vFile = new SaveFile(1);
+    try {
+        FileInputStream fileIn = new FileInputStream(vFile.getFileName());
+        ObjectInputStream in = new ObjectInputStream(fileIn);
+        vFile = (SaveFile)in.readObject();
+
+        in.close();
+
+        this.aMap = vFile.getaMap();
+        this.armeeHeros =vFile.getArmeeHeros();
+        this.armeeMonstre = vFile.getArmeeMonstre();
+        this.monstre_restant = vFile.getMonstre_restant();
+        this.heros_restant = vFile.getHeros_restant();
+
+        for (int x = 0; x < LARGEUR_CARTE ; x++) {
+            for (int y = 0; y < HAUTEUR_CARTE ; y++) {
+                this.aMap[x][y].reloadData();
+            }
+        }
+        fileIn.close();
+
+    } catch (IOException | ClassNotFoundException i) {
+        i.printStackTrace();
+        return;
+    }
     }
 }

@@ -3,10 +3,15 @@ package wargame;
 import java.awt.Graphics;
 import java.awt.Polygon;
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 
-public abstract class Element{
+public abstract class Element implements Serializable{
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 6708915742292972554L;
 	private Position pos;
-	protected BufferedImage aBufferedImage;
+	protected transient BufferedImage aBufferedImage;
 	
 	/**
 	 * Constructeur de l'élément
@@ -46,4 +51,6 @@ public abstract class Element{
 	 * @param p Polygone à dessiner
 	 */
 	public abstract void renderElement(Graphics g,Polygon p);
+
+	public abstract void reloadData();
 }

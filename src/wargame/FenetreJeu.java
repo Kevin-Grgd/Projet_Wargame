@@ -31,8 +31,7 @@ public class FenetreJeu extends JPanel implements IConfig{
 		fenetre.setSize(LARGEUR_FENETRE, HAUTEUR_FENETRE);
 		fenetre.setLocation(POSITION_X, POSITION_Y);
 		fenetre.setBackground(Color.GRAY);
-		
-
+	
 		PanneauJeu vPanneau = new PanneauJeu();
 		Accueil vAccueil = new Accueil(vPanneau,fenetre);
 		fenetre.add(vAccueil);
