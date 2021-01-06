@@ -26,7 +26,12 @@ public class BoutonMenu extends JComponent implements IConfig{
 	private Font boutonFont;
 	
 
-
+	/**
+	 * Constructeur BoutonMenu
+	 * @param pX
+	 * @param pY
+	 * @param txt
+	 */
 	public BoutonMenu( int pX, int pY,  String txt) {
 		posX = pX;
 		posY = pY;
@@ -45,32 +50,32 @@ public class BoutonMenu extends JComponent implements IConfig{
 	}
 	
 	/**
-     * 
-     * @return Indique si le bouton a la souris sur lui
+     * Indique si le bouton est survole
+     * @return isFocus
      */
 	public boolean getFocus() {
 		return this.isFocus;
 	}
 	
 	 /**
-    * Choisi si le bouton est survole
-    * @param isFocus S'il l'est ou non
+    * Le bouton est survole
+    * @param isFocus 
     */
 	public void setFocus(boolean isFocus) {
 		this.isFocus = isFocus;
 	}
 	
 	/**
-     * 
-     * @return S'il est selectionne
+     * Indique si le bouton est selectionne
+     * @return isTarget
      */
 	public boolean getTarget() {
 		return this.isTarget;
 	}
 	
 	/**
-     * Choisi si le bouton est concerne par un clique de souris
-     * @param isTarget Vrai ou faux 
+     * Le bouton est selectionne
+     * @param isTarget 
      */
 	public void setTarget(boolean isTarget) {
 		this.isTarget = isTarget;
@@ -89,6 +94,7 @@ public class BoutonMenu extends JComponent implements IConfig{
 		heightBouton = heightTexte + (heightTexte*15/100);
 		
 		this.setBounds((posX-(widthBouton/2)-3), (posY-(heightBouton/2)-3), widthBouton, heightBouton);
+		g.setFont(boutonFont);
 		
 		if (getFocus()) { //Bouton survole
 
@@ -100,7 +106,6 @@ public class BoutonMenu extends JComponent implements IConfig{
 
 			//Affichage texte
 			g.setColor(TEXTE_NORMAL);
-			g.setFont(boutonFont);
 			g.drawString(texte,(posX-(widthTexte/2)),(posY+midTexte));
 
 		} else if (getTarget()) { //Bouton selectionne
@@ -113,7 +118,6 @@ public class BoutonMenu extends JComponent implements IConfig{
 			
 			//Affichage texte
 			g.setColor(TEXTE_SELECTIONNE);
-			g.setFont(boutonFont);
 			g.drawString(texte,(posX-(widthTexte/2)),(posY+midTexte));
 		
 		} else { //Bouton normal
@@ -126,7 +130,6 @@ public class BoutonMenu extends JComponent implements IConfig{
 			
 			//Affichage texte
 			g.setColor(TEXTE_NORMAL);
-			g.setFont(boutonFont);
 			g.drawString(texte,(posX-(widthTexte/2)),(posY+midTexte));
 		}
 	}

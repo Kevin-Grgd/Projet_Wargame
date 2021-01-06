@@ -19,7 +19,7 @@ public class MenuFin extends JPanel implements IConfig {
 
     private static final long serialVersionUID = 1L;
     private transient Image img_End;
-    private transient Image img_Background;
+    private transient Image img_BackgroundFin;
     private transient PanneauJeu aGame;
     private transient JFrame aWindow;
     private transient MenuAccueil aMenuAccueil;
@@ -189,25 +189,22 @@ public class MenuFin extends JPanel implements IConfig {
             URL urlBackground = null;
             URL urlEnd = null;
 
-            if(aVictory == true) {
+            if(aVictory) {
                 urlBackground = this.getClass().getResource("/resources/win_background.jpg");
                 urlEnd = this.getClass().getResource("/resources/img_endWin.png");
-            } else if (aVictory == false) {
+            } else {
                 urlBackground = this.getClass().getResource("/resources/loose_background.jpg");
                 urlEnd = this.getClass().getResource("/resources/img_endLoose.png");
-            } else {
-                System.out.println("Erreur switch victory");
-                System.exit(0);
             }
 
-            img_Background = ImageIO.read(urlBackground);
+            img_BackgroundFin = ImageIO.read(urlBackground);
             img_End = ImageIO.read(urlEnd);
             
             int imgEndWidth = img_End.getWidth(null);
             int imgEndHeight = img_End.getHeight(null);
             int newWidthImgEnd = 700;
             int newHeightImgEnd = newWidthImgEnd*imgEndHeight/imgEndWidth;
-            img_Background = img_Background.getScaledInstance(LARGEUR_FENETRE, HAUTEUR_FENETRE, Image.SCALE_SMOOTH);
+            img_BackgroundFin = img_BackgroundFin.getScaledInstance(LARGEUR_FENETRE, HAUTEUR_FENETRE, Image.SCALE_SMOOTH);
             img_End = img_End.getScaledInstance(newWidthImgEnd, newHeightImgEnd, Image.SCALE_SMOOTH);
             
         } catch (IOException e) {
@@ -222,7 +219,7 @@ public class MenuFin extends JPanel implements IConfig {
     protected void paintComponent(Graphics g) {
         int imgWidth = img_End.getWidth(null);
         super.paintComponent(g);
-        g.drawImage(img_Background,0,0,this);
+        g.drawImage(img_BackgroundFin,0,0,this);
         g.drawImage(img_End, ((LARGEUR_FENETRE/2)-(imgWidth/2)), 25, this);
 
         aRejouer.paintComponent(g);

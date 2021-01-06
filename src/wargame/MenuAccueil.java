@@ -27,11 +27,12 @@ import javax.sound.sampled.LineListener;
 public class MenuAccueil extends JPanel implements IConfig, LineListener {
 	
 	private static final long serialVersionUID = 1L;
-	private transient Image MenuAccueilBackground;
+	private transient Image img_BackgroundAccueil;
 	private transient Image logoJeu;
 	private transient PanneauJeu aGame;
 	private transient JFrame aWindow;
 	private transient MenuFin aMenuFin;
+	private transient MenuLoadSave aMenuLoadSave;
 	private transient BoutonMenu aJouer = null;
 	private transient BoutonMenu aQuitter = null;
 	private transient BoutonMenu aCharger = null;
@@ -53,9 +54,9 @@ public class MenuAccueil extends JPanel implements IConfig, LineListener {
 		
 		menu.setOpaque(false);
 		menu.setPreferredSize(new Dimension(LARGEUR_FENETRE, HAUTEUR_FENETRE));
-		menu.setLayout(null);
 		vTemp = this;
 		aMenuFin = new MenuFin(aGame,aWindow,vTemp,false);
+		aMenuLoadSave = new MenuLoadSave(aGame,aWindow,vTemp,false);
 
 		
 		/**
@@ -234,9 +235,9 @@ public class MenuAccueil extends JPanel implements IConfig, LineListener {
 		try {
 			URL url = this.getClass().getResource(urlBackground);
 			URL urlLogo = this.getClass().getResource("/resources/wargame_logo.png");
-			MenuAccueilBackground = ImageIO.read(url);
+			img_BackgroundAccueil = ImageIO.read(url);
 			logoJeu = ImageIO.read(urlLogo);			
-			MenuAccueilBackground = MenuAccueilBackground.getScaledInstance(LARGEUR_FENETRE, HAUTEUR_FENETRE, Image.SCALE_SMOOTH);
+			img_BackgroundAccueil = img_BackgroundAccueil.getScaledInstance(LARGEUR_FENETRE, HAUTEUR_FENETRE, Image.SCALE_SMOOTH);
 			
 		} catch (IOException e) {
 			e.printStackTrace();			
@@ -251,7 +252,7 @@ public class MenuAccueil extends JPanel implements IConfig, LineListener {
 	protected void paintComponent(Graphics g) {
 		int logoWidth = logoJeu.getWidth(null);
 		super.paintComponent(g);
-		g.drawImage(MenuAccueilBackground,0,0,this);
+		g.drawImage(img_BackgroundAccueil,0,0,this);
 		g.drawImage(logoJeu, ((LARGEUR_FENETRE/2)-(logoWidth/2)), 25,this);
 
 		aJouer.paintComponent(g);
@@ -304,8 +305,8 @@ public class MenuAccueil extends JPanel implements IConfig, LineListener {
 			}
 			aCharger.setTarget(false);
 			aWindow.remove(vTemp);
-			aWindow.add(aMenuFin);
-			aMenuFin.focusPanel();
+			aWindow.add(aMenuLoadSave);
+			aMenuLoadSave.focusPanel();
 			aWindow.repaint();
 			aWindow.pack();
 		}

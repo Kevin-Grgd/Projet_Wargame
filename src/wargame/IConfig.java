@@ -66,6 +66,21 @@ public interface IConfig {
 	/* PARTIE MUSIQUE */
 	public final int MUSIC_1 = 1;
 	public final int MUSIC_2 = 2;
+
+
+	/* PARTIE SAUVEGARDE et CHARGEMENT */
+	public final int NB_MAX_SAVE = 5;
+	public final int LARGEUR_BOUTON_LOAD_SAVE = LARGEUR_FENETRE - (LARGEUR_FENETRE/3);
+	public final int HAUTEUR_BOUTON_LOAD_SAVE = 125;
+	public final float TAILLE_TEXTE_LOAD_SAVE = 35f;
+	public final Color BOUTON_LOAD_CONTOUR = new Color(68, 92, 60);
+	public final Color BOUTON_LOAD_CONTOUR_SURVOLE = new Color(40, 60, 35);
+	public final Color BOUTON_LOAD_CONTOUR_SELECTIONNE = new Color(214, 203, 0);
+	public final Color BOUTON_LOAD = new Color(138, 106, 39);
+	public final Color BOUTON_LOAD_SURVOLE = new Color(92, 71, 28);
+	public final Color BOUTON_LOAD_SELECTIONNE = new Color(59, 45, 18);
+	public final Color TEXTE_LOAD = new Color(186, 186, 186);
+	public final Color TEXTE_LOAD_SELECTIONNE = new Color(214, 203, 0);
 	
 }
 	
