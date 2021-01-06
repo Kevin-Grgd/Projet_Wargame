@@ -15,37 +15,27 @@ import javax.swing.JComponent;
 public class Hexagone extends JComponent implements IConfig{
     private static final long serialVersionUID = 1905122041950251207L;
 
-    private transient Element aElement;
-    private boolean isVisible;
     private Polygon Hexa = new Polygon();
-    private boolean aFocus = false;
-    private boolean isTarget = false;
     private transient Image aImage;
     private transient BufferedImage aBackground;
-    private transient Position aPosition;
 
     /**
      * Constructeur de l'hexagone
-     * @param pElement L'élément sur l'hexagone
-     * @param pVisible S'il est visible ou non
      * @param pHexa Le polygone concerné
-     * @param pPos Sa position
+     * @param posX Sa position en x
+     * @param posY Sa position en y
      */
-    public Hexagone(Element pElement, boolean pVisible, Polygon pHexa, Position pPos) {
+    public Hexagone(Polygon pHexa, int posX, int posY) {
         int xCenter = LARGEUR_FENETRE - (LARGEUR_CARTE+1) * NB_PIX_CASE + NB_PIX_CASE/4;//Pour centrer la carte dans la fenetre
         int yCenter = HAUTEUR_BARRE_OUTIL + HAUTEUR_FENETRE/2 - (HAUTEUR_CARTE/2)*NB_PIX_CASE + NB_PIX_CASE/2;
         int xOffSet = NB_PIX_CASE / 2;//decalage pour les lignes impaires
-    	isVisible = pVisible;
-        aElement = pElement;
         aImage = null;
-        aPosition = pPos;
-        isTarget = false;
         
         if(pHexa == null) {
         	int x, y;
-        	int decalageX = NB_PIX_CASE * pPos.getX(); //decalage des cases en fonction pPos
-        	int decalageY = ((int) (NB_PIX_CASE * 0.75)) * pPos.getY();
-        	if(pPos.getY() % 2 == 0) {
+        	int decalageX = NB_PIX_CASE * posX; //decalage des cases en fonction de (posX, posY)
+        	int decalageY = ((int) (NB_PIX_CASE * 0.75)) * posY;
+        	if(posY % 2 == 0) {
         		for(int i = 0 ; i < 6 ; i++) {
         			x = (int) ((xCenter + decalageX) + (NB_PIX_CASE/2+4) * Math.sin(i*2*Math.PI/6));
         			y = (int) ((yCenter + decalageY) + (NB_PIX_CASE/2) * Math.cos(i*2*Math.PI/6));
@@ -79,8 +69,8 @@ public class Hexagone extends JComponent implements IConfig{
      * @param pHexa Le polygone a dessiné
      * @param pPos Sa position
      */
-    public Hexagone(Position pPos){
-        this(null, false, null, pPos);        
+    public Hexagone(int x, int y){
+        this(null, x, y);        
     }
 
     /**
@@ -98,58 +88,6 @@ public class Hexagone extends JComponent implements IConfig{
     public void setaImage(Image pImage) {
         this.aImage = pImage;
     }
-    
-    /**
-     * @return L'élément de l'hexagone
-     */
-    public Element getElement(){
-        return this.aElement;
-    }
-
-    /**
-     * Définir l'élément de l'hexagone
-     * @param pE L'élément à définir
-     */
-    public void setElement(Element pE){
-        this.aElement = pE;
-    }
-
-    /**
-     * 
-     * @return Si l'hexagone a un élément
-     */
-    public Boolean hasElement(){
-        return this.aElement != null;
-    }
-
-    @Override
-    public void setVisible(boolean bool){
-        this.isVisible = bool;
-    }
-
-    /**
-     * 
-     * @return Si l'hexagone est visible
-     */
-    public boolean getVisible(){
-        return this.isVisible;
-    }
-
-    /**
-     * Définir l'hexagone
-     * @param pP Le polygone a définir
-     */
-    public void setHexagone(Polygon pP){
-        this.Hexa = pP;
-    }
-
-    /**
-     * 
-     * @return L'hexagone choisi
-     */
-    public Polygon getHexagone(){
-        return this.Hexa;
-    }
 
     /**
      * Indique si l'hexagone est contenu dans ces coordonnées
@@ -162,53 +100,21 @@ public class Hexagone extends JComponent implements IConfig{
     }
 
     /**
-     * 
-     * @return Indique si l'hexagone a la souris sur lui
+     * @return L'hexagone choisi
      */
-    public boolean getFocus() {
-        return this.aFocus;
-    }
-
-    /**
-     * 
-     * @return La position de l'hexagone
-     */
-    public Position getPos() {
-        return this.aPosition;
-    }
-
-    /**
-    * Choisi si l'hexagone est survolé    
-    * @param aFocus S'il l'est ou non
-    */
-    public void setFocus(boolean aFocus) {
-        this.aFocus = aFocus;
+    public Polygon getHexagone(){
+        return this.Hexa;
     }
     
     /**
-     * Choisi si l'hexagone est concerné par un clique de souris
-     * @param pTarget Vrai ou faux 
-     */
-    public void setTarget(boolean pTarget){
-        this.isTarget = pTarget;
-    }
-
-    /**
-     * 
-     * @return S'il est ciblé
-     */
-    public boolean getTarget(){
-        return this.isTarget;
-    }
-
-    /**
      * Dessine l'hexagone
      * @param g Endroit où le dessiner
+     * @param pos La case a dessiner
      */
-    public void seDessiner(Graphics g){
+    public void seDessiner(Graphics g, Position pos){
         super.paintComponent(g);
         
-        if(!(isVisible)){
+        if(!(pos.getVisible())){
             g.setColor(Color.darkGray);
             g.fillPolygon(this.Hexa);
         }
@@ -217,12 +123,12 @@ public class Hexagone extends JComponent implements IConfig{
             Image vImage = new Image(this.aBackground, this.Hexa);
 
             vImage.drawHexa(g);
-            if(Boolean.TRUE.equals(this.hasElement())){
-                this.getElement().renderElement(g, this.Hexa);
+            if(pos.getElement() != null){
+                pos.getElement().renderElement(g, this.Hexa);
             }
             
-            if(aElement instanceof Heros) {
-            	Heros heros = (Heros) aElement;
+            if(pos.getElement() instanceof Heros) {
+            	Heros heros = (Heros) pos.getElement();
             	if(heros.getJoue()) {
             		 Color vWhiteOpa = new Color(0,0,0,180);
             		 g.setColor(vWhiteOpa);
@@ -234,25 +140,24 @@ public class Hexagone extends JComponent implements IConfig{
             g.drawPolygon(this.Hexa);
         }
 
-        if(getFocus()){
+        if(pos.getFocus()){
             Color vWhiteOpa = new Color(1,0,0,70);
             g.setColor(vWhiteOpa);
             g.fillPolygon(this.Hexa);
         }
 
-        if(getTarget()){
-            if (this.aElement instanceof Monstre){ // Si c'est un monstre
+        if(pos.getTarget()){
+            if (pos.getElement() instanceof Monstre){ // Si c'est un monstre
                 Color vBlueOpa = new Color(1, 250, 0, 70);
                 g.setColor(vBlueOpa);
                 g.fillPolygon(this.Hexa);
             }
             else{
-                Color vGrayOpa = new Color(1, 0, 0, 70);
+                Color vGrayOpa = new Color(0, 100, 250, 150);
                 g.setColor(vGrayOpa);
                 g.fillPolygon(this.Hexa);
             }
         }
     }
-
 
 }

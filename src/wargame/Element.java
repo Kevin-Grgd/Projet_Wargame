@@ -9,14 +9,6 @@ public abstract class Element{
 	protected BufferedImage aBufferedImage;
 	
 	/**
-	 * Constructeur de l'élément
-	 * @param pos Sa position
-	 */
-	Element(Position pos){
-		this.pos = pos;
-	}
-	
-	/**
 	 * Donne la position de l'élément
 	 * @return La position de l'élément
 	 */

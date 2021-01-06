@@ -1,15 +1,15 @@
 package wargame;
 
 import java.awt.Polygon;
-import java.util.Random;
 import java.awt.Graphics;
 import javax.swing.JPanel;
+
 import java.util.ArrayList;
 
 public class Carte extends JPanel implements IConfig, ICarte{
     private static final long serialVersionUID = 1L;
-    //public Position[][] Map;
-    public Hexagone[][] aMap;
+    private Hexagone[][] hexagone;
+    private Position[][] map;
     private transient Heros[] armeeHeros;
     private transient Monstre[] armeeMonstre;
     private transient int heros_restant;
@@ -20,8 +20,8 @@ public class Carte extends JPanel implements IConfig, ICarte{
      * Constructeur de la carte
     */
     public Carte() {
-        aMap = new Hexagone[LARGEUR_CARTE][HAUTEUR_CARTE];
-        //Map = new Position[LARGEUR_CARTE][HAUTEUR_CARTE];
+        hexagone = new Hexagone[LARGEUR_CARTE][HAUTEUR_CARTE];
+        map = new Position[LARGEUR_CARTE][HAUTEUR_CARTE];
         armeeHeros = new Heros[NB_HEROS];
         armeeMonstre = new Monstre[NB_MONSTRES];
         heros_restant = NB_HEROS;
@@ -29,10 +29,11 @@ public class Carte extends JPanel implements IConfig, ICarte{
         
         for (int x = 0; x < LARGEUR_CARTE ; x++) {
             for (int y = 0; y < HAUTEUR_CARTE ; y++) {
-            	aMap[x][y] = new Hexagone(new Position(x, y));
-            	//Map[x][y] = new Position(x, y);
+            	hexagone[x][y] = new Hexagone(x, y);
+            	map[x][y] = new Position(x, y);
             }
         }
+        
         ajoutObstacle();
         ajoutSoldat();
     }
@@ -42,17 +43,8 @@ public class Carte extends JPanel implements IConfig, ICarte{
      * @param pCarte Carte où ajouter les obstacles
      */
     public void ajoutObstacle() {
-        int x;
-        int y;
-        Obstacle vObstacle;
-        Position vPos;
-        for (int i = 0; i < NB_OBSTACLES; i++) {
-        	vPos = trouvePositionVide();
-            x = vPos.getX();
-            y = vPos.getY();
-            vObstacle = new Obstacle(vPos, aMap[x][y].getHexagone());
-            aMap[x][y].setElement(vObstacle);
-        }
+        for (int i = 0; i < NB_OBSTACLES; i++)
+        	trouvePositionVide().setElement(new Obstacle());
     }
     
     /**
@@ -66,10 +58,10 @@ public class Carte extends JPanel implements IConfig, ICarte{
             do {
                 x = (int) (Math.random() * (LARGEUR_CARTE / 2)); // Côté gauche de la carte
                 y = (int) (Math.random() * HAUTEUR_CARTE); // De bas en haut
-            } while (aMap[x][y].getElement() != null); // Tant que il y a un obstacle on prend une autre position
+            } while (map[x][y].getElement() != null); // Tant que il y a un obstacle on prend une autre position
             
-            armeeHeros[i] = new Heros(new Position(x, y)); // Création du héros
-            aMap[x][y].setElement(armeeHeros[i]); // Ajout du héros dans la map
+            armeeHeros[i] = new Heros(); // Création du héros
+            map[x][y].setElement(armeeHeros[i]); // Ajout du héros dans la map
             herosVision(true);
         }
 
@@ -78,32 +70,38 @@ public class Carte extends JPanel implements IConfig, ICarte{
             do {
                 x = LARGEUR_CARTE / 2 + (int) (Math.random() * (LARGEUR_CARTE - LARGEUR_CARTE / 2)); // Côté droit de la carte
                 y = (int) (Math.random() * HAUTEUR_CARTE); // De bas en haut
-            } while (aMap[x][y].getElement() != null); // Tant que il y a un obstacle on prend une autre position
+            } while (map[x][y].getElement() != null); // Tant que il y a un obstacle on prend une autre position
            
-            armeeMonstre[i] = new Monstre(new Position(x, y));// Création du monstre
-            aMap[x][y].setElement(armeeMonstre[i]); // Ajout du monstre dans la map
+            armeeMonstre[i] = new Monstre();// Création du monstre
+            map[x][y].setElement(armeeMonstre[i]); // Ajout du monstre dans la map
         }
     }
     
     /**
      * @return Tous les polygones de la carte
      */
-    public Hexagone[][] getPolygons() {
-        return this.aMap;
+    public Hexagone[][] getHexagones() {
+        return hexagone;
+    }
+    /**
+     * @return la carte
+     */
+    public Position[][] getCarte() {
+        return map;
     }
 
     /**
      * @return L'armée de héros
      */
     public Heros[] getArmeeHeros() {
-        return this.armeeHeros;
+        return armeeHeros;
     }
 
     /**
      * @return L'armée de monstre
      */
     public Monstre[] getArmeeMonstre() {
-        return this.armeeMonstre;
+        return armeeMonstre;
     }
 
     /**
@@ -111,43 +109,35 @@ public class Carte extends JPanel implements IConfig, ICarte{
      * @return L'élément à obtenir
      */
     public Element getElement(Position pos) {
-        int x;
-        int y;
-        x = pos.getX();
-        y = pos.getY();
-        return this.aMap[x][y].getElement();
+        return pos.getElement();
     }
 
-
     /**
-     * 
      * @return Le nombre de héros restant
      */
     public int getHerosRestant(){
-        return this.heros_restant;
+        return heros_restant;
     }
 
     /**
-     * 
      * @param i Défini le nombre de héros restant
      */
     public void setHerosRestant(int i){
-        this.heros_restant = i;
+        heros_restant = i;
     }
 
     /**
-     * 
      * @return Le nombre de monstre restant
      */
     public int getMonstreRestant(){
-        return this.monstre_restant;
+        return monstre_restant;
     }
 
     /**
      * @param i Défini le nombre de monstre restant
      */
     public void setMonstreRestant(int i){
-        this.monstre_restant = i;
+        monstre_restant = i;
     }
 
     /**
@@ -155,20 +145,15 @@ public class Carte extends JPanel implements IConfig, ICarte{
      * @return La position vide sur la carte
      */
     public Position trouvePositionVide() {
-        int x;
-        int y;
-        Position vPos;
+        int x, y;
         do {
-            x = new Random().nextInt(aMap.length);
-            y = new Random().nextInt(aMap[0].length);
-        } while (aMap[x][y].getElement() != null);
-        vPos = new Position(x, y);
-
-        return vPos;
+            x = (int) (Math.random() * LARGEUR_CARTE);
+            y = (int) (Math.random() * HAUTEUR_CARTE);
+        } while (map[x][y].getElement() != null);
+        return map[x][y];
     }
 
-    // Trouve une position vide choisie
-    // aléatoirement parmi les 6 positions adjacentes de pos
+    // Trouve une position vide choisie aléatoirement parmi les 6 positions adjacentes de pos
     /**
      * Trouve une position vide adjacente
      * @param pos La position de base
@@ -198,54 +183,53 @@ public class Carte extends JPanel implements IConfig, ICarte{
      * @return Le héros trouvé
      */
     public Heros trouveHeros() {
-        return this.armeeHeros[(int) Math.random()];
+        return armeeHeros[(int) Math.random()];
     }
  
     /**
      * Trouve un héros choisi aléatoirement parmi les 6 positons adjacentes
      * @param pos La position du soldat
-     * @return Le héros s'il existe
+     * @return Le héros s'il existe, null sinon
      */
     public Heros trouveHeros(Position pos) {
-        int x;
-        int y;
+        int x, y;
         ArrayList<Heros> herosAdjacents = new ArrayList<>();
         Position[] posAdjacentes = pos.getAdjacents();
 		for(int i = 0 ; i <  posAdjacentes.length ; i++) {
                 x = posAdjacentes[i].getX();
                 y = posAdjacentes[i].getY();
-            if (aMap[x][y].getElement() instanceof Heros){
-				herosAdjacents.add((Heros) aMap[x][y].getElement());
-			}
+            if (map[x][y].getElement() instanceof Heros)
+				herosAdjacents.add((Heros) map[x][y].getElement());
         }
-		if(herosAdjacents.isEmpty()){
+		
+		if(herosAdjacents.isEmpty())
             return null; //on n'a pas trouve de heros
-        }
-		else{
+		else
             return herosAdjacents.get((int) (Math.random()*herosAdjacents.size()));
-        }
     }
 
     public Heros trouveHerosTir(Monstre pMonstre){
         int vPortee = pMonstre.getPortee();
         Position vPos = pMonstre.getPosition();
         Heros vHerosTarget = null;
+        Polygon vPoly = new Polygon();
 
-        int hexaLargeur = ((vPortee*50)*2)+1; 
-        int hexaHauteur = hexaLargeur;
+        int hexaLargeur = vPortee * NB_PIX_CASE; 
+        int hexaHauteur = hexaLargeur - NB_PIX_CASE;
 
-        int xCenter = (int)(aMap[vPos.getX()][vPos.getY()].getHexagone().getBounds().getCenterX() - (double)((vPortee*50)*2)/2); 
-        int yCenter = (int)(aMap[vPos.getX()][vPos.getY()].getHexagone().getBounds().getCenterY() -(double)((vPortee*50)*2)/2);
+        int xCenter = (int)(hexagone[vPos.getX()][vPos.getY()].getHexagone().getBounds().getCenterX() - (double)((vPortee*NB_PIX_CASE)*2)/2); 
+        int yCenter = (int)(hexagone[vPos.getX()][vPos.getY()].getHexagone().getBounds().getCenterY() -(double)((vPortee*NB_PIX_CASE)*2)/2); 
 
-        int[] xPoly = {xCenter, xCenter, (int)(hexaLargeur*0.50) + xCenter,hexaLargeur+xCenter, hexaLargeur+xCenter, (int)(hexaLargeur*0.50)+xCenter};
-        int[] yPoly = {(int)(hexaHauteur*0.75) + yCenter, (int)(hexaHauteur*0.25) + yCenter, yCenter, (int)(hexaHauteur*0.25)+ yCenter, (int)(hexaHauteur*0.75)+yCenter, yCenter+hexaHauteur}; 
+        for(int i = 0 ; i < 6 ; i++) {
+    		int x = (int) (xCenter + hexaLargeur * Math.sin(i*2*Math.PI/6));
+			int y = (int) (yCenter + hexaHauteur * Math.cos(i*2*Math.PI/6));
+			vPoly.addPoint(x, y);
+    	}
 
-        Polygon vPoly = new Polygon(xPoly, yPoly,xPoly.length);
-
-        for(int x = 0; x < this.aMap.length; x++){ 
-            for (int y = 0; y <this.aMap[0].length; y++) {
-                if(vPoly.contains(this.aMap[x][y].getHexagone().getBounds2D().getCenterX(), this.aMap[x][y].getHexagone().getBounds2D().getCenterY()) && (this.aMap[x][y].getElement() instanceof Heros)){
-                    vHerosTarget = (Heros) this.aMap[x][y].getElement(); 
+        for(int x = 0; x < LARGEUR_CARTE; x++){ 
+            for (int y = 0; y < HAUTEUR_CARTE; y++) {
+                if(vPoly.contains(hexagone[x][y].getHexagone().getBounds2D().getCenterX(), hexagone[x][y].getHexagone().getBounds2D().getCenterY()) && (map[x][y].getElement() instanceof Heros)){
+                    vHerosTarget = (Heros) map[x][y].getElement(); 
                 }
             }
         } 
@@ -260,12 +244,12 @@ public class Carte extends JPanel implements IConfig, ICarte{
      */
     public boolean deplaceSoldat(Position pos, Soldat soldat) {
         // Si case voisine et qu'il n'y a pas d'éléments dessus
-        if (soldat.getPosition().estVoisine(pos) && aMap[pos.getX()][pos.getY()].getElement() == null) {
+        if (soldat.getPosition().estVoisine(pos) && map[pos.getX()][pos.getY()].getElement() == null) {
             herosVision(false);
 
-            aMap[soldat.getPosition().getX()][soldat.getPosition().getY()].setElement(null);// On retire le soldat
+            map[soldat.getPosition().getX()][soldat.getPosition().getY()].setElement(null);// On retire le soldat
             soldat.seDeplace(pos);// On change sa pos
-            aMap[soldat.getPosition().getX()][soldat.getPosition().getY()].setElement(soldat);// On le replace
+            map[soldat.getPosition().getX()][soldat.getPosition().getY()].setElement(soldat);// On le replace
             herosVision(true);
             return true;
         } else {
@@ -279,10 +263,10 @@ public class Carte extends JPanel implements IConfig, ICarte{
      */
     public void mort(Soldat perso) {
         // Il est mort on update la carte en mettant null
-        this.aMap[perso.getPosition().getX()][perso.getPosition().getY()].setElement(null);
-        this.herosVision(false);
+        map[perso.getPosition().getX()][perso.getPosition().getY()].setElement(null);
+        herosVision(false);
         if(perso instanceof Heros){
-            for (int i = 0; i< armeeHeros.length;i++) {
+            for (int i = 0; i < armeeHeros.length;i++) {
                 if(armeeHeros[i] != null){
                     if(armeeHeros[i].equals((Heros)perso)){
                         armeeHeros[i] = null;
@@ -299,7 +283,7 @@ public class Carte extends JPanel implements IConfig, ICarte{
                 }
             }
         }
-        this.herosVision(true);
+        herosVision(true);
     }
 
     /**
@@ -312,14 +296,14 @@ public class Carte extends JPanel implements IConfig, ICarte{
     	if(pHeros.getJoue())
     		return false;
     	else { // S'il n'a pas déjà joué
-            if (aMap[pos2.getX()][pos2.getY()].getElement() == null) { // Pas d'éléments on se déplace
+            if (map[pos2.getX()][pos2.getY()].getElement() == null) { // Pas d'éléments on se déplace
                 deplaceSoldat(pos2, pHeros);
                 pHeros.setJoue(true);
                 return true;
             }
             else { // Sinon on combat
-                if (aMap[pos2.getX()][pos2.getY()].getElement() instanceof Monstre) { // On vérifie tout de même qu'il s'agisse bien d'un monstre 
-                    Monstre vMonstre = (Monstre) aMap[pos2.getX()][pos2.getY()].getElement();
+                if (map[pos2.getX()][pos2.getY()].getElement() instanceof Monstre) { // On vérifie tout de même qu'il s'agisse bien d'un monstre 
+                    Monstre vMonstre = (Monstre) map[pos2.getX()][pos2.getY()].getElement();
                     pHeros.combat(vMonstre); // On combat
                     pHeros.setJoue(true);
                     if (vMonstre.getPoints() <= 0) { // Plus de points de vie, il décède
@@ -336,7 +320,7 @@ public class Carte extends JPanel implements IConfig, ICarte{
     public void toutDessiner(Graphics g) {
     	for (int x = 0; x < LARGEUR_CARTE ; x++) {
             for (int y = 0; y < HAUTEUR_CARTE ; y++) {
-            	aMap[x][y].seDessiner(g);
+            	hexagone[x][y].seDessiner(g,map[x][y]);
             }
         }
     }
@@ -346,30 +330,29 @@ public class Carte extends JPanel implements IConfig, ICarte{
      * @param pSet Mets à vrai ou faux leur vision
      */
     public void herosVision(boolean pSet) {
-        for (int i = 0; i < NB_HEROS; i++) {
-            if (this.armeeHeros[i] != null) {
-                int vision = this.armeeHeros[i].getPortee();
-                Position vPos = this.armeeHeros[i].getPosition();
-
-                aMap[vPos.getX()][vPos.getY()].setVisible(pSet);// Positon unite
-                //visionOne(vPos, pSet, vision);
+    	for (int i = 0; i < NB_HEROS; i++) {
+            if (armeeHeros[i] != null) {
+                int vision = armeeHeros[i].getPortee();
+                Position vPos = armeeHeros[i].getPosition();
+                Polygon vPoly;
+  
+                map[vPos.getX()][vPos.getY()].setVisible(pSet);// Positon unite
                 
-                 int hexaLargeur = ((vision*50)*2)+1; 
-                 int hexaHauteur = hexaLargeur;
+
+                int hexaLargeur = ((vision*50)*2)+1; 
+                int hexaHauteur = hexaLargeur;
                   
-                 int xCenter = (int)(aMap[vPos.getX()][vPos.getY()].getHexagone().getBounds().getCenterX() - (double)((vision*50)*2)/2); 
-                 int yCenter = (int)(aMap[vPos.getX()][vPos.getY()].getHexagone().getBounds().getCenterY() -(double)((vision*50)*2)/2);
+                 int xCenter = (int)(hexagone[vPos.getX()][vPos.getY()].getHexagone().getBounds().getCenterX() - (double)((vision*NB_PIX_CASE)*2)/2); 
+                 int yCenter = (int)(hexagone[vPos.getX()][vPos.getY()].getHexagone().getBounds().getCenterY() -(double)((vision*NB_PIX_CASE)*2)/2);
                  
                  int[] xPoly = {xCenter, xCenter, (int)(hexaLargeur*0.50) + xCenter,hexaLargeur+xCenter, hexaLargeur+xCenter, (int)(hexaLargeur*0.50)+xCenter};
-                 int[] yPoly = {(int)(hexaHauteur*0.75) + yCenter, (int)(hexaHauteur*0.25) + yCenter, yCenter, (int)(hexaHauteur*0.25)+ yCenter, (int)(hexaHauteur*0.75)+yCenter, yCenter+hexaHauteur}; 
-                 Polygon vPoly = new Polygon(xPoly, yPoly,xPoly.length);
-                 
+                 int[] yPoly = {(int)(hexaHauteur*0.75) + yCenter, (int)(hexaHauteur*0.25) + yCenter, yCenter, (int)(hexaHauteur*0.25)+ yCenter, (int)(hexaHauteur*0.75)+yCenter, yCenter+hexaHauteur};
+                 vPoly = new Polygon(xPoly, yPoly, xPoly.length);
 
-                 
-                 for(int x = 0; x < this.aMap.length; x++){ 
-                    for (int y = 0; y <this.aMap[0].length; y++) {
-                        if(vPoly.contains( this.aMap[x][y].getHexagone().getBounds2D().getCenterX(), this.aMap[x][y].getHexagone().getBounds2D().getCenterY())){
-                            this.aMap[x][y].setVisible(pSet); 
+                 for(int x = 0; x < LARGEUR_CARTE; x++){ 
+                    for (int y = 0; y < HAUTEUR_CARTE; y++) {
+                    	if(vPoly.contains(hexagone[x][y].getHexagone().getBounds2D().getCenterX(), hexagone[x][y].getHexagone().getBounds2D().getCenterY())){
+                            map[x][y].setVisible(pSet); 
                         } 
                     } 
                 }
@@ -390,21 +373,21 @@ public class Carte extends JPanel implements IConfig, ICarte{
             return;
 
         if (vPos.getX() - 1 >= 0) {
-            aMap[vPos.getX() - 1][vPos.getY()].setVisible(pSet);
+            map[vPos.getX() - 1][vPos.getY()].setVisible(pSet);
             visionOne(new Position(vPos.getX() - 1, vPos.getY()), pSet, pVision - 1);
         }
         if (vPos.getX() + 1 < LARGEUR_CARTE) {
-            aMap[vPos.getX() + 1][vPos.getY()].setVisible(pSet);
+            map[vPos.getX() + 1][vPos.getY()].setVisible(pSet);
             visionOne(new Position(vPos.getX() + 1, vPos.getY()), pSet, pVision - 1);
 
         }
         if (vPos.getY() - 1 >= 0) {
-            aMap[vPos.getX()][vPos.getY() - 1].setVisible(pSet);
+            map[vPos.getX()][vPos.getY() - 1].setVisible(pSet);
             visionOne(new Position(vPos.getX(), vPos.getY() - 1), pSet, pVision - 1);
 
         }
         if (vPos.getY() + 1 < HAUTEUR_CARTE) {
-            aMap[vPos.getX()][vPos.getY() + 1].setVisible(pSet);
+            map[vPos.getX()][vPos.getY() + 1].setVisible(pSet);
             visionOne(new Position(vPos.getX(), vPos.getY() + 1), pSet, pVision - 1);
 
         }
@@ -412,23 +395,23 @@ public class Carte extends JPanel implements IConfig, ICarte{
         if (vPos.getY() % 2 != 0) { // Ligne impaire
 
             if (vPos.getX() + 1 < LARGEUR_CARTE && vPos.getY() + 1 < HAUTEUR_CARTE) {
-                aMap[vPos.getX() + 1][vPos.getY() + 1].setVisible(pSet);
+                map[vPos.getX() + 1][vPos.getY() + 1].setVisible(pSet);
                 visionOne(new Position(vPos.getX() + 1, vPos.getY() + 1), pSet, pVision - 1);
 
             }
             if (vPos.getX() + 1 < LARGEUR_CARTE && vPos.getY() - 1 >= 0) {
-                aMap[vPos.getX() + 1][vPos.getY() - 1].setVisible(pSet);
+                map[vPos.getX() + 1][vPos.getY() - 1].setVisible(pSet);
                 visionOne(new Position(vPos.getX() + 1, vPos.getY() - 1), pSet, pVision - 1);
 
             }
         } else { // Ligne paire
             if (vPos.getX() - 1 >= 0 && vPos.getY() + 1 < HAUTEUR_CARTE) {
-                aMap[vPos.getX() - 1][vPos.getY() + 1].setVisible(pSet);
+                map[vPos.getX() - 1][vPos.getY() + 1].setVisible(pSet);
                 visionOne(new Position(vPos.getX() - 1, vPos.getY() + 1), pSet, pVision - 1);
 
             }
             if (vPos.getX() - 1 >= 0 && vPos.getY() - 1 >= 0) {
-                aMap[vPos.getX() - 1][vPos.getY() - 1].setVisible(pSet);
+                map[vPos.getX() - 1][vPos.getY() - 1].setVisible(pSet);
                 visionOne(new Position(vPos.getX() - 1, vPos.getY() - 1), pSet, pVision - 1);
 
             }
@@ -460,3 +443,4 @@ public class Carte extends JPanel implements IConfig, ICarte{
         }
     }
 }
+

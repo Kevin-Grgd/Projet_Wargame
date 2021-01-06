@@ -10,23 +10,7 @@ public class FenetreJeu extends JPanel implements IConfig{
 	
 	public static void main(String[] args) {
 
-		// test Position
-		/*
-		 * Position pos1 = new Position(4, 5); Position pos2 = new Position(3, 4);
-		 * Position pos3 = new Position(6, 0); Heros heros1 = new Heros(pos1);
-		 * System.out.println(heros1); heros1.seDeplace(pos2);
-		 * System.out.println(heros1); Heros heros2 = new Heros(pos3);
-		 * System.out.println(heros2); heros1.setPoints(5); System.out.println(heros1);
-		 * heros1.seRepose(); System.out.println(heros1); heros1.seRepose();
-		 * System.out.println(heros1); heros1.seRepose(); System.out.println(heros1);
-		 * heros1.seRepose(); System.out.println(heros1); heros1.seRepose();
-		 * System.out.println(heros1); heros1.seRepose(); System.out.println(heros1);
-		 * heros1.seRepose(); System.out.println(heros1);
-		 * 
-		 * Monstre monstre1 = new Monstre(pos1); Monstre monstre2 = new Monstre(pos3);
-		 * System.out.println(monstre1); System.out.println(monstre2);
-		 */
-
+		
 		JFrame fenetre = new JFrame("Wargame");
 		fenetre.setSize(LARGEUR_FENETRE, HAUTEUR_FENETRE);
 		fenetre.setLocation(POSITION_X, POSITION_Y);
@@ -36,7 +20,7 @@ public class FenetreJeu extends JPanel implements IConfig{
 		PanneauJeu vPanneau = new PanneauJeu();
 		Accueil vAccueil = new Accueil(vPanneau,fenetre);
 		fenetre.add(vAccueil);
-		
+
 		fenetre.pack();
 		fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		fenetre.setVisible(true);

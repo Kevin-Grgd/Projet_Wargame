@@ -5,7 +5,7 @@ import java.awt.Graphics;
 
 public class Heros extends Soldat {
 	private static int numHeros = 64;
-	private final char ID_HEROS;
+	private final char ID;
 	private boolean aSelected;
 	private boolean aJoue = false;
 
@@ -13,20 +13,14 @@ public class Heros extends Soldat {
 	 * Constructeur du héros
 	 * @param pos Sa position sur la carte
 	 */
-	Heros(Position pos) {
-		super(pos);
-		setType(TypesH.getTypeHAlea());
-		this.aBufferedImage = this.type.getEnumImage();
-		setPoints(type.getPoints());
-		setPortee(type.getPortee());
-		setPuissance(type.getPuissance());
-		setTir(type.getTir());
+	Heros() {
+		super(TypesH.getTypeHAlea());
 		aSelected = false;
-		ID_HEROS = (char) ++numHeros;
+		ID = (char) ++numHeros;
 	}
 
 	public String toString() {
-		return type.toString() + " " + ID_HEROS;
+		return type.toString() + " " + ID;
 	}
 
 	@Override

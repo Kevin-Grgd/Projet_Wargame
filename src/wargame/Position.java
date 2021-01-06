@@ -1,6 +1,5 @@
 package wargame;
 
-//import java.awt.Graphics;
 import java.util.ArrayList;
 
 public class Position implements IConfig {
@@ -8,6 +7,8 @@ public class Position implements IConfig {
 	private int y;
 	private Element elem;
 	private boolean isVisible;
+	private boolean aFocus = false;
+    private boolean isTarget = false;
 
 	/**
 	 * Constructeur
@@ -71,8 +72,10 @@ public class Position implements IConfig {
 	 * @return Si elles le sont
 	 */
 	public boolean estVoisine(Position pos) {
-		if (pos != null) {
+		if (pos.estValide()) {
 			// Elimination des cas non souhaités
+			if(x == pos.getX() && y == pos.getY()) return false;
+			
 			if (y % 2 == 0) {
 				if (x == pos.getX() - 1 && y == pos.getY() - 1) {
 					return false;
@@ -126,7 +129,7 @@ public class Position implements IConfig {
 	
 	
     public void setVisible(boolean bool){
-        this.isVisible = bool;
+        isVisible = bool;
     }
 
     /**
@@ -134,29 +137,56 @@ public class Position implements IConfig {
      * @return Si la position est visible
      */
     public boolean getVisible(){
-        return this.isVisible;
+        return isVisible;
     }
+    
+    /**
+     * 
+     * @return Indique si la curseur souris est sur la position
+     */
+    public boolean getFocus() {
+        return aFocus;
+    }
+    
+    /**
+     * Choisi si la position est survolée    
+     * @param aFocus S'il l'est ou non
+     */
+     public void setFocus(boolean aFocus) {
+         this.aFocus = aFocus;
+     }
+     
+     /**
+      * Choisi si la position est concernée par un clique de souris
+      * @param pTarget Vrai ou faux 
+      */
+     public void setTarget(boolean pTarget){
+         this.isTarget = pTarget;
+     }
+
+     /**
+      * 
+      * @return Si la position est ciblée
+      */
+     public boolean getTarget(){
+         return this.isTarget;
+     }
 
 	/**
 	 * Donne un tableau des cases adjacentes de cette position
 	 * @return Position[]
 	 */
-	public Position[] getAdjacents() { //retourne les 6 cases adjacentes
+	public Position[] getAdjacents() { //retourne jusqu'à 6 cases adjacentes
 		ArrayList<Position> posAdjacentes = new ArrayList<>();
 		Position pos;
 		for(int i = x-1 ; i <= x+1 ; i++) {
 			for(int j = y-1 ; j <= y+1 ; j++) {
 				pos = new Position(i, j);
-				if(estVoisine(pos) && i > 0 && i < LARGEUR_CARTE && j > 0 && j < HAUTEUR_CARTE) {
+				if(estVoisine(pos)) {
 					posAdjacentes.add(pos);
 				}
 			}
 		}
 		return posAdjacentes.toArray(new Position[0]);
 	}
-	
-	/*public void seDessiner(Graphics g) {
-		Hexagone hexa = new Hexagone(elem, isVisible, null, this);
-		hexa.seDessiner(g);
-	}*/
 }

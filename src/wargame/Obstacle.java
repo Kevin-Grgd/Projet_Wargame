@@ -5,12 +5,10 @@ import java.awt.Polygon;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Random;
-
 import javax.imageio.ImageIO;
 
 public class Obstacle extends Element {
-	private Position pos;
+	private TypeObstacle TYPE;
 	
 	public enum TypeObstacle implements IConfig  {
 		ROCHEIMAGE ("/resources/roche#.png"), ARBREIMAGE ("/resources/arbre#.png"), WATERIMAGE ("/resources/water#.png");
@@ -22,7 +20,6 @@ public class Obstacle extends Element {
 		}
 
 		public static TypeObstacle getObstacleAlea() {
-			
 			return values()[(int)(Math.random()*values().length)];
 		}
 
@@ -30,7 +27,7 @@ public class Obstacle extends Element {
 		 * Défini l'image de l'obstacle
 		 */
 		public void setImage(){
-			int vRand = new Random().nextInt(NB_TEXTURE_OBSTACLE)+1;
+			int vRand = (int) Math.random() * NB_TEXTURE_OBSTACLE + 1;
 			String vIMAGE = URL_IMAGE.replace("#",  Integer.toString(vRand));
 			URL url = this.getClass().getResource(vIMAGE);
 			try {
@@ -50,16 +47,12 @@ public class Obstacle extends Element {
 		}
 	}
 	
-	private TypeObstacle TYPE;
-	private Image aImage;
-	
 	/**
 	 * Constructeur
 	 * @param type Le type de l'obstacle
 	 * @param pos Sa position
 	 */
-	Obstacle(TypeObstacle type, Position pos) {
-		super(pos);
+	Obstacle(TypeObstacle type) {
 		TYPE = type;
 	}
 
@@ -68,28 +61,22 @@ public class Obstacle extends Element {
 	 * @param vPos Sa position
 	 * @param p Le polygone (Pour y insérer l'image)
 	 */
-	Obstacle(Position vPos,Polygon p){
-		super(vPos);
-		TYPE = TypeObstacle.getObstacleAlea();
+	Obstacle(){
+		this(TypeObstacle.getObstacleAlea());
 		this.aBufferedImage = TYPE.getImage();
-		this.aImage = new Image(this.aBufferedImage,p);
 	}
 
 	@Override
 	public void renderElement(Graphics g,Polygon p){
-        this.aImage.drawHexa(g);
+        new Image(this.aBufferedImage,p).drawHexa(g);
 	}
 
 	public BufferedImage getObstacleBufferedImage(){
 		return this.TYPE.IMAGE;
 	}
-	@Override
-	public Position getPosition(){
-		return this.pos;
-	}
 
 	public String toString() {
-		return ""+TYPE;
+		return getPosition() + " " + TYPE;
 	}
 
 	
