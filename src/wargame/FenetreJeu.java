@@ -33,8 +33,9 @@ public class FenetreJeu extends JPanel implements IConfig{
 		fenetre.setBackground(Color.GRAY);
 	
 		PanneauJeu vPanneau = new PanneauJeu();
-		Accueil vAccueil = new Accueil(vPanneau,fenetre);
-		fenetre.add(vAccueil);
+		MenuAccueil vMenuAccueil = new MenuAccueil(vPanneau,fenetre);
+		fenetre.add(vMenuAccueil);
+		vMenuAccueil.focusPanel();
 		
 		fenetre.pack();
 		fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -58,5 +59,13 @@ public class FenetreJeu extends JPanel implements IConfig{
 		}*/
 		
 	}
+
+	/**
+	 * Remet le focus sur le bon panel
+	 */
+	public void focusPanel(){
+        this.setFocusable(true);
+        this.requestFocusInWindow();
+    }
 
 }
