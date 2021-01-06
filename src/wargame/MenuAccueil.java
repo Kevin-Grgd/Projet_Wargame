@@ -5,6 +5,8 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.Dimension;
 
 import javax.swing.JPanel;
@@ -22,24 +24,27 @@ import javax.sound.sampled.LineEvent;
 import javax.sound.sampled.LineListener;
 
 
-public class Accueil extends JPanel implements IConfig, LineListener {
+public class MenuAccueil extends JPanel implements IConfig, LineListener {
 	
 	private static final long serialVersionUID = 1L;
-	private transient Image accueilBackground;
+	private transient Image MenuAccueilBackground;
 	private transient Image logoJeu;
 	private transient PanneauJeu aGame;
 	private transient JFrame aWindow;
-	private transient EndGame aEndGame;
+	private transient MenuFin aMenuFin;
 	private transient BoutonMenu aJouer = null;
 	private transient BoutonMenu aQuitter = null;
 	private transient BoutonMenu aCharger = null;
 	private transient int choixMusic;
 	private transient boolean playOnce = false;
 	private transient Clip audioClip;
+	private transient int keyDetected;
+	private transient boolean keyPushedOnce = false;
+	private transient MenuAccueil vTemp;
 	
 	/**
 	 * 	
-	 * @return Le menu d'accueil
+	 * @return Le menu d'MenuAccueil
 	 */
 	public JPanel menu() {
 		
@@ -49,10 +54,13 @@ public class Accueil extends JPanel implements IConfig, LineListener {
 		menu.setOpaque(false);
 		menu.setPreferredSize(new Dimension(LARGEUR_FENETRE, HAUTEUR_FENETRE));
 		menu.setLayout(null);
-		Accueil vTemp = this;
-		aEndGame = new EndGame(aGame,aWindow,vTemp,false);
+		vTemp = this;
+		aMenuFin = new MenuFin(aGame,aWindow,vTemp,false);
+
 		
-		//Gestion dynamique des boutons
+		/**
+		* GESTION SOURIS
+		**/
 		this.addMouseListener( new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -81,43 +89,7 @@ public class Accueil extends JPanel implements IConfig, LineListener {
             
             @Override
             public void mouseReleased(MouseEvent e) {
-				
-            	if (aJouer.getTarget() ) {
-            		try {
-						Thread.sleep(50);
-					} catch(InterruptedException ex) {
-					    Thread.currentThread().interrupt();
-					}
-					aJouer.setTarget(false);
-            		aWindow.remove(vTemp);
-					aWindow.add(aGame);
-					aGame.focusPanel();
-            		aWindow.repaint();
-            		aWindow.pack();
-				}
-				
-            	if (aCharger.getTarget()) {
-					try {
-						Thread.sleep(50);
-					} catch(InterruptedException ex) {
-						Thread.currentThread().interrupt();
-					}
-					aCharger.setTarget(false);
-					aWindow.remove(vTemp);
-					aWindow.add(aEndGame);
-					aWindow.repaint();
-					aWindow.pack();
-				}
-
-            	if (aQuitter.getTarget()) {
-            		try {
-						Thread.sleep(50);
-					} catch(InterruptedException ex) {
-					    Thread.currentThread().interrupt();
-					}
-					aQuitter.setTarget(false);
-            		System.exit(0);
-            	}
+				actionMenu();
             }
 		});
 		
@@ -128,16 +100,107 @@ public class Accueil extends JPanel implements IConfig, LineListener {
 				repaint();
 			}
 		});
+		/**
+		* FIN GESTION SOURIS
+		**/
+
+		/**
+		* GESTION CLAVIER
+		**/
+		this.addKeyListener(new KeyListener () {
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				keyDetected = e.getKeyCode();
+
+				while (!keyPushedOnce) {
+					switch( keyDetected ) { 
+
+        				case KeyEvent.VK_DOWN: //Vers le bas
+							//System.out.println("FLECHE BAS");
+							if ( !(aJouer.getFocus()) && !(aCharger.getFocus()) && !(aQuitter.getFocus())) {
+								aJouer.setFocus(true);
+							} else if (aJouer.getFocus()) {
+								aJouer.setFocus(false);
+								aCharger.setFocus(true);
+							} else if (aCharger.getFocus()) {
+								aCharger.setFocus(false);
+								aQuitter.setFocus(true);
+							} else if (aQuitter.getFocus()) {
+								aQuitter.setFocus(false);
+								aJouer.setFocus(true);
+							}
+							removeTarget();
+							keyPushedOnce = true;
+							break;
+
+
+						case KeyEvent.VK_UP: //Vers le haut
+							//System.out.println("FLECHE HAUT");
+							if ( !(aJouer.getFocus()) && !(aCharger.getFocus()) && !(aQuitter.getFocus())) {
+								aQuitter.setFocus(true);
+							} else if (aJouer.getFocus()) {
+								aJouer.setFocus(false);
+								aQuitter.setFocus(true);
+							} else if (aCharger.getFocus()) {
+								aCharger.setFocus(false);
+								aJouer.setFocus(true);
+							
+							} else if (aQuitter.getFocus()) {
+								aQuitter.setFocus(false);
+								aCharger.setFocus(true);
+							}
+							removeTarget();
+							keyPushedOnce = true;
+							break;
+
+
+						case KeyEvent.VK_ENTER: //Entree
+							//System.out.println("ENTREE");
+							if (aJouer.getFocus()) {
+								aJouer.setTarget(true);
+							} else if (aCharger.getFocus()) {
+								aCharger.setTarget(true);
+							} else if (aQuitter.getFocus()) {
+								aQuitter.setTarget(true);
+							}
+							removeFocus();
+							keyPushedOnce = true;
+							break;
+					}
+					repaint();
+				}
+			}
+
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				keyDetected = e.getKeyCode();
+				keyPushedOnce = false;
+
+				if (keyDetected == KeyEvent.VK_ENTER) {
+					actionMenu();
+				}
+			}
+		});
+		
+		/**
+		* FIN GESTION CLAVIER
+		**/
 
 		return menu;		
 	}
 
 	/**
-	 * Constructeur Accueil
+	 * Constructeur MenuAccueil
 	 * @param pGame
 	 * @param pWindow
 	 */
-	public Accueil(PanneauJeu pGame,JFrame pWindow) {
+	public MenuAccueil(PanneauJeu pGame,JFrame pWindow) {
 		aGame = pGame;
 		aWindow = pWindow;
 		
@@ -171,9 +234,9 @@ public class Accueil extends JPanel implements IConfig, LineListener {
 		try {
 			URL url = this.getClass().getResource(urlBackground);
 			URL urlLogo = this.getClass().getResource("/resources/wargame_logo.png");
-			accueilBackground = ImageIO.read(url);
+			MenuAccueilBackground = ImageIO.read(url);
 			logoJeu = ImageIO.read(urlLogo);			
-			accueilBackground = accueilBackground.getScaledInstance(LARGEUR_FENETRE, HAUTEUR_FENETRE, Image.SCALE_SMOOTH);
+			MenuAccueilBackground = MenuAccueilBackground.getScaledInstance(LARGEUR_FENETRE, HAUTEUR_FENETRE, Image.SCALE_SMOOTH);
 			
 		} catch (IOException e) {
 			e.printStackTrace();			
@@ -188,7 +251,7 @@ public class Accueil extends JPanel implements IConfig, LineListener {
 	protected void paintComponent(Graphics g) {
 		int logoWidth = logoJeu.getWidth(null);
 		super.paintComponent(g);
-		g.drawImage(accueilBackground,0,0,this);
+		g.drawImage(MenuAccueilBackground,0,0,this);
 		g.drawImage(logoJeu, ((LARGEUR_FENETRE/2)-(logoWidth/2)), 25,this);
 
 		aJouer.paintComponent(g);
@@ -217,6 +280,54 @@ public class Accueil extends JPanel implements IConfig, LineListener {
 			this.aCharger.setFocus(false);
 		}
 	}
+
+	public void actionMenu() {
+		if (aJouer.getTarget()) {
+			try {
+				Thread.sleep(50);
+			} catch(InterruptedException ex) {
+			    Thread.currentThread().interrupt();
+			}
+			aJouer.setTarget(false);
+            aWindow.remove(vTemp);
+            aWindow.add(aGame);
+			aGame.focusPanel();
+            aWindow.repaint();
+            aWindow.pack();
+		}
+				
+           if (aCharger.getTarget()) {
+			try {
+				Thread.sleep(50);
+			} catch(InterruptedException ex) {
+				Thread.currentThread().interrupt();
+			}
+			aCharger.setTarget(false);
+			aWindow.remove(vTemp);
+			aWindow.add(aMenuFin);
+			aMenuFin.focusPanel();
+			aWindow.repaint();
+			aWindow.pack();
+		}
+
+        if (aQuitter.getTarget()) {
+        	try {
+				Thread.sleep(50);
+			} catch(InterruptedException ex) {
+			    Thread.currentThread().interrupt();
+			}
+			aQuitter.setTarget(false);
+        	System.exit(0);
+		}
+	}
+	
+	/**
+	 * Remet le focus sur le bon panel
+	 */
+	public void focusPanel(){
+        this.setFocusable(true);
+        this.requestFocusInWindow();
+    }
 	
 	/**
 	 * Detection musique finie
@@ -275,5 +386,23 @@ public class Accueil extends JPanel implements IConfig, LineListener {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * Supprime le target de tous les boutons
+	 */
+	private void removeTarget() {
+		aJouer.setTarget(false);
+		aCharger.setTarget(false);
+		aQuitter.setTarget(false);
+	}
+
+	/**
+	 * Supprime le focus de tous les boutons
+	 */
+	private void removeFocus() {
+		aJouer.setFocus(false);
+		aCharger.setFocus(false);
+		aQuitter.setFocus(false);
 	}
 }
