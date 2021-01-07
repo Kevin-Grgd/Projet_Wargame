@@ -4,7 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+//import java.awt.Graphics2D;
 import java.awt.Polygon;
+//import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -45,6 +47,7 @@ public class PanneauJeu extends JPanel implements IConfig {
 
         JToolBar barreoutil = new JToolBar();
         barreoutil.setPreferredSize(new Dimension(LARGEUR_BARRE_OUTIL, HAUTEUR_BARRE_OUTIL));
+        barreoutil.setBackground(new Color(128, 79, 54, 250));
         setLayout(new BorderLayout());
         // Ajout des boutons
         JButton button_fin_tour = Bouton("Fin du Tour");
@@ -54,6 +57,7 @@ public class PanneauJeu extends JPanel implements IConfig {
         JButton loadButton = Bouton("Charger");//à enlever
         
         JLabel tour = new JLabel();
+        tour.setForeground(Color.white);
         tour.setText("Tour " + aCarte.getTours());
         
         // Action des boutons        
@@ -64,7 +68,6 @@ public class PanneauJeu extends JPanel implements IConfig {
                 aCarte.setTours(aCarte.getTours() + 1);
                 tour.setText("Tour " + aCarte.getTours()); // Fin du tour, on incrémente de 1
                 joueIA(); // A l'IA de jouer
-                repaintThread();
             }
 
         });
@@ -104,7 +107,7 @@ public class PanneauJeu extends JPanel implements IConfig {
         barreoutil.addSeparator(); // Sépare les deux boutons
         barreoutil.add(repos);
         barreoutil.addSeparator();
-        barreoutil.addSeparator(new Dimension(400, 0));
+        barreoutil.addSeparator(new Dimension(450, 0));
         barreoutil.add(tour);
         barreoutil.add(Box.createHorizontalGlue());
         barreoutil.add(saveButton);
@@ -112,6 +115,7 @@ public class PanneauJeu extends JPanel implements IConfig {
         barreoutil.add(loadButton);
         barreoutil.addSeparator();
         barreoutil.add(restartButton);
+        barreoutil.addSeparator();
         
         barreoutil.setFloatable(false); // Rend possible le déplacement de la barre d'outils
         return barreoutil;
@@ -198,7 +202,7 @@ public class PanneauJeu extends JPanel implements IConfig {
                 if (aPressedPosition != null) {
                 	aDraggedUnit = new Polygon();
                 	for(int i = 0 ; i < 6 ; i++) {
-                		int x = (int) (xCenter + (NB_PIX_CASE/2) * Math.sin(i*2*Math.PI/6));
+                		int x = (int) (xCenter + (NB_PIX_CASE/2+3) * Math.sin(i*2*Math.PI/6));
             			int y = (int) (yCenter + (NB_PIX_CASE/2) * Math.cos(i*2*Math.PI/6));
             			aDraggedUnit.addPoint(x, y);
                 	}
@@ -271,6 +275,10 @@ public class PanneauJeu extends JPanel implements IConfig {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
+        //Antialazing mais drop fps
+        //Graphics2D g2d = (Graphics2D) g;
+        //g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        
         g.setColor(Color.WHITE);
 
         aCarte.toutDessiner(g);

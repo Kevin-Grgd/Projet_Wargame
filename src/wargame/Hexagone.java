@@ -37,14 +37,14 @@ public class Hexagone extends JComponent implements IConfig{
         	int decalageY = ((int) (NB_PIX_CASE * 0.75)) * posY;
         	if(posY % 2 == 0) {
         		for(int i = 0 ; i < 6 ; i++) {
-        			x = (int) ((xCenter + decalageX) + (NB_PIX_CASE/2+4) * Math.sin(i*2*Math.PI/6));
+        			x = (int) ((xCenter + decalageX) + (NB_PIX_CASE/2+3) * Math.sin(i*2*Math.PI/6));
         			y = (int) ((yCenter + decalageY) + (NB_PIX_CASE/2) * Math.cos(i*2*Math.PI/6));
         			Hexa.addPoint(x, y);
         		}
         	}
         	else {
         		for(int i = 0 ; i < 6 ; i++) {
-        			x = (int) ((xCenter + decalageX + xOffSet) + (NB_PIX_CASE/2+4) * Math.sin(i*2*Math.PI/6));
+        			x = (int) ((xCenter + decalageX + xOffSet) + (NB_PIX_CASE/2+3) * Math.sin(i*2*Math.PI/6));
         			y = (int) ((yCenter + decalageY) + (NB_PIX_CASE/2) * Math.cos(i*2*Math.PI/6));
         			Hexa.addPoint(x, y);
         		}	
@@ -113,9 +113,9 @@ public class Hexagone extends JComponent implements IConfig{
      */
     public void seDessiner(Graphics g, Position pos){
         super.paintComponent(g);
-        
         if(!(pos.getVisible())){
             g.setColor(COULEUR_INCONNU);
+            g.drawPolygon(Hexa);
             g.fillPolygon(Hexa);
         }
 
