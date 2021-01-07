@@ -189,4 +189,7 @@ public class Position implements IConfig {
 		}
 		return posAdjacentes.toArray(new Position[0]);
 	}
+	
+	
+	
 }

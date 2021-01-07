@@ -20,7 +20,7 @@ public class EndGame extends JPanel implements IConfig {
     private transient Image img_Background;
     private transient PanneauJeu aGame;
     private transient JFrame aWindow;
-    private transient Accueil aAccueil;
+    private transient MenuAccueil aAccueil;
     private transient BoutonMenu aRejouer = null;
     private transient BoutonMenu aMainMenu = null;
     private transient BoutonMenu aQuitter = null;
@@ -114,7 +114,7 @@ public class EndGame extends JPanel implements IConfig {
         return endScreen;
     }
 
-    public EndGame(PanneauJeu pGame, JFrame pWindow, Accueil pAccueil, boolean pVictory) {
+    public EndGame(PanneauJeu pGame, JFrame pWindow, MenuAccueil pAccueil, boolean pVictory) {
         this.aGame = pGame;
         this.aWindow = pWindow;
         this.aAccueil = pAccueil;

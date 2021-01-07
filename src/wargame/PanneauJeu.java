@@ -442,4 +442,9 @@ public class PanneauJeu extends JPanel implements IConfig {
         };
         worker.execute();
     }
+    
+    public void focusPanel(){
+        this.setFocusable(true);
+        this.requestFocusInWindow();
+    }
 }

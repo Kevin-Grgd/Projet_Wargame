@@ -37,5 +37,9 @@ public abstract class Element{
 	 * @param g Graphique où dessiner
 	 * @param p Polygone à dessiner
 	 */
-	public abstract void renderElement(Graphics g,Polygon p);
+	public void renderElement(Graphics g, Polygon p) {
+		new Image(aBufferedImage,p).drawHexa(g);
+	}
+	
+	public abstract void reloadData();
 }

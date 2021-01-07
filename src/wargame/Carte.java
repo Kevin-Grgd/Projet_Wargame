@@ -3,7 +3,12 @@ package wargame;
 import java.awt.Polygon;
 import java.awt.Graphics;
 import javax.swing.JPanel;
-
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 public class Carte extends JPanel implements IConfig, ICarte{
@@ -448,5 +453,56 @@ public class Carte extends JPanel implements IConfig, ICarte{
             }
         }
     }
+    /*
+    public void Sauvegarde(){
+        //Save
+        SaveFile vFile = new SaveFile(1);
+        vFile.setArmeeHeros(armeeHeros);
+        vFile.setArmeeMonstre(armeeMonstre);
+        vFile.setHeros_restant(heros_restant);
+        vFile.setMonstre_restant(monstre_restant);
+        vFile.setaMap(map);
+
+        try {
+           FileOutputStream fileOut = new FileOutputStream(vFile.getFileName());
+           ObjectOutputStream out = new ObjectOutputStream(fileOut);
+           out.writeObject(vFile);
+           out.close();
+           fileOut.close();
+           System.out.printf("Serialized data is saved in carte.ser");
+        } catch (IOException i) {
+           i.printStackTrace();
+        }
+    }
+    
+    public void Recharger(){
+        //Load
+        SaveFile vFile = new SaveFile(1);
+        try {
+            FileInputStream fileIn = new FileInputStream(vFile.getFileName());
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            vFile = (SaveFile)in.readObject();
+
+            in.close();
+
+            this.map = vFile.getaMap();
+            this.armeeHeros =vFile.getArmeeHeros();
+            this.armeeMonstre = vFile.getArmeeMonstre();
+            this.monstre_restant = vFile.getMonstre_restant();
+            this.heros_restant = vFile.getHeros_restant();
+
+            for (int x = 0; x < LARGEUR_CARTE ; x++) {
+                for (int y = 0; y < HAUTEUR_CARTE ; y++) {
+                    map[x][y].reloadData();
+                }
+            }
+            fileIn.close();
+
+        } catch (IOException | ClassNotFoundException i) {
+            i.printStackTrace();
+            return;
+        }
+    }*/
+    
 }
 

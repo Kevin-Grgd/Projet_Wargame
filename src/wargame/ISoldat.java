@@ -54,7 +54,7 @@ public interface ISoldat {
 		}
 		public BufferedImage getEnumImage(){
 			setImage();
-			return this.IMAGE;
+			return IMAGE;
 		}
 		
       
@@ -103,7 +103,7 @@ public interface ISoldat {
 		}
 		public BufferedImage getEnumImage(){
 			setImage();
-			return this.IMAGE;
+			return IMAGE;
 		}
 	}
 	int getPoints();

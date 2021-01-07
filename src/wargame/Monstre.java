@@ -1,7 +1,4 @@
 package wargame;
-import java.awt.Graphics;
-import java.awt.Polygon;
-import java.awt.image.BufferedImage;
 
 public class Monstre extends Soldat {
 	private static int numMonstre = 0;
@@ -20,14 +17,4 @@ public class Monstre extends Soldat {
 		return type.toString() + " " + ID;
 	}
 
-	@Override
-	public void renderElement(Graphics g, Polygon p) {
-		new Image(this.aBufferedImage,p).drawHexa(g);
-	}
-
-	@Override
-	public BufferedImage getEnumImage() {
-		// Never go here
-		return null;
-	}
 }

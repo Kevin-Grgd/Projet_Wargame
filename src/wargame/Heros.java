@@ -1,7 +1,4 @@
 package wargame;
-import java.awt.Polygon;
-import java.awt.image.BufferedImage;
-import java.awt.Graphics;
 
 public class Heros extends Soldat {
 	private static int numHeros = 64;
@@ -21,11 +18,6 @@ public class Heros extends Soldat {
 
 	public String toString() {
 		return type.toString() + " " + ID;
-	}
-
-	@Override
-	public void renderElement(Graphics g, Polygon p) {
-		new Image(this.aBufferedImage,p).drawHexa(g);
 	}
 
 	/**
@@ -58,12 +50,6 @@ public class Heros extends Soldat {
 	 */
 	public boolean getJoue() {
 		return this.aJoue;
-	}
-
-	@Override
-	public BufferedImage getEnumImage() {
-		//Not used
-		return null;
 	}
 
 }

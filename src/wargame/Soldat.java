@@ -1,7 +1,6 @@
 package wargame;
 
-import java.awt.Graphics;
-import java.awt.Polygon;
+import java.awt.image.BufferedImage;
 
 public abstract class Soldat extends Element implements ISoldat {
 	private int points;
@@ -10,11 +9,9 @@ public abstract class Soldat extends Element implements ISoldat {
 	private int tir;
 	protected ISoldat type;
 
-	public abstract void renderElement(Graphics g, Polygon p);
-
 	/**
 	 * Constructeur
-	 * @param pos La position du soldat
+	 * @param type La position du soldat
 	 */
 	Soldat(ISoldat type) {
 		setType(type);
@@ -95,9 +92,9 @@ public abstract class Soldat extends Element implements ISoldat {
 	 */
 	public void combat(Soldat soldat) {
 		if (this.getPosition().estVoisine(soldat.getPosition())) { // Au corps à corps
-			soldat.setPoints(soldat.getPoints() - this.getPuissance());
+			soldat.setPoints(soldat.getPoints() - getPuissance());
 		} else { // A distance
-			soldat.setPoints(soldat.getPoints() - this.getTir());
+			soldat.setPoints(soldat.getPoints() - getTir());
 		}
 	}
 
@@ -122,7 +119,7 @@ public abstract class Soldat extends Element implements ISoldat {
 	 * @return Le type du soldat
 	 */
 	public ISoldat getTypeSoldat() {
-		return this.type;
+		return type;
 	}
 
 	/**
@@ -143,4 +140,15 @@ public abstract class Soldat extends Element implements ISoldat {
 	public void est_elu() {
 
 	}
+	
+	public BufferedImage getEnumImage() {
+		//Not used
+		return null;
+	}
+	
+	public void reloadData() {
+		aBufferedImage = type.getEnumImage();
+	}
+	
+	
 }

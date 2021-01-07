@@ -1,7 +1,5 @@
 package wargame;
 
-import java.awt.Graphics;
-import java.awt.Polygon;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
@@ -29,7 +27,7 @@ public class Obstacle extends Element {
 		public void setImage(){
 			int vRand = (int) Math.random() * NB_TEXTURE_OBSTACLE + 1;
 			String vIMAGE = URL_IMAGE.replace("#",  Integer.toString(vRand));
-			URL url = this.getClass().getResource(vIMAGE);
+			URL url = getClass().getResource(vIMAGE);
 			try {
 				IMAGE = ImageIO.read(url);
 			} catch (IOException e) {
@@ -43,14 +41,13 @@ public class Obstacle extends Element {
 		 */
 		public BufferedImage getImage(){
 			setImage();
-			return this.IMAGE;
+			return IMAGE;
 		}
 	}
 	
 	/**
 	 * Constructeur
 	 * @param type Le type de l'obstacle
-	 * @param pos Sa position
 	 */
 	Obstacle(TypeObstacle type) {
 		TYPE = type;
@@ -58,26 +55,24 @@ public class Obstacle extends Element {
 
 	/**
 	 * Constructeur
-	 * @param vPos Sa position
 	 * @param p Le polygone (Pour y insérer l'image)
 	 */
 	Obstacle(){
 		this(TypeObstacle.getObstacleAlea());
-		this.aBufferedImage = TYPE.getImage();
-	}
-
-	@Override
-	public void renderElement(Graphics g,Polygon p){
-        new Image(this.aBufferedImage,p).drawHexa(g);
+		aBufferedImage = TYPE.getImage();
 	}
 
 	public BufferedImage getObstacleBufferedImage(){
-		return this.TYPE.IMAGE;
+		return TYPE.IMAGE;
 	}
 
 	public String toString() {
 		return getPosition() + " " + TYPE;
 	}
 
+	public void reloadData() {
+		TYPE = TypeObstacle.getObstacleAlea();
+		aBufferedImage = TYPE.getImage();
+	}
 	
 }
