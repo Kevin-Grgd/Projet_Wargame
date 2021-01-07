@@ -56,6 +56,22 @@ public class PanneauJeu extends JPanel implements IConfig {
         JButton restartButton = Bouton("Restaurer");
         JButton loadButton = Bouton("Charger");//à enlever
         
+        //Couleur de fond des boutons
+        button_fin_tour.setBackground(BOUTON_NORMAL);
+        repos.setBackground(BOUTON_NORMAL);
+        saveButton.setBackground(BOUTON_NORMAL);
+        restartButton.setBackground(BOUTON_NORMAL);
+        loadButton.setBackground(BOUTON_NORMAL);
+        
+        //Couleur du texte des boutons
+        button_fin_tour.setForeground(Color.white);
+        repos.setForeground(Color.white);
+        saveButton.setForeground(Color.white);
+        restartButton.setForeground(Color.white);
+        loadButton.setForeground(Color.white);
+        
+        
+        
         JLabel tour = new JLabel();
         tour.setForeground(Color.white);
         tour.setText("Tour " + aCarte.getTours());
