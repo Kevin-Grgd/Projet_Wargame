@@ -78,7 +78,7 @@ public class PanneauJeu extends JPanel implements IConfig {
         
         saveButton.addActionListener(new ActionListener() {
         	public void actionPerformed(final ActionEvent e) {
-        		aCarte.sauvegarde();
+        		aCarte.Sauvegarde();
         	}
         });
         
@@ -198,8 +198,10 @@ public class PanneauJeu extends JPanel implements IConfig {
      * Constructeur PanneauJeu
      */
     public PanneauJeu() {
-
-        aCarte = new Carte();//ICI !!!
+    	
+    	if(aCarte == null) {
+    		aCarte = new Carte();
+    	}
         
 
         setLayout(new BorderLayout());

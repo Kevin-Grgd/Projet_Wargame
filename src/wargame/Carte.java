@@ -460,27 +460,38 @@ public class Carte extends JPanel implements IConfig, ICarte, Serializable{
         }
     }
     
-    public void sauvegarde() {
-    	try {
-    		FileOutputStream fileOut = new FileOutputStream("save1.wargame");
-    		ObjectOutputStream out = new ObjectOutputStream(fileOut);
-    		out.writeObject(this);
-    		out.close();
-            fileOut.close();
-            System.out.printf("Serialized data is saved in carte.ser");
-    	} catch (IOException e) {
-    		e.printStackTrace();
-    	}
+    public void Sauvegarde(){
+        //Save
+        SaveFile vFile = new SaveFile(1, this);
+
+        try {
+           FileOutputStream fileOut = new FileOutputStream("save1.warsave");
+           ObjectOutputStream out = new ObjectOutputStream(fileOut);
+           out.writeObject(vFile);
+           out.close();
+           fileOut.close();
+           System.out.printf("Serialized data is saved in carte.ser");
+        } catch (IOException i) {
+           i.printStackTrace();
+        }
     }
     
-    public Carte Recharger(){
+    public void Recharger(){
         //Load
-    	Carte carte = new Carte();
+        SaveFile vFile;
         try {
-            FileInputStream fileIn = new FileInputStream("save1.wargame");
+            FileInputStream fileIn = new FileInputStream("save1.warsave");
             ObjectInputStream in = new ObjectInputStream(fileIn);
-            carte = (Carte) in.readObject();
+            vFile = (SaveFile)in.readObject();
+
             in.close();
+
+            map = vFile.getCarte();
+            hexagone = vFile.getHexagone();
+            armeeHeros =vFile.getArmeeHeros();
+            armeeMonstre = vFile.getArmeeMonstre();
+            monstre_restant = vFile.getMonstre_restant();
+            heros_restant = vFile.getHeros_restant();
 
             for (int x = 0; x < LARGEUR_CARTE ; x++) {
                 for (int y = 0; y < HAUTEUR_CARTE ; y++) {
@@ -491,9 +502,10 @@ public class Carte extends JPanel implements IConfig, ICarte, Serializable{
 
         } catch (IOException | ClassNotFoundException i) {
             i.printStackTrace();
+            return;
         }
-        return carte;
     }
+    
     
     /*
     public void Sauvegarde(){
