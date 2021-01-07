@@ -293,28 +293,33 @@ public class Carte extends JPanel implements IConfig, ICarte{
      * @return Booléen si il peut jouer ou non
      */
     public boolean actionHeros(Heros pHeros, Position pos2) {
-    	if(pHeros.getJoue())
-    		return false;
-    	else { // S'il n'a pas déjà joué
-            if (map[pos2.getX()][pos2.getY()].getElement() == null) { // Pas d'éléments on se déplace
-                deplaceSoldat(pos2, pHeros);
-                pHeros.setJoue(true);
-                return true;
-            }
-            else { // Sinon on combat
-                if (map[pos2.getX()][pos2.getY()].getElement() instanceof Monstre) { // On vérifie tout de même qu'il s'agisse bien d'un monstre 
-                    Monstre vMonstre = (Monstre) map[pos2.getX()][pos2.getY()].getElement();
-                    pHeros.combat(vMonstre); // On combat
+    	if(pHeros != null) {
+    		if(pHeros.getJoue())
+        		return false;
+        	else { // S'il n'a pas déjà joué
+                if (map[pos2.getX()][pos2.getY()].getElement() == null) { // Pas d'éléments on se déplace
+                    deplaceSoldat(pos2, pHeros);
                     pHeros.setJoue(true);
-                    if (vMonstre.getPoints() <= 0) { // Plus de points de vie, il décède
-                        mort(vMonstre);
-                        setMonstreRestant(monstre_restant--);
-                    }
                     return true;
                 }
-                return false;
+                else { // Sinon on combat
+                    if (map[pos2.getX()][pos2.getY()].getElement() instanceof Monstre) { // On vérifie tout de même qu'il s'agisse bien d'un monstre 
+                        Monstre vMonstre = (Monstre) map[pos2.getX()][pos2.getY()].getElement();
+                        pHeros.combat(vMonstre); // On combat
+                        pHeros.setJoue(true);
+                        if (vMonstre.getPoints() <= 0) { // Plus de points de vie, il décède
+                            mort(vMonstre);
+                            setMonstreRestant(monstre_restant--);
+                        }
+                        return true;
+                    }
+                    return false;
+                }
             }
-        }
+    	}
+    	else {
+    		return false;
+    	}
     }
 
     public void toutDessiner(Graphics g) {
@@ -334,21 +339,22 @@ public class Carte extends JPanel implements IConfig, ICarte{
             if (armeeHeros[i] != null) {
                 int vision = armeeHeros[i].getPortee();
                 Position vPos = armeeHeros[i].getPosition();
-                Polygon vPoly;
+                Polygon vPoly = new Polygon();
   
                 map[vPos.getX()][vPos.getY()].setVisible(pSet);// Positon unite
-                
 
-                int hexaLargeur = ((vision*50)*2)+1; 
-                int hexaHauteur = hexaLargeur;
+                int hexaLargeur = ((2*vision+1)*NB_PIX_CASE); 
+                int hexaHauteur = hexaLargeur - NB_PIX_CASE;
                   
-                 int xCenter = (int)(hexagone[vPos.getX()][vPos.getY()].getHexagone().getBounds().getCenterX() - (double)((vision*NB_PIX_CASE)*2)/2); 
-                 int yCenter = (int)(hexagone[vPos.getX()][vPos.getY()].getHexagone().getBounds().getCenterY() -(double)((vision*NB_PIX_CASE)*2)/2);
-                 
-                 int[] xPoly = {xCenter, xCenter, (int)(hexaLargeur*0.50) + xCenter,hexaLargeur+xCenter, hexaLargeur+xCenter, (int)(hexaLargeur*0.50)+xCenter};
-                 int[] yPoly = {(int)(hexaHauteur*0.75) + yCenter, (int)(hexaHauteur*0.25) + yCenter, yCenter, (int)(hexaHauteur*0.25)+ yCenter, (int)(hexaHauteur*0.75)+yCenter, yCenter+hexaHauteur};
-                 vPoly = new Polygon(xPoly, yPoly, xPoly.length);
+                 int xCenter = (int) hexagone[vPos.getX()][vPos.getY()].getHexagone().getBounds().getCenterX(); 
+                 int yCenter = (int) hexagone[vPos.getX()][vPos.getY()].getHexagone().getBounds().getCenterY();
 
+                 for(int j = 0 ; j < 6 ; j++) {
+             		int x = (int) (xCenter + (hexaLargeur/2) * Math.cos(j*2*Math.PI/6));
+         			int y = (int) (yCenter + hexaHauteur/2 * Math.sin(j*2*Math.PI/6));
+         			vPoly.addPoint(x, y);
+             	}
+                 
                  for(int x = 0; x < LARGEUR_CARTE; x++){ 
                     for (int y = 0; y < HAUTEUR_CARTE; y++) {
                     	if(vPoly.contains(hexagone[x][y].getHexagone().getBounds2D().getCenterX(), hexagone[x][y].getHexagone().getBounds2D().getCenterY())){
