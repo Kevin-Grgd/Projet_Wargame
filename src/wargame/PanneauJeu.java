@@ -25,7 +25,6 @@ public class PanneauJeu extends JPanel implements IConfig {
     private transient Position aPressedPosition;
     private transient Position aPressedTarget;
     private transient Polygon aDraggedUnit;
-    public transient int nb_tour = 1;
    
 
     /**
@@ -52,15 +51,23 @@ public class PanneauJeu extends JPanel implements IConfig {
         JButton loadButton = Bouton("Charger");
         
         JLabel tour = new JLabel();
-        tour.setText("Tour "+nb_tour);
+        tour.setText("Tour " + aCarte.getTours());
         
         // Action des boutons
+        
+        loadButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(final ActionEvent e) {
+        		aCarte.Recharger();
+        		repaintThread();
+        	}
+        });
+        
         button_fin_tour.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(final ActionEvent e) {
-                nb_tour++;
-                tour.setText("Tour "+nb_tour); // Fin du tour, on incrémente de 1
+                aCarte.setTours(aCarte.getTours() + 1);
+                tour.setText("Tour " + aCarte.getTours()); // Fin du tour, on incrémente de 1
                 joueIA(); // A l'IA de jouer
                 repaintThread();
             }
@@ -82,11 +89,7 @@ public class PanneauJeu extends JPanel implements IConfig {
         	}
         });
         
-        loadButton.addActionListener(new ActionListener() {
-        	public void actionPerformed(final ActionEvent e) {
-        		aCarte.Recharger();
-        	}
-        });
+        
         barreoutil.addSeparator();
         barreoutil.add(button_fin_tour);
         barreoutil.addSeparator(); // Sépare les deux boutons

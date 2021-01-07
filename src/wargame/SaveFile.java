@@ -11,6 +11,7 @@ public class SaveFile implements Serializable{
     private int heros_restant;
     private int monstre_restant;
     private String fileName;
+    private int nbTours;
 
     public SaveFile(int i, Carte carte) {
         setFileName(i);
@@ -20,6 +21,15 @@ public class SaveFile implements Serializable{
         setArmeeMonstre(carte.getArmeeMonstre());
         setHeros_restant(carte.getHerosRestant());
         setMonstre_restant(carte.getMonstreRestant());
+        setTours(carte.getTours());
+    }
+    
+    public int getTours() {
+    	return nbTours;
+    }
+    
+    public void setTours(int nbTours) {
+    	this.nbTours = nbTours;
     }
 
     public String getFileName() {

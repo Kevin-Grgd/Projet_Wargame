@@ -20,6 +20,7 @@ public class Carte extends JPanel implements IConfig, ICarte, Serializable{
     private transient Monstre[] armeeMonstre;
     private transient int heros_restant;
     private transient int monstre_restant;
+    private int nbTours;
 
 
     /**
@@ -32,6 +33,7 @@ public class Carte extends JPanel implements IConfig, ICarte, Serializable{
         armeeMonstre = new Monstre[NB_MONSTRES];
         heros_restant = NB_HEROS;
         monstre_restant = NB_MONSTRES;
+        nbTours = 1;
         
         for (int x = 0; x < LARGEUR_CARTE ; x++) {
             for (int y = 0; y < HAUTEUR_CARTE ; y++) {
@@ -42,6 +44,14 @@ public class Carte extends JPanel implements IConfig, ICarte, Serializable{
         
         ajoutObstacle();
         ajoutSoldat();
+    }
+    
+    public int getTours() {
+    	return nbTours;
+    }
+    
+    public void setTours(int nbTours) {
+    	this.nbTours = nbTours;
     }
 
     /**
@@ -492,6 +502,7 @@ public class Carte extends JPanel implements IConfig, ICarte, Serializable{
             armeeMonstre = vFile.getArmeeMonstre();
             monstre_restant = vFile.getMonstre_restant();
             heros_restant = vFile.getHeros_restant();
+            nbTours = vFile.getTours();
 
             for (int x = 0; x < LARGEUR_CARTE ; x++) {
                 for (int y = 0; y < HAUTEUR_CARTE ; y++) {
