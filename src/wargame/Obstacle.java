@@ -6,6 +6,7 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 
 public class Obstacle extends Element {
+	private static final long serialVersionUID = 8277957568171064957L;
 	private TypeObstacle TYPE;
 	
 	public enum TypeObstacle implements IConfig  {

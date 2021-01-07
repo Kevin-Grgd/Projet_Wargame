@@ -48,6 +48,8 @@ public class PanneauJeu extends JPanel implements IConfig {
         // Ajout des boutons
         JButton button_fin_tour = Bouton("Fin du Tour");
         JButton repos = Bouton("Se reposer");
+        JButton saveButton = Bouton("Sauvegarder");
+        JButton loadButton = Bouton("Charger");
         
         JLabel tour = new JLabel();
         tour.setText("Tour "+nb_tour);
@@ -73,10 +75,26 @@ public class PanneauJeu extends JPanel implements IConfig {
             }
 
         });
+        
+        saveButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(final ActionEvent e) {
+        		aCarte.sauvegarde();
+        	}
+        });
+        
+        loadButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(final ActionEvent e) {
+        		aCarte.Recharger();
+        	}
+        });
         barreoutil.addSeparator();
         barreoutil.add(button_fin_tour);
         barreoutil.addSeparator(); // Sépare les deux boutons
         barreoutil.add(repos);
+        barreoutil.addSeparator();
+        barreoutil.add(saveButton);
+        barreoutil.addSeparator();
+        barreoutil.add(loadButton);
         barreoutil.addSeparator(new Dimension(400, 0));
         barreoutil.add(tour);
         barreoutil.setFloatable(false); // Rend possible le déplacement de la barre d'outils
@@ -181,7 +199,8 @@ public class PanneauJeu extends JPanel implements IConfig {
      */
     public PanneauJeu() {
 
-        this.aCarte = new Carte();
+        aCarte = new Carte();//ICI !!!
+        
 
         setLayout(new BorderLayout());
         JToolBar outil = toolBar();

@@ -7,10 +7,9 @@ import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
-
-public class Image {
-    BufferedImage aBackground;
-    Polygon aPoly;
+public class Image{
+	private transient BufferedImage aBackground;
+    private transient Polygon aPoly;
 
     /**
      * Constructeur

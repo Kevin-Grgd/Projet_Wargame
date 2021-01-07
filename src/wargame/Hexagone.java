@@ -115,16 +115,16 @@ public class Hexagone extends JComponent implements IConfig{
         super.paintComponent(g);
         
         if(!(pos.getVisible())){
-            g.setColor(Color.darkGray);
-            g.fillPolygon(this.Hexa);
+            g.setColor(COULEUR_INCONNU);
+            g.fillPolygon(Hexa);
         }
 
         else{
-            Image vImage = new Image(this.aBackground, this.Hexa);
+            Image vImage = new Image(aBackground, Hexa);
 
             vImage.drawHexa(g);
             if(pos.getElement() != null){
-                pos.getElement().renderElement(g, this.Hexa);
+                pos.getElement().renderElement(g, Hexa);
             }
             
             if(pos.getElement() instanceof Heros) {
@@ -132,32 +132,44 @@ public class Hexagone extends JComponent implements IConfig{
             	if(heros.getJoue()) {
             		 Color vWhiteOpa = new Color(0,0,0,180);
             		 g.setColor(vWhiteOpa);
-            		 g.fillPolygon(this.Hexa);
+            		 g.fillPolygon(Hexa);
             	}
             }
       
             g.setColor(Color.BLACK);
-            g.drawPolygon(this.Hexa);
+            g.drawPolygon(Hexa);
         }
 
         if(pos.getFocus()){
             Color vWhiteOpa = new Color(1,0,0,70);
             g.setColor(vWhiteOpa);
-            g.fillPolygon(this.Hexa);
+            g.fillPolygon(Hexa);
         }
 
         if(pos.getTarget()){
             if (pos.getElement() instanceof Monstre){ // Si c'est un monstre
                 Color vBlueOpa = new Color(1, 250, 0, 70);
                 g.setColor(vBlueOpa);
-                g.fillPolygon(this.Hexa);
+                g.fillPolygon(Hexa);
             }
             else{
                 Color vGrayOpa = new Color(0, 100, 250, 150);
                 g.setColor(vGrayOpa);
-                g.fillPolygon(this.Hexa);
+                g.fillPolygon(Hexa);
             }
         }
+    }
+    
+    public void reloadData(Position pos){
+        try {
+            int vRand = new Random().nextInt(IConfig.NB_TEXTURE_OBSTACLE)+1;
+            String vUrlString = "/resources/grass#.png".replace('#',  Integer.toString(vRand).charAt(0));
+            URL url = this.getClass().getResource(vUrlString);
+            this.aBackground = ImageIO.read(url);         
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if(pos.getElement() != null) pos.getElement().reloadData();
     }
 
 }

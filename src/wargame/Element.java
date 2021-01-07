@@ -3,10 +3,12 @@ package wargame;
 import java.awt.Graphics;
 import java.awt.Polygon;
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 
-public abstract class Element{
+public abstract class Element implements Serializable{
+	private static final long serialVersionUID = 4761294017398466739L;
 	private Position pos;
-	protected BufferedImage aBufferedImage;
+	protected transient BufferedImage aBufferedImage;
 	
 	/**
 	 * Donne la position de l'élément

@@ -1,8 +1,10 @@
 package wargame;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Position implements IConfig {
+public class Position implements IConfig, Serializable {
+	private static final long serialVersionUID = 380845925989148507L;
 	private int x;
 	private int y;
 	private Element elem;

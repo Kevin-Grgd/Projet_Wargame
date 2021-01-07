@@ -1,6 +1,7 @@
 package wargame;
 
 public class Heros extends Soldat {
+	private static final long serialVersionUID = -8042494773455062650L;
 	private static int numHeros = 64;
 	private final char ID;
 	private boolean aSelected;

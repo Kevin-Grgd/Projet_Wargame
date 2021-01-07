@@ -4,21 +4,22 @@ import java.io.Serializable;
 public class SaveFile implements Serializable{
 
     private static final long serialVersionUID = 3517160801267666132L;
-    
-    private Position[][] aMap;
+    private Position[][] map;
+    private Hexagone[][] hexagone;
     private Heros[] armeeHeros;
     private Monstre[] armeeMonstre;
     private int heros_restant;
     private int monstre_restant;
     private String fileName;
 
-    public SaveFile(int i) {
-        this.setFileName(i);
-        this.setaMap(null);
-        this.setArmeeHeros(null);
-        this.setArmeeMonstre(null);
-        this.setHeros_restant(0);
-        this.setMonstre_restant(0);
+    public SaveFile(int i, Carte carte) {
+        setFileName(i);
+        setCarte(carte.getCarte());
+        setHexagone(carte.getHexagones());
+        setArmeeHeros(carte.getArmeeHeros());
+        setArmeeMonstre(carte.getArmeeMonstre());
+        setHeros_restant(carte.getHerosRestant());
+        setMonstre_restant(carte.getMonstreRestant());
     }
 
     public String getFileName() {
@@ -28,7 +29,15 @@ public class SaveFile implements Serializable{
     public void setFileName(int numero) {
         this.fileName = "carte" + numero + ".warsave";
     }
-
+    
+    public Position[][] getCarte(){
+    	return map;
+    }
+    
+    public void setCarte(Position[][] map) {
+    	this.map = map;
+    }
+    
     public int getMonstre_restant() {
         return monstre_restant;
     }
@@ -61,12 +70,12 @@ public class SaveFile implements Serializable{
         this.armeeHeros = armeeHeros;
     }
 
-    public Position[][] getaMap() {
-        return aMap;
+    public Hexagone[][] getHexagone() {
+        return hexagone;
     }
 
-    public void setaMap(Position[][] aMap) {
-        this.aMap = aMap;
+    public void setHexagone(Hexagone[][] hexagone) {
+        this.hexagone = hexagone;
     }
 
     

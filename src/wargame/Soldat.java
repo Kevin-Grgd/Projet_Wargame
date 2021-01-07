@@ -3,6 +3,7 @@ package wargame;
 import java.awt.image.BufferedImage;
 
 public abstract class Soldat extends Element implements ISoldat {
+	private static final long serialVersionUID = 6135340252482111515L;
 	private int points;
 	private int portee;
 	private int puissance;

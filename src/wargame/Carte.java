@@ -9,9 +9,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Carte extends JPanel implements IConfig, ICarte{
+public class Carte extends JPanel implements IConfig, ICarte, Serializable{
     private static final long serialVersionUID = 1L;
     private Hexagone[][] hexagone;
     private Position[][] map;
@@ -251,12 +252,17 @@ public class Carte extends JPanel implements IConfig, ICarte{
         // Si case voisine et qu'il n'y a pas d'éléments dessus
         if (soldat.getPosition().estVoisine(pos) && map[pos.getX()][pos.getY()].getElement() == null) {
             herosVision(false);
-
-            map[soldat.getPosition().getX()][soldat.getPosition().getY()].setElement(null);// On retire le soldat
-            soldat.seDeplace(pos);// On change sa pos
-            map[soldat.getPosition().getX()][soldat.getPosition().getY()].setElement(soldat);// On le replace
-            herosVision(true);
-            return true;
+            try {
+            	map[soldat.getPosition().getX()][soldat.getPosition().getY()].setElement(null);// On retire le soldat
+                soldat.seDeplace(pos);// On change sa pos
+                map[soldat.getPosition().getX()][soldat.getPosition().getY()].setElement(soldat);// On le replace
+                herosVision(true);
+                return true;
+            } catch (Exception e) {
+            	e.printStackTrace();
+            	return false;
+            }
+           
         } else {
             return false;
         }
@@ -453,6 +459,42 @@ public class Carte extends JPanel implements IConfig, ICarte{
             }
         }
     }
+    
+    public void sauvegarde() {
+    	try {
+    		FileOutputStream fileOut = new FileOutputStream("save1.wargame");
+    		ObjectOutputStream out = new ObjectOutputStream(fileOut);
+    		out.writeObject(this);
+    		out.close();
+            fileOut.close();
+            System.out.printf("Serialized data is saved in carte.ser");
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    	}
+    }
+    
+    public Carte Recharger(){
+        //Load
+    	Carte carte = new Carte();
+        try {
+            FileInputStream fileIn = new FileInputStream("save1.wargame");
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            carte = (Carte) in.readObject();
+            in.close();
+
+            for (int x = 0; x < LARGEUR_CARTE ; x++) {
+                for (int y = 0; y < HAUTEUR_CARTE ; y++) {
+                    hexagone[x][y].reloadData(map[x][y]);
+                }
+            }
+            fileIn.close();
+
+        } catch (IOException | ClassNotFoundException i) {
+            i.printStackTrace();
+        }
+        return carte;
+    }
+    
     /*
     public void Sauvegarde(){
         //Save

@@ -54,7 +54,7 @@ public interface IConfig {
 	public final int MINIMAL_TIR_REQUIS = 5;
 	
 	public final Color COULEUR_VIDE = Color.white;
-	public final Color COULEUR_INCONNU = Color.lightGray;
+	public final Color COULEUR_INCONNU = Color.darkGray;
 	public final Color COULEUR_TEXTE = Color.black;
 	public final Color COULEUR_MONSTRES = Color.black;
 	public final Color COULEUR_HEROS = Color.red;
