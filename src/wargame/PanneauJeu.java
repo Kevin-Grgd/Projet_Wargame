@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -44,24 +45,18 @@ public class PanneauJeu extends JPanel implements IConfig {
 
         JToolBar barreoutil = new JToolBar();
         barreoutil.setPreferredSize(new Dimension(LARGEUR_BARRE_OUTIL, HAUTEUR_BARRE_OUTIL));
+        setLayout(new BorderLayout());
         // Ajout des boutons
         JButton button_fin_tour = Bouton("Fin du Tour");
         JButton repos = Bouton("Se reposer");
         JButton saveButton = Bouton("Sauvegarder");
-        JButton loadButton = Bouton("Charger");
+        JButton restartButton = Bouton("Restaurer");
+        JButton loadButton = Bouton("Charger");//à enlever
         
         JLabel tour = new JLabel();
         tour.setText("Tour " + aCarte.getTours());
         
-        // Action des boutons
-        
-        loadButton.addActionListener(new ActionListener() {
-        	public void actionPerformed(final ActionEvent e) {
-        		aCarte.Recharger();
-        		repaintThread();
-        	}
-        });
-        
+        // Action des boutons        
         button_fin_tour.addActionListener(new ActionListener() {
 
             @Override
@@ -89,17 +84,35 @@ public class PanneauJeu extends JPanel implements IConfig {
         	}
         });
         
+        restartButton.addActionListener(new ActionListener() { //à enlever
+        	public void actionPerformed(final ActionEvent e) {
+        		aCarte = new Carte();
+        		repaintThread();
+        	}
+        });
+        
+        loadButton.addActionListener(new ActionListener() { //à enlever
+        	public void actionPerformed(final ActionEvent e) {
+        		aCarte.Recharger();
+        		repaintThread();
+        	}
+        });
+        
         
         barreoutil.addSeparator();
         barreoutil.add(button_fin_tour);
         barreoutil.addSeparator(); // Sépare les deux boutons
         barreoutil.add(repos);
         barreoutil.addSeparator();
+        barreoutil.addSeparator(new Dimension(400, 0));
+        barreoutil.add(tour);
+        barreoutil.add(Box.createHorizontalGlue());
         barreoutil.add(saveButton);
         barreoutil.addSeparator();
         barreoutil.add(loadButton);
-        barreoutil.addSeparator(new Dimension(400, 0));
-        barreoutil.add(tour);
+        barreoutil.addSeparator();
+        barreoutil.add(restartButton);
+        
         barreoutil.setFloatable(false); // Rend possible le déplacement de la barre d'outils
         return barreoutil;
     }
