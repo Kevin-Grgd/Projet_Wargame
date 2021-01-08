@@ -130,8 +130,6 @@ public class Hexagone extends JComponent implements IConfig{
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            	
-               // pos.getElement().renderElement(g, Hexa);
             }
             
             if(pos.getElement() instanceof Heros) {

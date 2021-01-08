@@ -1,6 +1,5 @@
 package wargame;
 
-import java.awt.Graphics;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -200,11 +199,6 @@ public class Position implements IConfig, Serializable {
 			}
 		}
 		return posAdjacentes.toArray(new Position[0]);
-	}
-	
-	public void seDessiner(Graphics g) {
-		Hexagone hexa = new Hexagone(x, y);
-		hexa.seDessiner(g, this);
 	}
 	
 }

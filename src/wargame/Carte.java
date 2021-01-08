@@ -344,7 +344,7 @@ public class Carte extends JPanel implements IConfig, ICarte, Serializable{
     public void toutDessiner(Graphics g) {
     	for (int x = 0; x < LARGEUR_CARTE ; x++) {
             for (int y = 0; y < HAUTEUR_CARTE ; y++) {
-            	map[x][y].seDessiner(g);
+            	hexagone[x][y].seDessiner(g,map[x][y]);
             }
         }
     }
