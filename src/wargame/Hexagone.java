@@ -23,7 +23,7 @@ public class Hexagone extends JComponent implements IConfig{
      * @param posX Sa position en x
      * @param posY Sa position en y
      */
-    public Hexagone(Polygon pHexa, int posX, int posY) {
+    public Hexagone(Polygon pHexa, Position pos) {
         int xCenter = LARGEUR_FENETRE - (LARGEUR_CARTE+1) * NB_PIX_CASE + NB_PIX_CASE/4;//Pour centrer la carte dans la fenetre
         int yCenter = HAUTEUR_BARRE_OUTIL + HAUTEUR_FENETRE/2 - (HAUTEUR_CARTE/2)*NB_PIX_CASE + NB_PIX_CASE/2;
         int xOffSet = NB_PIX_CASE / 2;//decalage pour les lignes impaires
@@ -31,9 +31,9 @@ public class Hexagone extends JComponent implements IConfig{
         
         if(pHexa == null) {
         	int x, y;
-        	int decalageX = NB_PIX_CASE * posX; //decalage des cases en fonction de (posX, posY)
-        	int decalageY = ((int) (NB_PIX_CASE * 0.75)) * posY;
-        	if(posY % 2 == 0) {
+        	int decalageX = NB_PIX_CASE * pos.getX(); //decalage des cases en fonction de (posX, posY)
+        	int decalageY = ((int) (NB_PIX_CASE * 0.75)) * pos.getY();
+        	if(pos.getY() % 2 == 0) {
         		for(int i = 0 ; i < 6 ; i++) {
         			x = (int) ((xCenter + decalageX) + (NB_PIX_CASE/2+3) * Math.sin(i*2*Math.PI/6));
         			y = (int) ((yCenter + decalageY) + (NB_PIX_CASE/2) * Math.cos(i*2*Math.PI/6));
@@ -51,6 +51,15 @@ public class Hexagone extends JComponent implements IConfig{
         else {
         	Hexa = pHexa;
         }
+        
+        try {
+            String vUrlString = "/resources/grass#.png".replace('#',  Integer.toString(pos.getGrassNumber()).charAt(0));
+            URL url = getClass().getResource(vUrlString);
+            BufferedImage aBackground = ImageIO.read(url); 
+            aImage = new Image(aBackground, Hexa);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     
     /**
@@ -58,8 +67,8 @@ public class Hexagone extends JComponent implements IConfig{
      * @param pHexa Le polygone a dessiné
      * @param pPos Sa position
      */
-    public Hexagone(int x, int y){
-        this(null, x, y);        
+    public Hexagone(Position pos){
+        this(null, pos);        
     }
 
     /**
@@ -109,16 +118,7 @@ public class Hexagone extends JComponent implements IConfig{
         }
 
         else{
-        	
-        	try {
-                String vUrlString = "/resources/grass#.png".replace('#',  Integer.toString(pos.getGrassNumber()).charAt(0));
-                URL url = getClass().getResource(vUrlString);
-                BufferedImage aBackground = ImageIO.read(url); 
-                Image vImage = new Image(aBackground, Hexa);
-                vImage.drawHexa(g);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+                aImage.drawHexa(g);
         	
             if(pos.getElement() != null){
             	try {
@@ -130,6 +130,8 @@ public class Hexagone extends JComponent implements IConfig{
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+            	
+            	
             }
             
             if(pos.getElement() instanceof Heros) {

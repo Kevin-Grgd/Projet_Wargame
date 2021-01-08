@@ -36,8 +36,8 @@ public class Carte extends JPanel implements IConfig, ICarte, Serializable{
         
         for (int x = 0; x < LARGEUR_CARTE ; x++) {
             for (int y = 0; y < HAUTEUR_CARTE ; y++) {
-            	hexagone[x][y] = new Hexagone(x, y);
             	map[x][y] = new Position(x, y);
+            	hexagone[x][y] = new Hexagone(map[x][y]);
             }
         }
         ajoutObstacle();
@@ -479,7 +479,7 @@ public class Carte extends JPanel implements IConfig, ICarte, Serializable{
            out.writeObject(vFile);
            out.close();
            fileOut.close();
-           System.out.println("Serialized data is saved in carte.ser");
+           System.out.println("Partie sauvegardée dans save1.warsave");
         } catch (IOException i) {
            i.printStackTrace();
         }
@@ -503,7 +503,7 @@ public class Carte extends JPanel implements IConfig, ICarte, Serializable{
             nbTours = vFile.getTours();
 
             fileIn.close();
-            System.out.println("Serialized data is load");
+            System.out.println("save1.warsave chargée");
         } catch (IOException | ClassNotFoundException i) {
             i.printStackTrace();
             return;

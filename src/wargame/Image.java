@@ -17,8 +17,8 @@ public class Image{
      * @param pPoly Le polygone concerné
      */
     public Image(BufferedImage pBackground, Polygon pPoly){
-        this.aBackground = pBackground;
-        this.aPoly = pPoly;
+        aBackground = pBackground;
+        aPoly = pPoly;
     }
 
     /**
@@ -26,7 +26,7 @@ public class Image{
      * @param pBackground Image à insérer
      */
     public Image(BufferedImage pBackground){
-        this.aBackground = pBackground;
+        aBackground = pBackground;
     }
 
     /**
@@ -64,7 +64,7 @@ public class Image{
      * @param g Endroit où le dessiner
      */
     public void drawHexa(Graphics g){
-        BufferedImage vTmpImage = getTexturedImage(this.aBackground, this.aPoly, this.aPoly.getBounds().x,this.aPoly.getBounds().y);
-        g.drawImage(vTmpImage, this.aPoly.getBounds().x,this.aPoly.getBounds().y, null);
+        BufferedImage vTmpImage = getTexturedImage(aBackground, aPoly, aPoly.getBounds().x, aPoly.getBounds().y);
+        g.drawImage(vTmpImage, aPoly.getBounds().x, aPoly.getBounds().y, null);
     }
 }
