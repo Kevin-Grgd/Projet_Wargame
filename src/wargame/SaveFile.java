@@ -5,7 +5,6 @@ public class SaveFile implements Serializable{
 
     private static final long serialVersionUID = 3517160801267666132L;
     private Position[][] map;
-    private Hexagone[][] hexagone;
     private Heros[] armeeHeros;
     private Monstre[] armeeMonstre;
     private int heros_restant;
@@ -16,7 +15,6 @@ public class SaveFile implements Serializable{
     public SaveFile(int i, Carte carte) {
         setFileName(i);
         setCarte(carte.getCarte());
-        setHexagone(carte.getHexagones());
         setArmeeHeros(carte.getArmeeHeros());
         setArmeeMonstre(carte.getArmeeMonstre());
         setHeros_restant(carte.getHerosRestant());
@@ -79,15 +77,5 @@ public class SaveFile implements Serializable{
     public void setArmeeHeros(Heros[] armeeHeros) {
         this.armeeHeros = armeeHeros;
     }
-
-    public Hexagone[][] getHexagone() {
-        return hexagone;
-    }
-
-    public void setHexagone(Hexagone[][] hexagone) {
-        this.hexagone = hexagone;
-    }
-
-    
 
 }

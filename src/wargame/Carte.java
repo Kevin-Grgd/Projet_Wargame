@@ -476,9 +476,10 @@ public class Carte extends JPanel implements IConfig, ICarte, Serializable{
            FileOutputStream fileOut = new FileOutputStream("save1.warsave");
            ObjectOutputStream out = new ObjectOutputStream(fileOut);
            out.writeObject(vFile);
+           out.writeObject(vFile);
            out.close();
            fileOut.close();
-           System.out.printf("Serialized data is saved in carte.ser");
+           System.out.println("Serialized data is saved in carte.ser");
         } catch (IOException i) {
            i.printStackTrace();
         }
@@ -495,7 +496,6 @@ public class Carte extends JPanel implements IConfig, ICarte, Serializable{
             in.close();
 
             map = vFile.getCarte();
-            hexagone = vFile.getHexagone();
             armeeHeros =vFile.getArmeeHeros();
             armeeMonstre = vFile.getArmeeMonstre();
             monstre_restant = vFile.getMonstre_restant();
@@ -503,7 +503,7 @@ public class Carte extends JPanel implements IConfig, ICarte, Serializable{
             nbTours = vFile.getTours();
 
             fileIn.close();
-
+            System.out.println("Serialized data is load");
         } catch (IOException | ClassNotFoundException i) {
             i.printStackTrace();
             return;

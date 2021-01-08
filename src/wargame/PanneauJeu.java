@@ -58,7 +58,7 @@ public class PanneauJeu extends JPanel implements IConfig {
         JButton saveButton = Bouton("Sauvegarder");
         JButton restartButton = Bouton("Restaurer");
         JButton loadButton = Bouton("Charger");//à enlever
-        
+  
         JLabel tour = new JLabel();
         tour.setForeground(Color.white);
         tour.setText("Tour " + aCarte.getTours());
@@ -71,6 +71,7 @@ public class PanneauJeu extends JPanel implements IConfig {
                 aCarte.setTours(aCarte.getTours() + 1);
                 tour.setText("Tour " + aCarte.getTours()); // Fin du tour, on incrémente de 1
                 joueIA(); // A l'IA de jouer
+                repaintThread();
             }
 
         });
