@@ -4,15 +4,17 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+//import java.awt.Graphics2D;
 import java.awt.Polygon;
+//import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.KeyEvent;
 
+import javax.swing.Box;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
@@ -27,16 +29,22 @@ public class PanneauJeu extends JPanel implements IConfig {
     private transient Position aPressedPosition;
     private transient Position aPressedTarget;
     private transient Polygon aDraggedUnit;
-    public transient int nb_tour = 1;
+    private transient JFrame aWindow;
+    private transient PanneauJeu vTemp;
+    private transient MenuAccueil aMenuAccueil;
+    private transient MenuLoadSave aMenuLoadSave;
+   
 
     /**
      * Création de boutons
-     * 
      * @param s Chaine à afficher sur le bouton
      * @return Un bouton
      */
     public static JButton Bouton(String s) {
-        return new JButton(s);
+    	JButton button = new JButton(s);
+    	button.setBackground(BOUTON_NORMAL);//Couleur de fond
+    	button.setForeground(Color.white);//Couleur du texte
+        return button;
     }
 
     /**
@@ -47,20 +55,27 @@ public class PanneauJeu extends JPanel implements IConfig {
 
         JToolBar barreoutil = new JToolBar();
         barreoutil.setPreferredSize(new Dimension(LARGEUR_BARRE_OUTIL, HAUTEUR_BARRE_OUTIL));
+        barreoutil.setBackground(new Color(128, 79, 54, 250));
+        setLayout(new BorderLayout());
         // Ajout des boutons
         JButton button_fin_tour = Bouton("Fin du Tour");
         JButton repos = Bouton("Se reposer");
-
+        JButton saveButton = Bouton("Sauvegarder");
+        JButton restartButton = Bouton("Nouvelle Partie");
+        JButton loadButton = Bouton("Charger");
+        JButton quitButton = Bouton("Quitter");
+  
         JLabel tour = new JLabel();
-        tour.setText("Tour " + nb_tour);
-
-        // Action des boutons
+        tour.setForeground(Color.white);
+        tour.setText("Tour " + aCarte.getTours());
+        
+        // Action des boutons        
         button_fin_tour.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(final ActionEvent e) {
-                nb_tour++;
-                tour.setText("Tour " + nb_tour); // Fin du tour, on incrémente de 1
+                aCarte.setTours(aCarte.getTours() + 1);
+                tour.setText("Tour " + aCarte.getTours()); // Fin du tour, on incrémente de 1
                 joueIA(); // A l'IA de jouer
                 repaintThread();
             }
@@ -75,12 +90,73 @@ public class PanneauJeu extends JPanel implements IConfig {
             }
 
         });
+        
+        saveButton.addActionListener(new ActionListener() {
+        	
+        	@Override
+        	public void actionPerformed(final ActionEvent e) {
+        		aMenuLoadSave = new MenuLoadSave(vTemp,aWindow,aMenuAccueil,SAUVEGARDER,JEU);
+        		aWindow.remove(vTemp);
+        		aWindow.add(aMenuLoadSave);
+        		aMenuLoadSave.focusPanel();
+        		aWindow.repaint();
+        		aWindow.pack();
+        	}
+        });
+        
+        restartButton.addActionListener(new ActionListener() { //à enlever
+        	
+        	@Override
+        	public void actionPerformed(final ActionEvent e) {
+        		aCarte = new Carte();
+        		repaintThread();
+        	}
+        });
+        
+        loadButton.addActionListener(new ActionListener() { //à enlever
+        	
+        	@Override
+        	public void actionPerformed(final ActionEvent e) {
+        		aMenuLoadSave = new MenuLoadSave(vTemp,aWindow,aMenuAccueil,CHARGER,JEU);
+        		aWindow.remove(vTemp);
+        		aWindow.add(aMenuLoadSave);
+        		aMenuLoadSave.focusPanel();
+        		aWindow.repaint();
+        		aWindow.pack();
+        	}
+        });
+        
+        quitButton.addActionListener(new ActionListener() { //à enlever
+        	
+        	@Override
+        	public void actionPerformed(final ActionEvent e) {
+        		aMenuAccueil = new MenuAccueil(vTemp, aWindow);
+        		aWindow.remove(vTemp);
+        		aWindow.add(aMenuAccueil);
+        		aMenuAccueil.focusPanel();
+        		aWindow.repaint();
+        		aWindow.pack();
+        	}
+        });
+        
+        
         barreoutil.addSeparator();
         barreoutil.add(button_fin_tour);
         barreoutil.addSeparator(); // Sépare les deux boutons
         barreoutil.add(repos);
-        barreoutil.addSeparator(new Dimension(400, 0));
+        barreoutil.addSeparator();
+        barreoutil.addSeparator(new Dimension(435, 0));
         barreoutil.add(tour);
+        barreoutil.add(Box.createHorizontalGlue());
+        barreoutil.add(saveButton);
+        barreoutil.addSeparator();
+        barreoutil.add(loadButton);
+        barreoutil.addSeparator();
+        barreoutil.add(restartButton);
+        barreoutil.addSeparator();
+        barreoutil.add(quitButton);
+        barreoutil.addSeparator();
+        
         barreoutil.setFloatable(false); // Rend possible le déplacement de la barre d'outils
         return barreoutil;
     }
@@ -92,16 +168,16 @@ public class PanneauJeu extends JPanel implements IConfig {
     public JPanel plateau() {
         JPanel plat = new JPanel();
         plat.setLocation(0, HAUTEUR_BARRE_OUTIL);
-
+        
         addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                for (int x = 0; x < aCarte.aMap.length; x++) {
-                    for (int y = 0; y < aCarte.aMap[0].length; y++) {
-                        if (aCarte.aMap[x][y].isContain(e.getX(), e.getY())
-                                && aCarte.aMap[x][y].getElement() instanceof Heros) {
-                            if (!((Heros) aCarte.aMap[x][y].getElement()).getJoue())
-                                aPressedPosition = new Position(x, y);
+                for (int x = 0; x < LARGEUR_CARTE; x++) {
+                    for (int y = 0; y < HAUTEUR_CARTE; y++) {
+                        if (aCarte.getHexagones()[x][y].isContain(e.getX(), e.getY())
+                                && aCarte.getCarte()[x][y].getElement() instanceof Heros) {
+                        	if(!((Heros) aCarte.getCarte()[x][y].getElement()).getJoue())
+                        		aPressedPosition = new Position(x, y);
                         }
                     }
                 }
@@ -116,17 +192,13 @@ public class PanneauJeu extends JPanel implements IConfig {
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                for (int x = 0; x < aCarte.aMap.length; x++) {
-                    for (int y = 0; y < aCarte.aMap[0].length; y++) {
-
-                        if (aCarte.aMap[x][y].isContain(e.getX(), e.getY()) && aPressedPosition != null
+                for (int x = 0; x < LARGEUR_CARTE; x++) {
+                    for (int y = 0; y < HAUTEUR_CARTE; y++) {
+                        if (aCarte.getHexagones()[x][y].isContain(e.getX(), e.getY()) && aPressedPosition != null
                                 && (new Position(x, y).estVoisine(aPressedPosition)
-                                        || aCarte.aMap[x][y].getElement() instanceof Monstre)) {
-                            // aCarte.deplaceSoldat(new Position(x, y),(Soldat)
-                            // aCarte.aMap[aPressedPosition.getX()][aPressedPosition.getY()].getElement());
-
+                                        || aCarte.getCarte()[x][y].getElement() instanceof Monstre)) {
                             aCarte.actionHeros(
-                                    (Heros) aCarte.aMap[aPressedPosition.getX()][aPressedPosition.getY()].getElement(),
+                                    (Heros) aCarte.getCarte()[aPressedPosition.getX()][aPressedPosition.getY()].getElement(),
                                     new Position(x, y));
                         }
                     }
@@ -139,11 +211,11 @@ public class PanneauJeu extends JPanel implements IConfig {
             @Override
             public void mouseClicked(MouseEvent e) {
                 aPressedTarget = null;
-                for (int x = 0; x < aCarte.aMap.length; x++) {
-                    for (int y = 0; y < aCarte.aMap[0].length; y++) {
-                        aCarte.aMap[x][y].setTarget(false); // On clear la portée d'attaque
-                        if (aCarte.aMap[x][y].isContain(e.getX(), e.getY())
-                                && aCarte.aMap[x][y].getElement() instanceof Heros) {
+                for (int x = 0; x < LARGEUR_CARTE ; x++) {
+                    for (int y = 0; y < HAUTEUR_CARTE ; y++) {
+                        aCarte.getCarte()[x][y].setTarget(false); // On clear la portée d'attaque
+                        if (aCarte.getHexagones()[x][y].isContain(e.getX(), e.getY())
+                                && aCarte.getCarte()[x][y].getElement() instanceof Heros) {
                             aPressedTarget = new Position(x, y);
                         }
                     }
@@ -168,12 +240,12 @@ public class PanneauJeu extends JPanel implements IConfig {
                 int xCenter = e.getX();
                 int yCenter = e.getY();
                 if (aPressedPosition != null) {
-                    int[] xPoly = { xCenter, xCenter, (int) (NB_PIX_CASE * 0.5) + xCenter, NB_PIX_CASE + xCenter,
-                            NB_PIX_CASE + xCenter, (int) (NB_PIX_CASE * 0.5) + xCenter };
-                    int[] yPoly = { (int) (NB_PIX_CASE * 0.75) + yCenter, (int) (NB_PIX_CASE * 0.25) + yCenter, yCenter,
-                            (int) (NB_PIX_CASE * 0.25) + yCenter, (int) (NB_PIX_CASE * 0.75) + yCenter,
-                            yCenter + NB_PIX_CASE };
-                    aDraggedUnit = new Polygon(xPoly, yPoly, xPoly.length);
+                	aDraggedUnit = new Polygon();
+                	for(int i = 0 ; i < 6 ; i++) {
+                		int x = (int) (xCenter + (NB_PIX_CASE/2+3) * Math.sin(i*2*Math.PI/6));
+            			int y = (int) (yCenter + (NB_PIX_CASE/2) * Math.cos(i*2*Math.PI/6));
+            			aDraggedUnit.addPoint(x, y);
+                	}
                 }
                 repaintThread();
             }
@@ -185,46 +257,46 @@ public class PanneauJeu extends JPanel implements IConfig {
     /**
      * Constructeur PanneauJeu
      */
-    public PanneauJeu() {
-
-        this.aCarte = new Carte();
+    public PanneauJeu(JFrame pWindow, Carte pCarte) {
+    	aWindow = pWindow;
+    	
+    	if(aCarte == null) {
+    		aCarte = new Carte();
+    	} else {
+    		setCarte(pCarte);
+    	}
+        
 
         setLayout(new BorderLayout());
         JToolBar outil = toolBar();
         this.add(outil, BorderLayout.NORTH);
         this.add(plateau(), BorderLayout.SOUTH);
         this.addKeyListener(new Clavier());
-
+        
+        vTemp = this;
+       
         repaintThread();
-        this.addKeyListener(new KeyListener() {
-			 
-            @Override 
-            public void keyTyped(KeyEvent e) { 
-                int key = e.getKeyChar(); 
-                System.out.println(key); 
-                if (key == 'a') {
-                    System.out.println("Test"); 
-                }
-            }
-            
-            @Override 
-            public void keyPressed(KeyEvent e) { 
-                int key = e.getKeyCode(); 
-                System.out.println(key); 
-                if (key == KeyEvent.VK_E) {
-                   System.out.println("Réussite"); 
-                } 
-            }
-            
-            @Override 
-            public void keyReleased(KeyEvent e) { 
-                int key = e.getKeyCode(); 
-                System.out.print(key); 
-                if (key == KeyEvent.VK_B) { 
-                    System.out.println("Zoulou"); 
-                }
-            } 
-        });
+        /*
+         * addKeyListener(new KeyAdapter(){
+         * 
+         * @Override public void keyTyped(KeyEvent e) { // TODO Auto-generated method
+         * stub int key = e.getKeyChar(); System.out.println(key); if (key == 'a') {
+         * System.out.println("Test"); }
+         * 
+         * }
+         * 
+         * @Override public void keyPressed(KeyEvent e) { // TODO Auto-generated method
+         * stub int key = e.getKeyCode(); if (key == KeyEvent.VK_E) {
+         * System.out.println("Réussite"); }
+         * 
+         * }
+         * 
+         * @Override public void keyReleased(KeyEvent e) { // TODO Auto-generated method
+         * stub int key = e.getKeyCode(); System.out.print(key); if (key ==
+         * KeyEvent.VK_B) { System.out.println("Zoulou"); }
+         * 
+         * } });
+         */
 
     }
 
@@ -233,7 +305,7 @@ public class PanneauJeu extends JPanel implements IConfig {
      * @return La carte du jeu
      */
     public Carte getCarte(){
-        return this.aCarte;
+        return aCarte;
     }
 
     /**
@@ -241,23 +313,27 @@ public class PanneauJeu extends JPanel implements IConfig {
      * @param pCarte Carte à définir
      */
     public void setCarte(Carte pCarte){
-        this.aCarte = pCarte;
+        aCarte = pCarte;
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
+        //Antialazing mais drop fps
+        //Graphics2D g2d = (Graphics2D) g;
+        //g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        
         g.setColor(Color.WHITE);
 
         aCarte.toutDessiner(g);
 
-        if (this.aDraggedUnit != null) {
-            new Hexagone(this.aCarte.aMap[this.aPressedPosition.getX()][this.aPressedPosition.getY()].getElement(),true, this.aDraggedUnit, null).seDessiner(g);
+        if (aDraggedUnit != null) {
+            new Hexagone(aDraggedUnit ,aPressedPosition.getX() , aPressedPosition.getY()).seDessiner(g, aCarte.getCarte()[aPressedPosition.getX()][aPressedPosition.getY()]);
         }
 
-        if (this.aInfo != null) {
-            this.aInfo.paintComponent(g);
+        if (aInfo != null) {
+            aInfo.paintComponent(g);
         }
 
         
@@ -274,17 +350,17 @@ public class PanneauJeu extends JPanel implements IConfig {
      * @param e MouseEvent
      */
     private void markHasHover(MouseEvent e) {
-        for (int x = 0; x < this.aCarte.aMap.length; x++) {
-            for (int y = 0; y < this.aCarte.aMap[0].length; y++) {
-                if (this.aCarte.aMap[x][y].isContain(e.getX(), e.getY())) {
-                    this.aCarte.aMap[x][y].setFocus(true);
-                    if (this.aCarte.aMap[x][y].getElement() instanceof Soldat && this.aCarte.aMap[x][y].getVisible()) {
-                        this.aInfo = new InfoBulle((Soldat) this.aCarte.aMap[x][y].getElement(), e.getX(), e.getY());
+        for (int x = 0; x < LARGEUR_CARTE; x++) {
+            for (int y = 0; y < HAUTEUR_CARTE; y++) {
+                if (aCarte.getHexagones()[x][y].isContain(e.getX(), e.getY())) {
+                    aCarte.getCarte()[x][y].setFocus(true);
+                    if (aCarte.getCarte()[x][y].getElement() instanceof Soldat && aCarte.getCarte()[x][y].getVisible()) {
+                        aInfo = new InfoBulle((Soldat) aCarte.getCarte()[x][y].getElement(), e.getX(), e.getY());
                     } else {
-                        this.aInfo = null;
+                        aInfo = null;
                     }
                 } else {
-                    this.aCarte.aMap[x][y].setFocus(false);
+                    aCarte.getCarte()[x][y].setFocus(false);
                 }
             }
         }
@@ -297,7 +373,7 @@ public class PanneauJeu extends JPanel implements IConfig {
     public void herosTarget(boolean pSet) {
 
         if (aPressedTarget != null) {
-            Position vPos = this.aPressedTarget;
+            Position vPos = aPressedTarget;
             // On trouve le héros à cette position
             Heros[] vArmee = aCarte.getArmeeHeros();
 
@@ -325,21 +401,21 @@ public class PanneauJeu extends JPanel implements IConfig {
             return;
 
         if (vPos.getX() - 1 >= 0) {
-            aCarte.aMap[vPos.getX() - 1][vPos.getY()].setTarget(pSet);
+            aCarte.getCarte()[vPos.getX() - 1][vPos.getY()].setTarget(pSet);
             targetOne(new Position(vPos.getX() - 1, vPos.getY()), pSet, pVision - 1);
         }
         if (vPos.getX() + 1 < LARGEUR_CARTE) {
-            aCarte.aMap[vPos.getX() + 1][vPos.getY()].setTarget(pSet);
+            aCarte.getCarte()[vPos.getX() + 1][vPos.getY()].setTarget(pSet);
             targetOne(new Position(vPos.getX() + 1, vPos.getY()), pSet, pVision - 1);
 
         }
         if (vPos.getY() - 1 >= 0) {
-            aCarte.aMap[vPos.getX()][vPos.getY() - 1].setTarget(pSet);
+            aCarte.getCarte()[vPos.getX()][vPos.getY() - 1].setTarget(pSet);
             targetOne(new Position(vPos.getX(), vPos.getY() - 1), pSet, pVision - 1);
 
         }
         if (vPos.getY() + 1 < HAUTEUR_CARTE) {
-            aCarte.aMap[vPos.getX()][vPos.getY() + 1].setTarget(pSet);
+            aCarte.getCarte()[vPos.getX()][vPos.getY() + 1].setTarget(pSet);
             targetOne(new Position(vPos.getX(), vPos.getY() + 1), pSet, pVision - 1);
 
         }
@@ -347,23 +423,23 @@ public class PanneauJeu extends JPanel implements IConfig {
         if (vPos.getY() % 2 != 0) { // Ligne impaire
 
             if (vPos.getX() + 1 < LARGEUR_CARTE && vPos.getY() + 1 < HAUTEUR_CARTE) {
-                aCarte.aMap[vPos.getX() + 1][vPos.getY() + 1].setTarget(pSet);
+                aCarte.getCarte()[vPos.getX() + 1][vPos.getY() + 1].setTarget(pSet);
                 targetOne(new Position(vPos.getX() + 1, vPos.getY() + 1), pSet, pVision - 1);
 
             }
             if (vPos.getX() + 1 < LARGEUR_CARTE && vPos.getY() - 1 >= 0) {
-                aCarte.aMap[vPos.getX() + 1][vPos.getY() - 1].setTarget(pSet);
+                aCarte.getCarte()[vPos.getX() + 1][vPos.getY() - 1].setTarget(pSet);
                 targetOne(new Position(vPos.getX() + 1, vPos.getY() - 1), pSet, pVision - 1);
 
             }
         } else { // Ligne paire
             if (vPos.getX() - 1 >= 0 && vPos.getY() + 1 < HAUTEUR_CARTE) {
-                aCarte.aMap[vPos.getX() - 1][vPos.getY() + 1].setTarget(pSet);
+                aCarte.getCarte()[vPos.getX() - 1][vPos.getY() + 1].setTarget(pSet);
                 targetOne(new Position(vPos.getX() - 1, vPos.getY() + 1), pSet, pVision - 1);
 
             }
             if (vPos.getX() - 1 >= 0 && vPos.getY() - 1 >= 0) {
-                aCarte.aMap[vPos.getX() - 1][vPos.getY() - 1].setTarget(pSet);
+                aCarte.getCarte()[vPos.getX() - 1][vPos.getY() - 1].setTarget(pSet);
                 targetOne(new Position(vPos.getX() - 1, vPos.getY() - 1), pSet, pVision - 1);
 
             }
@@ -456,7 +532,7 @@ public class PanneauJeu extends JPanel implements IConfig {
         };
         worker.execute();
     }
-
+    
     public void focusPanel(){
         this.setFocusable(true);
         this.requestFocusInWindow();

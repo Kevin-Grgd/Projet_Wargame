@@ -1,27 +1,25 @@
 package wargame;
 
-import java.awt.Graphics;
-import java.awt.Polygon;
-
 public abstract class Soldat extends Element implements ISoldat {
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 6135340252482111515L;
 	private int points;
 	private int portee;
 	private int puissance;
 	private int tir;
-	protected transient ISoldat type;
-
-	public abstract void renderElement(Graphics g, Polygon p);
+	protected ISoldat type;
 
 	/**
 	 * Constructeur
-	 * @param pos La position du soldat
+	 * @param type La position du soldat
 	 */
-	Soldat(Position pos) {
-		super(pos);
+	Soldat(ISoldat type) {
+		setType(type);
+		//aBufferedImage = type.getEnumImage();
+		setPoints(type.getPoints());
+		setPortee(type.getPortee());
+		setPuissance(type.getPuissance());
+		setTir(type.getTir());
+		setUrl(type.getUrl());
 	}
 
 	/**
@@ -94,9 +92,9 @@ public abstract class Soldat extends Element implements ISoldat {
 	 */
 	public void combat(Soldat soldat) {
 		if (this.getPosition().estVoisine(soldat.getPosition())) { // Au corps à corps
-			soldat.setPoints(soldat.getPoints() - this.getPuissance());
+			soldat.setPoints(soldat.getPoints() - getPuissance());
 		} else { // A distance
-			soldat.setPoints(soldat.getPoints() - this.getTir());
+			soldat.setPoints(soldat.getPoints() - getTir());
 		}
 	}
 
@@ -121,7 +119,7 @@ public abstract class Soldat extends Element implements ISoldat {
 	 * @return Le type du soldat
 	 */
 	public ISoldat getTypeSoldat() {
-		return this.type;
+		return type;
 	}
 
 	/**
@@ -136,12 +134,8 @@ public abstract class Soldat extends Element implements ISoldat {
 		}
 	}
 
-	/**
-	 * Le soldat choisi est un élu (Plus fort, plus résistant, ...)
-	 */
 	public void est_elu() {
 
 	}
-
-
+	
 }

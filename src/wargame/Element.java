@@ -1,25 +1,13 @@
 package wargame;
 
-import java.awt.Graphics;
-import java.awt.Polygon;
-import java.awt.image.BufferedImage;
 import java.io.Serializable;
 
 public abstract class Element implements Serializable{
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = 6708915742292972554L;
+	private static final long serialVersionUID = 4761294017398466739L;
 	private Position pos;
-	protected transient BufferedImage aBufferedImage;
-	
-	/**
-	 * Constructeur de l'élément
-	 * @param pos Sa position
-	 */
-	Element(Position pos){
-		this.pos = pos;
-	}
+	private int skinNumber;
+	private String url;
+	//protected transient BufferedImage aBufferedImage;
 	
 	/**
 	 * Donne la position de l'élément
@@ -36,21 +24,20 @@ public abstract class Element implements Serializable{
 	public void setPosition(Position pos) {
 		this.pos = pos;
 	}
-
-	/**
-	 * Renvoie l'image de cet élément
-	 * @return Image de l'élément
-	 */
-	public BufferedImage getBufferedImage(){
-		return aBufferedImage;
+	
+	public int getSkinNumber() {
+	   	 return skinNumber;
+	    }
+	    
+	public void setSkinNumber(int skinNumber) {
+	   	this.skinNumber = skinNumber;
 	}
-
-	/**
-	 * Méthode abstraite pour "dessiner" les éléments
-	 * @param g Graphique où dessiner
-	 * @param p Polygone à dessiner
-	 */
-	public abstract void renderElement(Graphics g,Polygon p);
-
-	public abstract void reloadData();
+	
+	public String getUrl() {
+		return url;
+	}
+	
+	public void setUrl(String url) {
+		this.url = url;
+	}
 }

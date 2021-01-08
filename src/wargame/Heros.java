@@ -1,13 +1,9 @@
 package wargame;
-import java.awt.Polygon;
-import java.awt.image.BufferedImage;
-import java.awt.Graphics;
 
-public class Heros extends Soldat{
-
-	private static final long serialVersionUID = -7002420395707777840L;
+public class Heros extends Soldat {
+	private static final long serialVersionUID = -8042494773455062650L;
 	private static int numHeros = 64;
-	private final char ID_HEROS;
+	private final char ID;
 	private boolean aSelected;
 	private boolean aJoue = false;
 
@@ -15,25 +11,15 @@ public class Heros extends Soldat{
 	 * Constructeur du héros
 	 * @param pos Sa position sur la carte
 	 */
-	Heros(Position pos) {
-		super(pos);
-		setType(TypesH.getTypeHAlea());
-		this.aBufferedImage = this.type.getEnumImage();
-		setPoints(type.getPoints());
-		setPortee(type.getPortee());
-		setPuissance(type.getPuissance());
-		setTir(type.getTir());
+	Heros() {
+		super(TypesH.getTypeHAlea());
 		aSelected = false;
-		ID_HEROS = (char) ++numHeros;
+		ID = (char) ++numHeros;
+		setSkinNumber((int) (Math.random()*2));
 	}
 
 	public String toString() {
-		return type.toString() + " " + ID_HEROS;
-	}
-
-	@Override
-	public void renderElement(Graphics g, Polygon p) {
-		new Image(this.aBufferedImage,p).drawHexa(g);
+		return type.toString() + " " + ID;
 	}
 
 	/**
@@ -66,17 +52,6 @@ public class Heros extends Soldat{
 	 */
 	public boolean getJoue() {
 		return this.aJoue;
-	}
-
-	@Override
-	public BufferedImage getEnumImage() {
-		//Not used
-		return null;
-	}
-
-	@Override
-	public void reloadData() {
-		this.aBufferedImage = this.type.getEnumImage();
 	}
 
 }

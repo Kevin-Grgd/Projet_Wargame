@@ -31,13 +31,13 @@ public class MenuAccueil extends JPanel implements IConfig, LineListener {
 	private transient Image logoJeu;
 	private transient PanneauJeu aGame;
 	private transient JFrame aWindow;
-	private transient MenuFin aMenuFin;
+	//private transient MenuFin aMenuFin;
 	private transient MenuLoadSave aMenuLoadSave;
 	private transient BoutonMenu aJouer = null;
 	private transient BoutonMenu aQuitter = null;
 	private transient BoutonMenu aCharger = null;
 	private transient int choixMusic;
-	private transient boolean playOnce = false;
+	private transient boolean playOnce;
 	private transient Clip audioClip;
 	private transient int keyDetected;
 	private transient boolean keyPushedOnce = false;
@@ -55,8 +55,8 @@ public class MenuAccueil extends JPanel implements IConfig, LineListener {
 		menu.setOpaque(false);
 		menu.setPreferredSize(new Dimension(LARGEUR_FENETRE, HAUTEUR_FENETRE));
 		vTemp = this;
-		aMenuFin = new MenuFin(aGame,aWindow,vTemp,false);
-		aMenuLoadSave = new MenuLoadSave(aGame,aWindow,vTemp,false);
+		//aMenuFin = new MenuFin(aGame,aWindow,vTemp,false);
+		aMenuLoadSave = new MenuLoadSave(aGame,aWindow,vTemp,CHARGER,MENU_ACCUEIL);
 
 		
 		/**
@@ -245,7 +245,9 @@ public class MenuAccueil extends JPanel implements IConfig, LineListener {
 		
 		setLayout(new BorderLayout());
 		this.add(menu());
-		playMusic();
+		if (!playOnce) {
+			playMusic();
+		}
 	}
 	
 	@Override
@@ -270,11 +272,13 @@ public class MenuAccueil extends JPanel implements IConfig, LineListener {
 		} else {
 			this.aJouer.setFocus(false);
 		}
+
 		if (this.aQuitter.getBounds().contains(e.getX(),e.getY())) {
 			this.aQuitter.setFocus(true);
 		} else {
 			this.aQuitter.setFocus(false);
 		}
+		
 		if (this.aCharger.getBounds().contains(e.getX(),e.getY())) {
 			this.aCharger.setFocus(true);
 		} else {

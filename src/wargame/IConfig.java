@@ -54,7 +54,7 @@ public interface IConfig {
 	public final int MINIMAL_TIR_REQUIS = 5;
 	
 	public final Color COULEUR_VIDE = Color.white;
-	public final Color COULEUR_INCONNU = Color.lightGray;
+	public final Color COULEUR_INCONNU = Color.darkGray;
 	public final Color COULEUR_TEXTE = Color.black;
 	public final Color COULEUR_MONSTRES = Color.black;
 	public final Color COULEUR_HEROS = Color.red;
@@ -66,13 +66,16 @@ public interface IConfig {
 	/* PARTIE MUSIQUE */
 	public final int MUSIC_1 = 1;
 	public final int MUSIC_2 = 2;
-
-
+	
 	/* PARTIE SAUVEGARDE et CHARGEMENT */
+	public final boolean CHARGER = true;
+	public final boolean SAUVEGARDER = false;
+	public final int JEU = 0;
+	public final int MENU_ACCUEIL = 1;
 	public final int NB_MAX_SAVE = 5;
-	public final int LARGEUR_BOUTON_LOAD_SAVE = LARGEUR_FENETRE - (LARGEUR_FENETRE/3);
-	public final int HAUTEUR_BOUTON_LOAD_SAVE = 125;
-	public final float TAILLE_TEXTE_LOAD_SAVE = 35f;
+	public final int LARGEUR_BOUTON_LOAD_SAVE = LARGEUR_FENETRE - (LARGEUR_FENETRE/2);
+	public final int HAUTEUR_BOUTON_LOAD_SAVE = 80;
+	public final float TAILLE_TEXTE_LOAD_SAVE = 25f;
 	public final Color BOUTON_LOAD_CONTOUR = new Color(68, 92, 60);
 	public final Color BOUTON_LOAD_CONTOUR_SURVOLE = new Color(40, 60, 35);
 	public final Color BOUTON_LOAD_CONTOUR_SELECTIONNE = new Color(214, 203, 0);

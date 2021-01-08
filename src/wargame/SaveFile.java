@@ -4,21 +4,30 @@ import java.io.Serializable;
 public class SaveFile implements Serializable{
 
     private static final long serialVersionUID = 3517160801267666132L;
-    
-    private Hexagone[][] aMap;
+    private Position[][] map;
     private Heros[] armeeHeros;
     private Monstre[] armeeMonstre;
     private int heros_restant;
     private int monstre_restant;
     private String fileName;
+    private int nbTours;
 
-    public SaveFile(int i) {
-        this.setFileName(i);
-        this.setaMap(null);
-        this.setArmeeHeros(null);
-        this.setArmeeMonstre(null);
-        this.setHeros_restant(0);
-        this.setMonstre_restant(0);
+    public SaveFile(int i, Carte carte) {
+        setFileName(i);
+        setCarte(carte.getCarte());
+        setArmeeHeros(carte.getArmeeHeros());
+        setArmeeMonstre(carte.getArmeeMonstre());
+        setHeros_restant(carte.getHerosRestant());
+        setMonstre_restant(carte.getMonstreRestant());
+        setTours(carte.getTours());
+    }
+    
+    public int getTours() {
+    	return nbTours;
+    }
+    
+    public void setTours(int nbTours) {
+    	this.nbTours = nbTours;
     }
 
     public String getFileName() {
@@ -26,9 +35,18 @@ public class SaveFile implements Serializable{
     }
 
     public void setFileName(int numero) {
-        this.fileName = "carte" + numero + ".warsave";
+        String usrDirectory = System.getProperty("user.dir");
+        this.fileName = usrDirectory+"/src/saves/save" + numero + ".warsave";
     }
-
+    
+    public Position[][] getCarte(){
+    	return map;
+    }
+    
+    public void setCarte(Position[][] map) {
+    	this.map = map;
+    }
+    
     public int getMonstre_restant() {
         return monstre_restant;
     }
@@ -60,15 +78,5 @@ public class SaveFile implements Serializable{
     public void setArmeeHeros(Heros[] armeeHeros) {
         this.armeeHeros = armeeHeros;
     }
-
-    public Hexagone[][] getaMap() {
-        return aMap;
-    }
-
-    public void setaMap(Hexagone[][] aMap) {
-        this.aMap = aMap;
-    }
-
-    
 
 }

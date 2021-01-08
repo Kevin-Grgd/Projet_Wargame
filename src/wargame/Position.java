@@ -3,15 +3,15 @@ package wargame;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Position implements IConfig,Serializable {
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = 4170380000741253038L;
+public class Position implements IConfig, Serializable {
+	private static final long serialVersionUID = 380845925989148507L;
 	private int x;
 	private int y;
 	private Element elem;
-
+	private boolean isVisible;
+	private boolean aFocus = false;
+    private boolean isTarget = false;
+    private int grassNumber;
 	/**
 	 * Constructeur
 	 * @param x Coordonnée en abscisse
@@ -20,6 +20,7 @@ public class Position implements IConfig,Serializable {
 	Position(int x, int y) {
 		this.x = x;
 		this.y = y;
+		grassNumber = 1 + (int) (Math.random()*2);
 	}
 
 	/**
@@ -74,8 +75,10 @@ public class Position implements IConfig,Serializable {
 	 * @return Si elles le sont
 	 */
 	public boolean estVoisine(Position pos) {
-		if (pos != null) {
+		if (pos.estValide()) {
 			// Elimination des cas non souhaités
+			if(x == pos.getX() && y == pos.getY()) return false;
+			
 			if (y % 2 == 0) {
 				if (x == pos.getX() - 1 && y == pos.getY() - 1) {
 					return false;
@@ -116,22 +119,86 @@ public class Position implements IConfig,Serializable {
 	public Element getElement() {
 		return elem;
 	}
+	
+	/**
+	 * Modifie l'element si l'element n'est pas null on lui donne cette position
+	 * @param elem
+	 */
+	public void setElement(Element elem) {
+		this.elem = elem;
+		if(elem != null)
+			elem.setPosition(this);
+	}
+	
+	
+    public void setVisible(boolean bool){
+        isVisible = bool;
+    }
+
+    /**
+     * 
+     * @return Si la position est visible
+     */
+    public boolean getVisible(){
+        return isVisible;
+    }
+    
+    /**
+     * 
+     * @return Indique si la curseur souris est sur la position
+     */
+    public boolean getFocus() {
+        return aFocus;
+    }
+    
+    /**
+     * Choisi si la position est survolée    
+     * @param aFocus S'il l'est ou non
+     */
+     public void setFocus(boolean aFocus) {
+         this.aFocus = aFocus;
+     }
+     
+     /**
+      * Choisi si la position est concernée par un clique de souris
+      * @param pTarget Vrai ou faux 
+      */
+     public void setTarget(boolean pTarget){
+         this.isTarget = pTarget;
+     }
+
+     /**
+      * 
+      * @return Si la position est ciblée
+      */
+     public boolean getTarget(){
+         return this.isTarget;
+     }
+     
+     public int getGrassNumber() {
+    	 return grassNumber;
+     }
+     
+     public void setGrassNumber(int grassNumber) {
+    	 this.grassNumber = grassNumber;
+     }
 
 	/**
 	 * Donne un tableau des cases adjacentes de cette position
 	 * @return Position[]
 	 */
-	public Position[] getAdjacents() { //retourne les 6 cases adjacentes
+	public Position[] getAdjacents() { //retourne jusqu'à 6 cases adjacentes
 		ArrayList<Position> posAdjacentes = new ArrayList<>();
 		Position pos;
 		for(int i = x-1 ; i <= x+1 ; i++) {
 			for(int j = y-1 ; j <= y+1 ; j++) {
 				pos = new Position(i, j);
-				if(estVoisine(pos) && i > 0 && i < LARGEUR_CARTE && j > 0 && j < HAUTEUR_CARTE) {
+				if(estVoisine(pos)) {
 					posAdjacentes.add(pos);
 				}
 			}
 		}
 		return posAdjacentes.toArray(new Position[0]);
 	}
+	
 }
