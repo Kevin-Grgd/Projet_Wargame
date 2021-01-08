@@ -1,5 +1,6 @@
 package wargame;
 
+import java.awt.Graphics;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -11,7 +12,7 @@ public class Position implements IConfig, Serializable {
 	private boolean isVisible;
 	private boolean aFocus = false;
     private boolean isTarget = false;
-
+    private int grassNumber;
 	/**
 	 * Constructeur
 	 * @param x Coordonnée en abscisse
@@ -20,6 +21,7 @@ public class Position implements IConfig, Serializable {
 	Position(int x, int y) {
 		this.x = x;
 		this.y = y;
+		grassNumber = 1 + (int) (Math.random()*2);
 	}
 
 	/**
@@ -173,6 +175,14 @@ public class Position implements IConfig, Serializable {
      public boolean getTarget(){
          return this.isTarget;
      }
+     
+     public int getGrassNumber() {
+    	 return grassNumber;
+     }
+     
+     public void setGrassNumber(int grassNumber) {
+    	 this.grassNumber = grassNumber;
+     }
 
 	/**
 	 * Donne un tableau des cases adjacentes de cette position
@@ -192,6 +202,9 @@ public class Position implements IConfig, Serializable {
 		return posAdjacentes.toArray(new Position[0]);
 	}
 	
-	
+	public void seDessiner(Graphics g) {
+		Hexagone hexa = new Hexagone(x, y);
+		hexa.seDessiner(g, this);
+	}
 	
 }

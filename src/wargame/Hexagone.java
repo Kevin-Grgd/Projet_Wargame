@@ -7,7 +7,6 @@ import java.awt.Polygon;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Random;
 
 import javax.imageio.ImageIO;
 import javax.swing.JComponent;
@@ -17,7 +16,6 @@ public class Hexagone extends JComponent implements IConfig{
 
     private Polygon Hexa = new Polygon();
     private transient Image aImage;
-    private transient BufferedImage aBackground;
 
     /**
      * Constructeur de l'hexagone
@@ -52,15 +50,6 @@ public class Hexagone extends JComponent implements IConfig{
         }
         else {
         	Hexa = pHexa;
-        }
-        	
-        try {
-            int vRand = new Random().nextInt(IConfig.NB_TEXTURE_OBSTACLE)+1;
-            String vUrlString = "/resources/grass#.png".replace('#',  Integer.toString(vRand).charAt(0));
-            URL url = this.getClass().getResource(vUrlString);
-            this.aBackground = ImageIO.read(url);         
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
     
@@ -120,11 +109,29 @@ public class Hexagone extends JComponent implements IConfig{
         }
 
         else{
-            Image vImage = new Image(aBackground, Hexa);
-
-            vImage.drawHexa(g);
+        	
+        	try {
+                String vUrlString = "/resources/grass#.png".replace('#',  Integer.toString(pos.getGrassNumber()).charAt(0));
+                URL url = getClass().getResource(vUrlString);
+                BufferedImage aBackground = ImageIO.read(url); 
+                Image vImage = new Image(aBackground, Hexa);
+                vImage.drawHexa(g);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        	
             if(pos.getElement() != null){
-                pos.getElement().renderElement(g, Hexa);
+            	try {
+                    String vUrlString = pos.getElement().getUrl().replace('#',  Integer.toString(pos.getElement().getSkinNumber()).charAt(0));
+                    URL url = getClass().getResource(vUrlString);
+                    BufferedImage aBackground = ImageIO.read(url); 
+                    Image vImage = new Image(aBackground, Hexa);
+                    vImage.drawHexa(g);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            	
+               // pos.getElement().renderElement(g, Hexa);
             }
             
             if(pos.getElement() instanceof Heros) {
@@ -159,17 +166,4 @@ public class Hexagone extends JComponent implements IConfig{
             }
         }
     }
-    
-    public void reloadData(Position pos){
-        try {
-            int vRand = new Random().nextInt(IConfig.NB_TEXTURE_OBSTACLE)+1;
-            String vUrlString = "/resources/grass#.png".replace('#',  Integer.toString(vRand).charAt(0));
-            URL url = this.getClass().getResource(vUrlString);
-            this.aBackground = ImageIO.read(url);         
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        if(pos.getElement() != null) pos.getElement().reloadData();
-    }
-
 }

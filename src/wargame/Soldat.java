@@ -1,7 +1,5 @@
 package wargame;
 
-import java.awt.image.BufferedImage;
-
 public abstract class Soldat extends Element implements ISoldat {
 	private static final long serialVersionUID = 6135340252482111515L;
 	private int points;
@@ -16,11 +14,12 @@ public abstract class Soldat extends Element implements ISoldat {
 	 */
 	Soldat(ISoldat type) {
 		setType(type);
-		aBufferedImage = type.getEnumImage();
+		//aBufferedImage = type.getEnumImage();
 		setPoints(type.getPoints());
 		setPortee(type.getPortee());
 		setPuissance(type.getPuissance());
 		setTir(type.getTir());
+		setUrl(type.getUrl());
 	}
 
 	/**
@@ -135,21 +134,8 @@ public abstract class Soldat extends Element implements ISoldat {
 		}
 	}
 
-	/**
-	 * Le soldat choisi est un élu (Plus fort, plus résistant, ...)
-	 */
 	public void est_elu() {
 
 	}
-	
-	public BufferedImage getEnumImage() {
-		//Not used
-		return null;
-	}
-	
-	public void reloadData() {
-		aBufferedImage = type.getEnumImage();
-	}
-	
 	
 }

@@ -15,6 +15,7 @@ public class Heros extends Soldat {
 		super(TypesH.getTypeHAlea());
 		aSelected = false;
 		ID = (char) ++numHeros;
+		setSkinNumber((int) (Math.random()*2));
 	}
 
 	public String toString() {

@@ -12,6 +12,7 @@ public class Monstre extends Soldat {
 	Monstre() {
 		super(TypesM.getTypeMAlea());
 		ID = ++numMonstre;
+		setSkinNumber((int) (Math.random()*6));
 	}
 
 	public String toString() {
