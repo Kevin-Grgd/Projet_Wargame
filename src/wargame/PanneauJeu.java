@@ -242,8 +242,8 @@ public class PanneauJeu extends JPanel implements IConfig {
                 if (aPressedPosition != null) {
                 	aDraggedUnit = new Polygon();
                 	for(int i = 0 ; i < 6 ; i++) {
-                		int x = (int) (xCenter + (NB_PIX_CASE/2+3) * Math.sin(i*2*Math.PI/6));
-            			int y = (int) (yCenter + (NB_PIX_CASE/2) * Math.cos(i*2*Math.PI/6));
+                		int x = (int) (xCenter + ((double)NB_PIX_CASE/2+3) * Math.sin(i*2*Math.PI/6));
+            			int y = (int) (yCenter + ((double)NB_PIX_CASE/2) * Math.cos(i*2*Math.PI/6));
             			aDraggedUnit.addPoint(x, y);
                 	}
                 }
@@ -263,7 +263,7 @@ public class PanneauJeu extends JPanel implements IConfig {
     	if(aCarte == null) {
     		aCarte = new Carte();
     	} else {
-    		setCarte(pCarte);
+    		this.setCarte(pCarte);
     	}
         
 
@@ -271,32 +271,10 @@ public class PanneauJeu extends JPanel implements IConfig {
         JToolBar outil = toolBar();
         this.add(outil, BorderLayout.NORTH);
         this.add(plateau(), BorderLayout.SOUTH);
-        this.addKeyListener(new Clavier());
         
         vTemp = this;
        
         repaintThread();
-        /*
-         * addKeyListener(new KeyAdapter(){
-         * 
-         * @Override public void keyTyped(KeyEvent e) { // TODO Auto-generated method
-         * stub int key = e.getKeyChar(); System.out.println(key); if (key == 'a') {
-         * System.out.println("Test"); }
-         * 
-         * }
-         * 
-         * @Override public void keyPressed(KeyEvent e) { // TODO Auto-generated method
-         * stub int key = e.getKeyCode(); if (key == KeyEvent.VK_E) {
-         * System.out.println("Réussite"); }
-         * 
-         * }
-         * 
-         * @Override public void keyReleased(KeyEvent e) { // TODO Auto-generated method
-         * stub int key = e.getKeyCode(); System.out.print(key); if (key ==
-         * KeyEvent.VK_B) { System.out.println("Zoulou"); }
-         * 
-         * } });
-         */
 
     }
 

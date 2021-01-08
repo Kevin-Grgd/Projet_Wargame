@@ -30,7 +30,7 @@ public class MenuLoadSave extends JPanel implements IConfig {
     private transient boolean aCharge; //True Chargement | False : Sauvegarde
     private transient MenuLoadSave vTemp;
     private transient int aAppel;
-    private transient Carte aCarte = new Carte();
+    private transient Carte aCarte;
     private transient int nbSave;
 
     public JPanel load() {
@@ -137,11 +137,13 @@ public class MenuLoadSave extends JPanel implements IConfig {
         aCharge = pCharge ;
         aEnsemble_Boutons = new BoutonLoadSave[NB_MAX_SAVE];
         aAppel = pAppel; //Pour savoir si on reviens au menu ou au jeu
-
+        
         if (aCharge == CHARGER) {
             aCharger_Sauvegarder = new BoutonMenu( ((LARGEUR_FENETRE/2)+(LARGEUR_BOUTON/2)+25), (HAUTEUR_FENETRE-50), "Charger");
+            aCarte = new Carte();
         } else if (aCharge == SAUVEGARDER) {
             aCharger_Sauvegarder = new BoutonMenu( ((LARGEUR_FENETRE/2)+(LARGEUR_BOUTON/2)+25), (HAUTEUR_FENETRE-50), "Sauvegarder");
+            aCarte = pGame.getCarte();
         }
 
         aRetour = new BoutonMenu( ((LARGEUR_FENETRE/2)-(LARGEUR_BOUTON/2)-25) , (HAUTEUR_FENETRE-50), "Retour");
@@ -185,17 +187,8 @@ public class MenuLoadSave extends JPanel implements IConfig {
         g.drawImage(img_BackgroundLoadSave,0,0,this);
         g.drawImage(img_LoadSave,( (LARGEUR_FENETRE/2)-(imgWidth/2) ), 20, this);
         
-        if (aCharge) { //Mode chargement de partie
-        						//On affiche nbSave boutons
-        	for (int i = 0; i < nbSave; i++) {
-        		aEnsemble_Boutons[i].paintComponent(g);
-        	}
-        	
-        } else { //Mode sauvegarde de partie
-        			//On affiche nbSave +1 boutons
-        	for (int i= 0; i < nbSave; i++) {
-        		aEnsemble_Boutons[i].paintComponent(g);
-        	}
+    	for (int i= 0; i < nbSave; i++) {
+            aEnsemble_Boutons[i].paintComponent(g);
         }
 
         aRetour.paintComponent(g);  
@@ -288,6 +281,7 @@ public class MenuLoadSave extends JPanel implements IConfig {
             } else if (aCharge == SAUVEGARDER) {
                 System.out.println("Sauvegarder la partie sur le slot numero "+choixSave);
                 aCarte.Sauvegarde(choixSave);
+                System.out.println("nbTours en VRAI :"+aCarte.getTours());
             }
         }
     }

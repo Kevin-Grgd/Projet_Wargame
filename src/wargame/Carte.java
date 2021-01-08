@@ -8,10 +8,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Carte extends JPanel implements IConfig, ICarte, Serializable{
+public class Carte extends JPanel implements IConfig, ICarte {
     private static final long serialVersionUID = 1L;
     private Hexagone[][] hexagone;
     private Position[][] map;
@@ -45,7 +44,7 @@ public class Carte extends JPanel implements IConfig, ICarte, Serializable{
     }
     
     public int getTours() {
-    	return nbTours;
+    	return this.nbTours;
     }
     
     public void setTours(int nbTours) {
@@ -66,11 +65,13 @@ public class Carte extends JPanel implements IConfig, ICarte, Serializable{
      * @param pCarte Carte où ajouter les soldats
      */
     public void ajoutSoldat() {
-        int x, y, i;
+        int x; 
+        int y;
+        int i;
         // Ajout des héros sur le côté gauche de la map
         for (i = 0; i < NB_HEROS; i++) {
             do {
-                x = (int) (Math.random() * (LARGEUR_CARTE / 2)); // Côté gauche de la carte
+                x = (int) (Math.random() * ((double)LARGEUR_CARTE / 2)); // Côté gauche de la carte
                 y = (int) (Math.random() * HAUTEUR_CARTE); // De bas en haut
             } while (map[x][y].getElement() != null); // Tant que il y a un obstacle on prend une autre position
             
@@ -82,7 +83,7 @@ public class Carte extends JPanel implements IConfig, ICarte, Serializable{
         // Ajout des monstres sur le côté droit de la map
         for (i = 0; i < NB_MONSTRES; i++) {
             do {
-                x = LARGEUR_CARTE / 2 + (int) (Math.random() * (LARGEUR_CARTE - LARGEUR_CARTE / 2)); // Côté droit de la carte
+                x = LARGEUR_CARTE / 2 + (int) (Math.random() * (LARGEUR_CARTE - (double)LARGEUR_CARTE / 2)); // Côté droit de la carte
                 y = (int) (Math.random() * HAUTEUR_CARTE); // De bas en haut
             } while (map[x][y].getElement() != null); // Tant que il y a un obstacle on prend une autre position
            
@@ -159,7 +160,8 @@ public class Carte extends JPanel implements IConfig, ICarte, Serializable{
      * @return La position vide sur la carte
      */
     public Position trouvePositionVide() {
-        int x, y;
+        int x;
+        int y;
         do {
             x = (int) (Math.random() * LARGEUR_CARTE);
             y = (int) (Math.random() * HAUTEUR_CARTE);
@@ -206,14 +208,16 @@ public class Carte extends JPanel implements IConfig, ICarte, Serializable{
      * @return Le héros s'il existe, null sinon
      */
     public Heros trouveHeros(Position pos) {
-        int x, y;
+        int x;
+        int y;
         ArrayList<Heros> herosAdjacents = new ArrayList<>();
         Position[] posAdjacentes = pos.getAdjacents();
 		for(int i = 0 ; i <  posAdjacentes.length ; i++) {
-                x = posAdjacentes[i].getX();
-                y = posAdjacentes[i].getY();
-            if (map[x][y].getElement() instanceof Heros)
+            x = posAdjacentes[i].getX();
+            y = posAdjacentes[i].getY();
+            if (map[x][y].getElement() instanceof Heros){
 				herosAdjacents.add((Heros) map[x][y].getElement());
+           }
         }
 		
 		if(herosAdjacents.isEmpty())
@@ -369,8 +373,8 @@ public class Carte extends JPanel implements IConfig, ICarte, Serializable{
                  int yCenter = (int) hexagone[vPos.getX()][vPos.getY()].getHexagone().getBounds().getCenterY();
 
                  for(int j = 0 ; j < 6 ; j++) {
-             		int x = (int) (xCenter + (hexaLargeur/2) * Math.cos(j*2*Math.PI/6));
-         			int y = (int) (yCenter + hexaHauteur/2 * Math.sin(j*2*Math.PI/6));
+             		int x = (int) (xCenter + ((double)hexaLargeur/2) * Math.cos(j*2*Math.PI/6));
+         			int y = (int) (yCenter + (double)hexaHauteur/2 * Math.sin(j*2*Math.PI/6));
          			vPoly.addPoint(x, y);
              	}
                  
@@ -466,21 +470,20 @@ public class Carte extends JPanel implements IConfig, ICarte, Serializable{
                 armeeMonstre[j].combat(vHerosTarget);
             }
         }
+        
     }
     
     public void Sauvegarde(int numSave){
         //Save
         SaveFile vFile = new SaveFile(numSave, this);
-        
-        try {
-           FileOutputStream fileOut = new FileOutputStream(vFile.getFileName());
-           ObjectOutputStream out = new ObjectOutputStream(fileOut);
+        try(FileOutputStream fileOut = new FileOutputStream(vFile.getFileName());
+        ObjectOutputStream out = new ObjectOutputStream(fileOut);){
+           
            out.writeObject(vFile);
-           out.close();
-           fileOut.close();
            System.out.println("Carte : saveGame : "+vFile.getFileName());
            System.out.println("Serialized data is saved in carte.ser");
            System.out.println("nbTours sauvegarde :"+vFile.getTours());
+           System.out.println("nbTours en VRAI :"+this.getTours());
         } catch (IOException i) {
            i.printStackTrace();
         }
@@ -493,25 +496,20 @@ public class Carte extends JPanel implements IConfig, ICarte, Serializable{
         String loadGame = usrDirectory+"/src/saves/save" + numSave + ".warsave";
         System.out.println("Carte : loadGame : "+loadGame);
         
-        try {
-            FileInputStream fileIn = new FileInputStream(loadGame);
-            ObjectInputStream in = new ObjectInputStream(fileIn);
+        try(FileInputStream fileIn = new FileInputStream(loadGame);
+        ObjectInputStream in = new ObjectInputStream(fileIn);) {
+            
             vFile = (SaveFile)in.readObject();
-
-            in.close();
-
             map = vFile.getCarte();
             armeeHeros =vFile.getArmeeHeros();
             armeeMonstre = vFile.getArmeeMonstre();
             monstre_restant = vFile.getMonstre_restant();
             heros_restant = vFile.getHeros_restant();
             nbTours = vFile.getTours();
-
-            fileIn.close();
             System.out.println("Serialized data is load");
         } catch (IOException | ClassNotFoundException i) {
             i.printStackTrace();
-            return;
+            
         }
     }
 }

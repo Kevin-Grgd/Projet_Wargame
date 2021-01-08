@@ -18,9 +18,6 @@ public class BoutonLoadSave extends JComponent implements IConfig {
     public int posX;
     public int posY;
     public int numeroBouton;
-    private int widthTexte;
-    private int heightTexte;
-    private int midTexte;
     private String texte;
     private boolean isTarget = false;
     private boolean isFocus = false;
@@ -103,7 +100,9 @@ public class BoutonLoadSave extends JComponent implements IConfig {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-
+        int widthTexte;
+        int heightTexte;
+        int midTexte;
         //Recuperation taille texte
 		FontMetrics metrics = g.getFontMetrics(boutonFont);
 		widthTexte = metrics.stringWidth(texte);
