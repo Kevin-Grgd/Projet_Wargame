@@ -19,12 +19,14 @@ public class Carte extends JPanel implements IConfig, ICarte {
     private transient int heros_restant;
     private transient int monstre_restant;
     private int nbTours;
+    private transient String saveName;
 
 
     /**
      * Constructeur de la carte
     */
     public Carte() {
+    	saveName = "";
         hexagone = new Hexagone[LARGEUR_CARTE][HAUTEUR_CARTE];
         map = new Position[LARGEUR_CARTE][HAUTEUR_CARTE];
         armeeHeros = new Heros[NB_HEROS];
@@ -35,12 +37,20 @@ public class Carte extends JPanel implements IConfig, ICarte {
         
         for (int x = 0; x < LARGEUR_CARTE ; x++) {
             for (int y = 0; y < HAUTEUR_CARTE ; y++) {
+            	hexagone[x][y] = new Hexagone(x, y);
             	map[x][y] = new Position(x, y);
-            	hexagone[x][y] = new Hexagone(map[x][y]);
             }
         }
         ajoutObstacle();
         ajoutSoldat();
+    }
+    
+    public String getSaveName() {
+    	return this.saveName;
+    }
+    
+    public void setSaveName(String saveName) {
+    	this.saveName = saveName;
     }
     
     public int getTours() {
@@ -473,9 +483,9 @@ public class Carte extends JPanel implements IConfig, ICarte {
         
     }
     
-    public void Sauvegarde(int numSave){
+    public void Sauvegarde(int numSave, String saveName){
         //Save
-        SaveFile vFile = new SaveFile(numSave, this);
+        SaveFile vFile = new SaveFile(numSave, saveName, this);
         try(FileOutputStream fileOut = new FileOutputStream(vFile.getFileName());
         ObjectOutputStream out = new ObjectOutputStream(fileOut);){
            
@@ -500,6 +510,7 @@ public class Carte extends JPanel implements IConfig, ICarte {
         ObjectInputStream in = new ObjectInputStream(fileIn);) {
             
             vFile = (SaveFile)in.readObject();
+            saveName = vFile.getSaveName();
             map = vFile.getCarte();
             armeeHeros =vFile.getArmeeHeros();
             armeeMonstre = vFile.getArmeeMonstre();
