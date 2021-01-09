@@ -42,6 +42,7 @@ public class MenuLoadSave extends JPanel implements IConfig {
         int x = LARGEUR_FENETRE/2;
         int y = 180;
         String texte;
+        Carte toutesCartes = new Carte();
         
         load.setOpaque(false);
         load.setPreferredSize(new Dimension(LARGEUR_FENETRE, HAUTEUR_FENETRE));
@@ -52,8 +53,8 @@ public class MenuLoadSave extends JPanel implements IConfig {
         						//cr�e nbSave boutons
         	
         	for (int i = 1; i <= nbSave; i++) {
-        		aCarte.Recharger(i);
-    			texte = ""+aCarte.getSaveName();
+        		toutesCartes.Recharger(i);
+    			texte = ""+toutesCartes.getSaveName();
         		aEnsemble_Boutons[i-1] = new BoutonLoadSave(x,y,i,texte);
         		y = y + HAUTEUR_BOUTON_LOAD_SAVE + 35;
         	}
@@ -68,8 +69,8 @@ public class MenuLoadSave extends JPanel implements IConfig {
         		if (i == nbSave && nbSave != 5) {
         			texte = " - ";
         		} else {
-        			aCarte.Recharger(i);
-        			texte = ""+aCarte.getSaveName();
+        			toutesCartes.Recharger(i);
+        			texte = ""+toutesCartes.getSaveName();
         		}
         		aEnsemble_Boutons[i-1] = new BoutonLoadSave(x,y,i,texte);
             	y = y + HAUTEUR_BOUTON_LOAD_SAVE + 35;
