@@ -85,5 +85,6 @@ public interface IConfig {
 	public final Color TEXTE_LOAD = new Color(186, 186, 186);
 	public final Color TEXTE_LOAD_SELECTIONNE = new Color(214, 203, 0);
 	
+	public final float TAILLE_TEXTE_FIELD = 80f;
 }
 	

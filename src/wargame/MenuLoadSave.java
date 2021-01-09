@@ -14,6 +14,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+
 public class MenuLoadSave extends JPanel implements IConfig {
     
     private static final long serialVersionUID = 1L;
@@ -32,6 +33,7 @@ public class MenuLoadSave extends JPanel implements IConfig {
     private transient int aAppel;
     private transient Carte aCarte;
     private transient int nbSave;
+    private transient NomSave aNomSave;
 
     public JPanel load() {
 
@@ -50,20 +52,24 @@ public class MenuLoadSave extends JPanel implements IConfig {
         						//cr�e nbSave boutons
         	
         	for (int i = 1; i <= nbSave; i++) {
-        		texte = "Partie "+i;
+        		aCarte.Recharger(i);
+    			texte = ""+aCarte.getSaveName();
         		aEnsemble_Boutons[i-1] = new BoutonLoadSave(x,y,i,texte);
         		y = y + HAUTEUR_BOUTON_LOAD_SAVE + 35;
         	}
         	
         } else { //Mode sauvegarde de partie
         			//cr�e nbSave + 1 boutons
-        	nbSave++;
+        	if (nbSave < 5) {
+        		nbSave++;
+        	}
         	
         	for (int i = 1; i <= nbSave; i++) {
-        		if (i == nbSave) {
+        		if (i == nbSave && nbSave != 5) {
         			texte = " - ";
         		} else {
-        			texte = "Partie "+i;
+        			aCarte.Recharger(i);
+        			texte = ""+aCarte.getSaveName();
         		}
         		aEnsemble_Boutons[i-1] = new BoutonLoadSave(x,y,i,texte);
             	y = y + HAUTEUR_BOUTON_LOAD_SAVE + 35;
@@ -174,7 +180,7 @@ public class MenuLoadSave extends JPanel implements IConfig {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        
         setLayout(new BorderLayout());
         nbSave = getSaveNumber();
         this.add(load());
@@ -269,19 +275,37 @@ public class MenuLoadSave extends JPanel implements IConfig {
             aCharger_Sauvegarder.setTarget(false);
             
             if (aCharge == CHARGER) {
-                System.out.println("Chargement partie numero "+choixSave);
-                aCarte.Recharger(choixSave);
-                aGame = new PanneauJeu(aWindow,aCarte);
-                aWindow.remove(vTemp);
-                aWindow.add(aGame);
-                aGame.focusPanel();
-                aWindow.repaint();
-                aWindow.pack();
+
+            	if (nbSave > 0) {
+                    System.out.println("Chargement partie numero "+choixSave);
+                    aCarte.Recharger(choixSave);
+                    aGame = new PanneauJeu(aWindow,aCarte);
+                    aWindow.remove(vTemp);
+                    aWindow.add(aGame);
+                    aGame.focusPanel();
+                    aWindow.repaint();
+                    aWindow.pack();
+
+                } else { //Il n'y a aucune partie sauvegarde, par securite -> Retour menu principal
+                    aWindow.remove(vTemp);
+                    aWindow.add(aMenuAccueil);
+                    aMenuAccueil.focusPanel();
+                    aWindow.repaint();
+                    aWindow.pack();
+                    System.out.println("Il n'y a aucune partie sauvegarde");
+                    System.out.println("Retour menu principal");
+                }
 
             } else if (aCharge == SAUVEGARDER) {
-                System.out.println("Sauvegarder la partie sur le slot numero "+choixSave);
-                aCarte.Sauvegarde(choixSave);
-                System.out.println("nbTours en VRAI :"+aCarte.getTours());
+
+                if (choixSave > 0) {
+                    System.out.println("Sauvegarder la partie sur le slot numero "+choixSave);
+                    aNomSave = new NomSave(aWindow,vTemp,aCarte,choixSave);
+                    aWindow.remove(vTemp);
+                    aWindow.add(aNomSave);
+                    aWindow.repaint();
+                    aWindow.pack();
+                }
             }
         }
     }
@@ -289,6 +313,10 @@ public class MenuLoadSave extends JPanel implements IConfig {
     private int getSaveNumber() {
         String usrDirectory = System.getProperty("user.dir");
         nbSave = new File(usrDirectory+"/src/saves/").listFiles().length;
-        return nbSave;
+        if (nbSave == NB_MAX_SAVE) {
+        	return 5;
+        } else {
+        	return nbSave;
+        }
     }
 }
