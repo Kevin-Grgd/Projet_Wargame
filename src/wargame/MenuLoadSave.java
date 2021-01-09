@@ -54,20 +54,24 @@ public class MenuLoadSave extends JPanel implements IConfig {
         vTemp = this;
         
         if (aCharge) { //Mode chargement de partie : creation  nbSave + 1 boutons
-        	//System.out.println(i);
+        	
+        	aEnsemble_Boutons = new BoutonLoadSave[nbSave];
         	for (int i = 1; i <= nbSave; i++) {
         		toutesCartes.Recharger(i);
     			texte = ""+toutesCartes.getSaveName();
-    			System.out.println("Nom save :"+texte);
+    			//System.out.println("Nom save :"+texte);
         		aEnsemble_Boutons[i-1] = new BoutonLoadSave(x,y,i,texte);
         		y = y + HAUTEUR_BOUTON_LOAD_SAVE + 35;
         	}
         	
         } else { //Mode sauvegarde de partie : creation  nbSave + 1 boutons
+        	
         	nbSave++;
+        	aEnsemble_Boutons = new BoutonLoadSave[nbSave];
         	
         	for (int i = 1; i <= nbSave; i++) {
         		if (i == nbSave) {
+        			System.out.println("ok");
         			texte = " - ";
         		} else {
         			toutesCartes.Recharger(i);
@@ -168,7 +172,6 @@ public class MenuLoadSave extends JPanel implements IConfig {
         aWindow = pWindow;
         aMenuAccueil = pMenuAccueil;
         aCharge = pCharge ;
-        aEnsemble_Boutons = new BoutonLoadSave[NB_MAX_SAVE];
         aAppel = pAppel; //Pour savoir si on reviens au menu ou au jeu
         
         if (aCharge == CHARGER) {
@@ -306,7 +309,7 @@ public class MenuLoadSave extends JPanel implements IConfig {
             if (aCharge == CHARGER) {
 
             	if (nbSave > 0) {
-                    System.out.println("Chargement partie numero "+choixSave);
+                    //System.out.println("Chargement partie numero "+choixSave);
                     aCarte.Recharger(choixSave);
                     aGame = new PanneauJeu(aWindow,aCarte);
                     aWindow.remove(vTemp);
@@ -328,7 +331,7 @@ public class MenuLoadSave extends JPanel implements IConfig {
             } else if (aCharge == SAUVEGARDER) {
 
                 if (choixSave > 0) {
-                    System.out.println("Sauvegarder la partie sur le slot numero "+choixSave);
+                    //System.out.println("Sauvegarder la partie sur le slot numero "+choixSave);
                     aNomSave = new NomSave(aGame,aWindow,vTemp, aMenuAccueil,aCarte,choixSave);
                     aWindow.remove(vTemp);
                     aWindow.add(aNomSave);
