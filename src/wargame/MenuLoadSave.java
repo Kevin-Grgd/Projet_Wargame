@@ -6,6 +6,8 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -34,7 +36,9 @@ public class MenuLoadSave extends JPanel implements IConfig {
     private transient Carte aCarte;
     private transient int nbSave;
     private transient NomSave aNomSave;
-
+    private transient int newPosY;
+    
+    
     public JPanel load() {
 
         JPanel load = new JPanel();
@@ -49,31 +53,28 @@ public class MenuLoadSave extends JPanel implements IConfig {
         
         vTemp = this;
         
-        if (aCharge) { //Mode chargement de partie
-        						//cr�e nbSave boutons
-        	
+        if (aCharge) { //Mode chargement de partie : creation  nbSave + 1 boutons
+        	//System.out.println(i);
         	for (int i = 1; i <= nbSave; i++) {
         		toutesCartes.Recharger(i);
     			texte = ""+toutesCartes.getSaveName();
+    			System.out.println("Nom save :"+texte);
         		aEnsemble_Boutons[i-1] = new BoutonLoadSave(x,y,i,texte);
         		y = y + HAUTEUR_BOUTON_LOAD_SAVE + 35;
         	}
         	
-        } else { //Mode sauvegarde de partie
-        			//cr�e nbSave + 1 boutons
-        	if (nbSave < 5) {
-        		nbSave++;
-        	}
+        } else { //Mode sauvegarde de partie : creation  nbSave + 1 boutons
+        	nbSave++;
         	
         	for (int i = 1; i <= nbSave; i++) {
-        		if (i == nbSave && nbSave != 5) {
+        		if (i == nbSave) {
         			texte = " - ";
         		} else {
         			toutesCartes.Recharger(i);
         			texte = ""+toutesCartes.getSaveName();
         		}
         		aEnsemble_Boutons[i-1] = new BoutonLoadSave(x,y,i,texte);
-            	y = y + HAUTEUR_BOUTON_LOAD_SAVE + 35;
+        		y = y + HAUTEUR_BOUTON_LOAD_SAVE + 35;
         	}
         }
 
@@ -116,12 +117,37 @@ public class MenuLoadSave extends JPanel implements IConfig {
            }
         });
 
-        this.addMouseMotionListener( new MouseAdapter() {
+        this.addMouseMotionListener(new MouseAdapter() {
             @Override
             public void mouseMoved(MouseEvent e) {
                 boutonHover(e);
                 repaint();
             }
+        });
+
+        this.addMouseWheelListener(new MouseWheelListener() {
+        	@Override
+            public void mouseWheelMoved(MouseWheelEvent e) {
+        		if (e.getWheelRotation() < 0) {
+        			System.out.println("Molette HAUT");
+        			for (int i = 0; i < nbSave; i++) {
+        				newPosY = aEnsemble_Boutons[i].getPosY() - 10;
+        				if(aEnsemble_Boutons[nbSave-1].getPosY() >= (180+HAUTEUR_BOUTON_LOAD_SAVE)) {
+        					aEnsemble_Boutons[i].setPosY(newPosY);
+        					repaint();
+        				}
+        			}
+        		} else {
+        			System.out.println("Molette BAS");
+        			for (int i = 0; i < nbSave; i++) {
+        				newPosY = aEnsemble_Boutons[i].getPosY() + 10;
+        				if(aEnsemble_Boutons[0].getPosY() <= (680-HAUTEUR_BOUTON_LOAD_SAVE)) {
+        					aEnsemble_Boutons[i].setPosY(newPosY);
+            				repaint();
+        				}
+        			}
+        		}
+        	}
         });
         /**
         * FIN GESTION SOURIS
@@ -195,7 +221,9 @@ public class MenuLoadSave extends JPanel implements IConfig {
         g.drawImage(img_LoadSave,( (LARGEUR_FENETRE/2)-(imgWidth/2) ), 20, this);
         
     	for (int i= 0; i < nbSave; i++) {
-            aEnsemble_Boutons[i].paintComponent(g);
+    		if (aEnsemble_Boutons[i].getPosY() >= 180 && aEnsemble_Boutons[i].getPosY() <= 670) {
+    			aEnsemble_Boutons[i].paintComponent(g);
+    		}
         }
 
         aRetour.paintComponent(g);  
@@ -314,10 +342,6 @@ public class MenuLoadSave extends JPanel implements IConfig {
     private int getSaveNumber() {
         String usrDirectory = System.getProperty("user.dir");
         nbSave = new File(usrDirectory+"/src/saves/").listFiles().length;
-        if (nbSave == NB_MAX_SAVE) {
-        	return 5;
-        } else {
-        	return nbSave;
-        }
+        return nbSave;
     }
 }

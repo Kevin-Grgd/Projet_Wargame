@@ -49,6 +49,14 @@ public class BoutonLoadSave extends JComponent implements IConfig {
         }
     }
 
+    public int getPosY() {
+        return this.posY;
+    }
+
+    public void setPosY(int posY) {
+        this.posY = posY;
+    }
+
     /**
      * Donne le numero du bouton (et donc de la partie)
      * @return numeroBouton
