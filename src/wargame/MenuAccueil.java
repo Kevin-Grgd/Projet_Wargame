@@ -112,6 +112,7 @@ public class MenuAccueil extends JPanel implements IConfig, LineListener {
 
 			@Override
 			public void keyTyped(KeyEvent e) {
+				// Empty
 			}
 			
 			@Override
@@ -171,6 +172,9 @@ public class MenuAccueil extends JPanel implements IConfig, LineListener {
 							}
 							removeFocus();
 							keyPushedOnce = true;
+							break;
+							
+						default:
 							break;
 					}
 					repaint();
