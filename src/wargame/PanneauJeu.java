@@ -307,7 +307,7 @@ public class PanneauJeu extends JPanel implements IConfig {
         aCarte.toutDessiner(g);
 
         if (aDraggedUnit != null) {
-            new Hexagone(aDraggedUnit ,aPressedPosition.getX() , aPressedPosition.getY()).seDessiner(g, aCarte.getCarte()[aPressedPosition.getX()][aPressedPosition.getY()]);
+            new Hexagone(aDraggedUnit , new Position(aPressedPosition.getX() , aPressedPosition.getY())).seDessiner(g, aCarte.getCarte()[aPressedPosition.getX()][aPressedPosition.getY()]);
         }
 
         if (aInfo != null) {
