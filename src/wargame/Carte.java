@@ -37,8 +37,8 @@ public class Carte extends JPanel implements IConfig, ICarte {
         
         for (int x = 0; x < LARGEUR_CARTE ; x++) {
             for (int y = 0; y < HAUTEUR_CARTE ; y++) {
-            	hexagone[x][y] = new Hexagone(x, y);
             	map[x][y] = new Position(x, y);
+            	hexagone[x][y] = new Hexagone(map[x][y]);
             }
         }
         ajoutObstacle();
