@@ -273,7 +273,28 @@ public class PanneauJeu extends JPanel implements IConfig {
         this.add(plateau(), BorderLayout.SOUTH);
         
         vTemp = this;
-       
+        MenuFin endScreen;
+        while(vTemp.getCarte().getHerosRestant() != 0 && vTemp.getCarte().getMonstreRestant() != 0){
+			//System.out.println(""+vPanneau.getCarte().getHerosRestant());
+			System.out.println("");
+        }
+        
+        if (vTemp.getCarte().getHerosRestant() == 0){
+			endScreen = new MenuFin(vTemp, aWindow, aMenuAccueil, false);
+        	aWindow.remove(vTemp);
+        	aWindow.add(endScreen);
+    		endScreen.focusPanel();
+    		aWindow.repaint();
+    		aWindow.pack();
+        }
+        if (vTemp.getCarte().getMonstreRestant() == 0){
+			endScreen = new MenuFin(vTemp, aWindow, aMenuAccueil, true);
+        	aWindow.remove(vTemp);
+    		aWindow.add(endScreen);
+    		endScreen.focusPanel();
+        	aWindow.repaint();
+        	aWindow.pack();
+		}
         repaintThread();
 
     }
