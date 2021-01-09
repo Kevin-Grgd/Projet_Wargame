@@ -30,6 +30,7 @@ public class MenuFin extends JPanel implements IConfig {
     private transient MenuFin vTemp;
     private transient int keyDetected;
     private transient boolean keyPushedOnce;
+    private transient Carte aCarte;
 
     public JPanel endScreen() {
         JPanel endScreen = new JPanel();
@@ -254,6 +255,8 @@ public class MenuFin extends JPanel implements IConfig {
             }
             aRejouer.setTarget(false);
             aWindow.remove(vTemp);
+            aCarte = new Carte();
+            aGame = new PanneauJeu(aWindow,aCarte);
             aWindow.add(aGame);
             aGame.focusPanel();
             aWindow.repaint();

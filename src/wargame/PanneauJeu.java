@@ -131,7 +131,7 @@ public class PanneauJeu extends JPanel implements IConfig {
         	
         	@Override
         	public void actionPerformed(final ActionEvent e) {
-        		aMenuAccueil = new MenuAccueil(vTemp, aWindow);
+        		aMenuAccueil = new MenuAccueil(aWindow);
         		aWindow.remove(vTemp);
         		aWindow.add(aMenuAccueil);
         		aMenuAccueil.focusPanel();
@@ -203,7 +203,7 @@ public class PanneauJeu extends JPanel implements IConfig {
                                     new Position(x, y));
                                     MenuFin endScreen;
                                     if (aCarte.getHerosRestant() == 0){
-                                        aMenuAccueil = new MenuAccueil(vTemp, aWindow);
+                                        aMenuAccueil = new MenuAccueil(aWindow);
                                         endScreen = new MenuFin(vTemp, aWindow, aMenuAccueil, true);
                                         aWindow.remove(vTemp);
                                         aWindow.add(endScreen);
@@ -463,7 +463,7 @@ public class PanneauJeu extends JPanel implements IConfig {
        
         MenuFin endScreen;
         if (aCarte.getMonstreRestant() == 0){
-            aMenuAccueil = new MenuAccueil(vTemp, aWindow);
+            aMenuAccueil = new MenuAccueil(aWindow);
             endScreen = new MenuFin(vTemp, aWindow, aMenuAccueil, true);
             aWindow.remove(vTemp);
             aWindow.add(endScreen);
@@ -505,7 +505,7 @@ public class PanneauJeu extends JPanel implements IConfig {
                         aCarte.mort(vHerosTarget);
                         aCarte.setHerosRestant(aCarte.getHerosRestant() - 1);
                         if (aCarte.getHerosRestant() == 0){
-                            aMenuAccueil = new MenuAccueil(vTemp, aWindow);
+                            aMenuAccueil = new MenuAccueil(aWindow);
                             endScreen = new MenuFin(vTemp, aWindow, aMenuAccueil, false);
                             aWindow.remove(vTemp);
                             aWindow.add(endScreen);

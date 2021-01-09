@@ -201,9 +201,9 @@ public class MenuAccueil extends JPanel implements IConfig, LineListener {
 	 * @param pGame
 	 * @param pWindow
 	 */
-	public MenuAccueil(PanneauJeu pGame,JFrame pWindow) {
-		aGame = pGame;
+	public MenuAccueil(JFrame pWindow) {
 		aWindow = pWindow;
+		aGame = new PanneauJeu(aWindow,null);
 		
 		/*
 		//Background : Aragorn

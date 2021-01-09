@@ -16,9 +16,7 @@ public class FenetreJeu extends JPanel implements IConfig{
 		fenetre.setLocation(POSITION_X, POSITION_Y);
 		fenetre.setBackground(Color.GRAY);
 		
-
-		PanneauJeu vPanneau = new PanneauJeu(fenetre,null);
-		MenuAccueil vMenuAccueil = new MenuAccueil(vPanneau,fenetre);
+		MenuAccueil vMenuAccueil = new MenuAccueil(fenetre);
 		fenetre.add(vMenuAccueil);
 		vMenuAccueil.focusPanel();
 		//vMenuAccueil.setMusicPlay(false); //Au lancement la musique n'est pas encore jouee
