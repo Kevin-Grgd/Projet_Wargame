@@ -179,8 +179,9 @@ public class PanneauJeu extends JPanel implements IConfig {
                     for (int y = 0; y < HAUTEUR_CARTE; y++) {
                         if (aCarte.getHexagones()[x][y].isContain(e.getX(), e.getY())
                                 && aCarte.getCarte()[x][y].getElement() instanceof Heros) {
-                        	if(!((Heros) aCarte.getCarte()[x][y].getElement()).getJoue())
-                        		aPressedPosition = new Position(x, y);
+                        	if(!((Heros) aCarte.getCarte()[x][y].getElement()).getJoue()) {
+                        		aPressedPosition = aCarte.getCarte()[x][y];
+                        	}
                         }
                     }
                 }
@@ -350,9 +351,8 @@ public class PanneauJeu extends JPanel implements IConfig {
                 // Empty
                 }
         });
-        
     }
-
+	
     /**
      * 
      * @return La carte du jeu
@@ -381,8 +381,9 @@ public class PanneauJeu extends JPanel implements IConfig {
 
         aCarte.toutDessiner(g);
 
-        if (aDraggedUnit != null) {
-            new Hexagone(aDraggedUnit ,new Position(aPressedPosition.getX() , aPressedPosition.getY())).seDessiner(g, aCarte.getCarte()[aPressedPosition.getX()][aPressedPosition.getY()]);
+        if (aDraggedUnit != null) {	
+        	Hexagone hexa = new Hexagone(aDraggedUnit, aPressedPosition);
+        	hexa.seDessiner(g, aPressedPosition);
         }
 
         if (aInfo != null) {
