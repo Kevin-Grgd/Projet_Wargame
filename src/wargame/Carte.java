@@ -342,7 +342,9 @@ public class Carte extends JPanel implements IConfig, ICarte {
                         pHeros.setJoue(true);
                         if (vMonstre.getPoints() <= 0) { // Plus de points de vie, il décède
                             mort(vMonstre);
-                            setMonstreRestant(monstre_restant--);
+                            this.setMonstreRestant(this.getMonstreRestant() -1);
+                            System.out.println(getMonstreRestant());
+                            
                         }
                         return true;
                     }
@@ -478,6 +480,10 @@ public class Carte extends JPanel implements IConfig, ICarte {
                 deplaceSoldat(vNextPos, armeeMonstre[j]);
             } else { // Si on a trouvé un héros non loin on l'affronte
                 armeeMonstre[j].combat(vHerosTarget);
+                if (vHerosTarget.getPoints() <= 0){
+                    this.mort(vHerosTarget);
+                    this.setMonstreRestant(this.getMonstreRestant() - 1);
+                }
             }
         }
         
@@ -524,4 +530,3 @@ public class Carte extends JPanel implements IConfig, ICarte {
         }
     }
 }
-

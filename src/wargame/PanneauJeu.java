@@ -77,6 +77,7 @@ public class PanneauJeu extends JPanel implements IConfig {
                 aCarte.setTours(aCarte.getTours() + 1);
                 tour.setText("Tour " + aCarte.getTours()); // Fin du tour, on incrémente de 1
                 joueIA(); // A l'IA de jouer
+                
                 repaintThread();
             }
 
@@ -200,6 +201,16 @@ public class PanneauJeu extends JPanel implements IConfig {
                             aCarte.actionHeros(
                                     (Heros) aCarte.getCarte()[aPressedPosition.getX()][aPressedPosition.getY()].getElement(),
                                     new Position(x, y));
+                                    MenuFin endScreen;
+                                    if (aCarte.getHerosRestant() == 0){
+                                        aMenuAccueil = new MenuAccueil(vTemp, aWindow);
+                                        endScreen = new MenuFin(vTemp, aWindow, aMenuAccueil, true);
+                                        aWindow.remove(vTemp);
+                                        aWindow.add(endScreen);
+                                        endScreen.focusPanel();
+                                        aWindow.repaint();
+                                        aWindow.pack();
+                                    }
                         }
                     }
                 }
@@ -250,7 +261,7 @@ public class PanneauJeu extends JPanel implements IConfig {
                 repaintThread();
             }
         });
-
+        
         return plat;
     }
 
@@ -266,36 +277,13 @@ public class PanneauJeu extends JPanel implements IConfig {
     		setCarte(pCarte);
     	}
         
-
+        vTemp = this;
         setLayout(new BorderLayout());
         JToolBar outil = toolBar();
         this.add(outil, BorderLayout.NORTH);
         this.add(plateau(), BorderLayout.SOUTH);
         
-        vTemp = this;
-        MenuFin endScreen;
-        while(vTemp.getCarte().getHerosRestant() != 0 && vTemp.getCarte().getMonstreRestant() != 0){
-			//System.out.println(""+vPanneau.getCarte().getHerosRestant());
-			System.out.println("");
-        }
         
-        if (vTemp.getCarte().getHerosRestant() == 0){
-			endScreen = new MenuFin(vTemp, aWindow, aMenuAccueil, false);
-        	aWindow.remove(vTemp);
-        	aWindow.add(endScreen);
-    		endScreen.focusPanel();
-    		aWindow.repaint();
-    		aWindow.pack();
-        }
-        if (vTemp.getCarte().getMonstreRestant() == 0){
-			endScreen = new MenuFin(vTemp, aWindow, aMenuAccueil, true);
-        	aWindow.remove(vTemp);
-    		aWindow.add(endScreen);
-    		endScreen.focusPanel();
-        	aWindow.repaint();
-        	aWindow.pack();
-		}
-        repaintThread();
 
     }
 
@@ -473,6 +461,17 @@ public class PanneauJeu extends JPanel implements IConfig {
         Monstre[] listeMonstre = aCarte.getArmeeMonstre();
         Heros vHerosTarget;
        
+        MenuFin endScreen;
+        if (aCarte.getMonstreRestant() == 0){
+            aMenuAccueil = new MenuAccueil(vTemp, aWindow);
+            endScreen = new MenuFin(vTemp, aWindow, aMenuAccueil, true);
+            aWindow.remove(vTemp);
+            aWindow.add(endScreen);
+            endScreen.focusPanel();
+            aWindow.repaint();
+            aWindow.pack();
+        }
+        
         // Les héros qui n'ont pas joué ce repose
         for (int i = 0; i < NB_HEROS; i++) {
             if (listeHeros[i] != null){
@@ -505,6 +504,15 @@ public class PanneauJeu extends JPanel implements IConfig {
                     if (vHerosTarget.getPoints() <= 0){
                         aCarte.mort(vHerosTarget);
                         aCarte.setHerosRestant(aCarte.getHerosRestant() - 1);
+                        if (aCarte.getHerosRestant() == 0){
+                            aMenuAccueil = new MenuAccueil(vTemp, aWindow);
+                            endScreen = new MenuFin(vTemp, aWindow, aMenuAccueil, false);
+                            aWindow.remove(vTemp);
+                            aWindow.add(endScreen);
+                            endScreen.focusPanel();
+                            aWindow.repaint();
+                            aWindow.pack();
+                        }
                     }
                 }
             }
@@ -516,6 +524,7 @@ public class PanneauJeu extends JPanel implements IConfig {
                 listeHeros[i].setJoue(false);
             }
         }
+        
     }
 
     /**

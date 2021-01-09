@@ -27,19 +27,17 @@ import javax.sound.sampled.LineListener;
 public class MenuAccueil extends JPanel implements IConfig, LineListener {
 	
 	private static final long serialVersionUID = 1L;
-
-	public static boolean playOnce;
-
 	private transient Image img_BackgroundAccueil;
 	private transient Image logoJeu;
 	private transient PanneauJeu aGame;
 	private transient JFrame aWindow;
+	//private transient MenuFin aMenuFin;
 	private transient MenuLoadSave aMenuLoadSave;
 	private transient BoutonMenu aJouer = null;
 	private transient BoutonMenu aQuitter = null;
 	private transient BoutonMenu aCharger = null;
 	private transient int choixMusic;
-	//private transient boolean playOnce;
+	private transient boolean playOnce;
 	private transient Clip audioClip;
 	private transient int keyDetected;
 	private transient boolean keyPushedOnce = false;
@@ -247,9 +245,11 @@ public class MenuAccueil extends JPanel implements IConfig, LineListener {
 		
 		setLayout(new BorderLayout());
 		this.add(menu());
-		if (!getMusicPlay()) {
+		/*
+		if (!playOnce) {
 			playMusic();
-		}
+			playOnce = true;
+		}*/
 	}
 	
 	@Override
@@ -335,14 +335,6 @@ public class MenuAccueil extends JPanel implements IConfig, LineListener {
         this.setFocusable(true);
         this.requestFocusInWindow();
     }
-
-	public boolean getMusicPlay(){
-		return playOnce;
-	}
-
-	public void setMusicPlay(boolean isMusicPlay){
-		playOnce = isMusicPlay;
-	}
 	
 	/**
 	 * Detection musique finie
@@ -352,10 +344,10 @@ public class MenuAccueil extends JPanel implements IConfig, LineListener {
 		LineEvent.Type type = e.getType();
 
 		if (type == LineEvent.Type.START) {
-			setMusicPlay(true);
+			playOnce = true;
 		} else if (type == LineEvent.Type.STOP) {
 			audioClip.close();
-			setMusicPlay(false);
+			playOnce = false;
 			playMusic();
 		}
 	}
