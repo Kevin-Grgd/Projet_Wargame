@@ -260,7 +260,7 @@ public class PanneauJeu extends JPanel implements IConfig {
     public PanneauJeu(JFrame pWindow, Carte pCarte) {
     	aWindow = pWindow;
     	
-    	if(aCarte == null) {
+    	if(pCarte == null) {
     		aCarte = new Carte();
     	} else {
     		this.setCarte(pCarte);
