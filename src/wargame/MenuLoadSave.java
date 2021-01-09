@@ -300,7 +300,7 @@ public class MenuLoadSave extends JPanel implements IConfig {
 
                 if (choixSave > 0) {
                     System.out.println("Sauvegarder la partie sur le slot numero "+choixSave);
-                    aNomSave = new NomSave(aWindow,vTemp,aCarte,choixSave);
+                    aNomSave = new NomSave(aGame,aWindow,vTemp, aMenuAccueil,aCarte,choixSave);
                     aWindow.remove(vTemp);
                     aWindow.add(aNomSave);
                     aWindow.repaint();

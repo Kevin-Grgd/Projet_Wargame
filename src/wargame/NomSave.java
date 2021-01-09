@@ -26,8 +26,10 @@ public class NomSave extends JPanel implements IConfig {
 	
 	private transient BoutonMenu aValider;
     private transient BoutonMenu aRetour;
+    private transient PanneauJeu aGame;
     private transient JFrame aWindow;
     private transient MenuLoadSave aMenuLoadSave;
+    private transient MenuAccueil aMenuAccueil;
     private transient NomSave vTemp;
     private transient JTextField aSaveNameSaisie;
     private transient String texte;
@@ -104,12 +106,13 @@ public class NomSave extends JPanel implements IConfig {
         return saveName;
     }
 
-    public NomSave(JFrame pWindow, MenuLoadSave pMenuLoadSave, Carte pCarte, int pChoixSave) {
+    public NomSave(PanneauJeu pGame, JFrame pWindow, MenuLoadSave pMenuLoadSave, MenuAccueil pMenuAccueil,  Carte pCarte, int pChoixSave) {
+    	aGame = pGame;
         aWindow = pWindow;
-        aMenuLoadSave = pMenuLoadSave;
+        aMenuAccueil = pMenuAccueil;
         aCarte = pCarte;
         choixSave = pChoixSave;
-
+        
         texte = "Nom de la sauvegarde";
 
         aValider = new BoutonMenu(((LARGEUR_FENETRE/2)+(LARGEUR_BOUTON/2)+25), (HAUTEUR_FENETRE-250), "Valider");
@@ -185,6 +188,12 @@ public class NomSave extends JPanel implements IConfig {
             if (saveName != null && !saveName.trim().isEmpty()) {
                 aCarte.Sauvegarde(choixSave,saveName);
 			    aValider.setTarget(false);
+			    aWindow.remove(vTemp);
+			    aMenuLoadSave = new MenuLoadSave(aGame, aWindow,aMenuAccueil,SAUVEGARDER,JEU);
+		        aWindow.add(aMenuLoadSave);
+		        aMenuLoadSave.focusPanel();
+		        aWindow.repaint();
+		        aWindow.pack();
             }
         }
 
@@ -195,11 +204,11 @@ public class NomSave extends JPanel implements IConfig {
             	Thread.currentThread().interrupt();
             }
             aRetour.setTarget(false);
+            aWindow.remove(vTemp);
+            aWindow.add(aMenuLoadSave);
+            aMenuLoadSave.focusPanel();
+            aWindow.repaint();
+            aWindow.pack();
         }
-        aWindow.remove(vTemp);
-        aWindow.add(aMenuLoadSave);
-        aMenuLoadSave.focusPanel();
-        aWindow.repaint();
-        aWindow.pack();
     }
 }
