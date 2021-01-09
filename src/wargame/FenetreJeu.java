@@ -21,7 +21,7 @@ public class FenetreJeu extends JPanel implements IConfig{
 		MenuAccueil vMenuAccueil = new MenuAccueil(vPanneau,fenetre);
 		fenetre.add(vMenuAccueil);
 		vMenuAccueil.focusPanel();
-		vMenuAccueil.setMusicPlay(false); //Au lancement la musique n'est pas encore jouee
+		//vMenuAccueil.setMusicPlay(false); //Au lancement la musique n'est pas encore jouee
 																//La detection se fait toute seule dans la classe
 
 		fenetre.pack();
