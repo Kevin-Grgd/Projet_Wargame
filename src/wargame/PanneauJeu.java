@@ -11,6 +11,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -33,7 +35,7 @@ public class PanneauJeu extends JPanel implements IConfig {
     private transient PanneauJeu vTemp;
     private transient MenuAccueil aMenuAccueil;
     private transient MenuLoadSave aMenuLoadSave;
-   
+    private transient JLabel tour;
 
     /**
      * Création de boutons
@@ -65,7 +67,7 @@ public class PanneauJeu extends JPanel implements IConfig {
         JButton loadButton = Bouton("Charger");
         JButton quitButton = Bouton("Quitter");
   
-        JLabel tour = new JLabel();
+        tour = new JLabel();
         tour.setForeground(Color.white);
         tour.setText("Tour " + aCarte.getTours());
         
@@ -283,6 +285,72 @@ public class PanneauJeu extends JPanel implements IConfig {
         this.add(outil, BorderLayout.NORTH);
         this.add(plateau(), BorderLayout.SOUTH);
         
+        this.addKeyListener(new KeyListener() {
+			 
+            @Override 
+            public void keyTyped(KeyEvent e) { 
+               // Empty
+            }
+            
+            @Override 
+            public void keyPressed(KeyEvent e) { 
+                int key = e.getKeyCode(); 
+                switch(key){
+                case KeyEvent.VK_N: 
+                    System.out.println("Réussite"); 
+                    aCarte = new Carte();
+                    repaintThread();
+                    break;
+                
+                case KeyEvent.VK_R:
+                    herosRepos();
+                    break;
+
+                case KeyEvent.VK_S:
+                    aMenuLoadSave = new MenuLoadSave(vTemp,aWindow,aMenuAccueil,SAUVEGARDER,JEU);
+                    aWindow.remove(vTemp);
+                    aWindow.add(aMenuLoadSave);
+                    aMenuLoadSave.focusPanel();
+                    aWindow.repaint();
+                    aWindow.pack();
+                    break;
+                
+                case KeyEvent.VK_F:
+                    aCarte.setTours(aCarte.getTours() + 1);
+                    tour.setText("Tour " + aCarte.getTours()); // Fin du tour, on incrémente de 1
+                    joueIA(); // A l'IA de jouer
+                    repaintThread();
+                    break;
+
+                case KeyEvent.VK_Q:
+                    aMenuAccueil = new MenuAccueil(aWindow);
+                    aWindow.remove(vTemp);
+                    aWindow.add(aMenuAccueil);
+                    aMenuAccueil.focusPanel();
+                    aWindow.repaint();
+                    aWindow.pack();
+                    break;
+                
+                case KeyEvent.VK_C:
+                    aMenuLoadSave = new MenuLoadSave(vTemp,aWindow,aMenuAccueil,CHARGER,JEU);
+                    aWindow.remove(vTemp);
+                    aWindow.add(aMenuLoadSave);
+                    aMenuLoadSave.focusPanel();
+                    aWindow.repaint();
+                    aWindow.pack();
+                    break;
+                default:
+                    break;
+            }
+
+            }
+            
+            @Override 
+            public void keyReleased(KeyEvent e) { 
+                // Empty
+                }
+            } 
+        });
         
 
     }
