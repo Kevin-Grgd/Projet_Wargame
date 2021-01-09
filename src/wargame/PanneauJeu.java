@@ -349,10 +349,8 @@ public class PanneauJeu extends JPanel implements IConfig {
             public void keyReleased(KeyEvent e) { 
                 // Empty
                 }
-            } 
         });
         
-
     }
 
     /**
