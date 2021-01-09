@@ -263,7 +263,7 @@ public class PanneauJeu extends JPanel implements IConfig {
     	if(pCarte == null) {
     		aCarte = new Carte();
     	} else {
-    		this.setCarte(pCarte);
+    		setCarte(pCarte);
     	}
         
 
