@@ -1,6 +1,7 @@
 
 package wargame;
 
+
 public class Obstacle extends Element {
 	private static final long serialVersionUID = 8277957568171064957L;
 	private TypeObstacle TYPE;
@@ -28,8 +29,7 @@ public class Obstacle extends Element {
 	 */
 	Obstacle(TypeObstacle type) {
 		TYPE = type;
-		setSkinNumber(1 + (int) (Math.random()*2));
-		setUrl(type.getUrl());
+		setUrl(type.getUrl().replace('#',  Integer.toString(1 + (int) (Math.random()*2)).charAt(0)));
 	}
 
 	/**

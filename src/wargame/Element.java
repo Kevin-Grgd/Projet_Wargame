@@ -2,12 +2,11 @@ package wargame;
 
 import java.io.Serializable;
 
+
 public abstract class Element implements Serializable{
 	private static final long serialVersionUID = 4761294017398466739L;
 	private Position pos;
-	private int skinNumber;
 	private String url;
-	//protected transient BufferedImage aBufferedImage;
 	
 	/**
 	 * Donne la position de l'élément
@@ -25,14 +24,6 @@ public abstract class Element implements Serializable{
 		this.pos = pos;
 	}
 	
-	public int getSkinNumber() {
-	   	 return skinNumber;
-	    }
-	    
-	public void setSkinNumber(int skinNumber) {
-	   	this.skinNumber = skinNumber;
-	}
-	
 	public String getUrl() {
 		return url;
 	}
@@ -40,4 +31,5 @@ public abstract class Element implements Serializable{
 	public void setUrl(String url) {
 		this.url = url;
 	}
+	
 }

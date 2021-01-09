@@ -12,11 +12,10 @@ public class Monstre extends Soldat {
 	Monstre() {
 		super(TypesM.getTypeMAlea());
 		ID = ++numMonstre;
-		setSkinNumber((int) (Math.random()*6));
+		setUrl(type.getUrl().replace('#',  Integer.toString((int) (Math.random()*6)).charAt(0)));
 	}
 
 	public String toString() {
 		return type.toString() + " " + ID;
 	}
-
 }

@@ -19,7 +19,6 @@ public abstract class Soldat extends Element implements ISoldat {
 		setPortee(type.getPortee());
 		setPuissance(type.getPuissance());
 		setTir(type.getTir());
-		setUrl(type.getUrl());
 	}
 
 	/**

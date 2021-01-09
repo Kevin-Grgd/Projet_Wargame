@@ -122,16 +122,14 @@ public class Hexagone extends JComponent implements IConfig{
         	
             if(pos.getElement() != null){
             	try {
-                    String vUrlString = pos.getElement().getUrl().replace('#',  Integer.toString(pos.getElement().getSkinNumber()).charAt(0));
-                    URL url = getClass().getResource(vUrlString);
+                    URL url = getClass().getResource(pos.getElement().getUrl());
                     BufferedImage aBackground = ImageIO.read(url); 
                     Image vImage = new Image(aBackground, Hexa);
                     vImage.drawHexa(g);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            	
-            	
+
             }
             
             if(pos.getElement() instanceof Heros) {
