@@ -60,12 +60,12 @@ public class PanneauJeu extends JPanel implements IConfig {
         barreoutil.setBackground(new Color(128, 79, 54, 250));
         setLayout(new BorderLayout());
         // Ajout des boutons
-        JButton button_fin_tour = Bouton("Fin du Tour");
-        JButton repos = Bouton("Se reposer");
-        JButton saveButton = Bouton("Sauvegarder");
-        JButton restartButton = Bouton("Nouvelle Partie");
-        JButton loadButton = Bouton("Charger");
-        JButton quitButton = Bouton("Quitter");
+        JButton button_fin_tour = Bouton("Fin du Tour (F)");
+        JButton repos = Bouton("Se reposer (R)");
+        JButton saveButton = Bouton("Sauvegarder (S)");
+        JButton restartButton = Bouton("Nouvelle Partie (N)");
+        JButton loadButton = Bouton("Charger (C)");
+        JButton quitButton = Bouton("Quitter (Q)");
   
         tour = new JLabel();
         tour.setForeground(Color.white);
@@ -85,7 +85,7 @@ public class PanneauJeu extends JPanel implements IConfig {
 
         });
 
-        repos.addActionListener(new ActionListener() {
+        repos.addActionListener(new ActionListener() { //Le heros selectionné se repose
 
             @Override
             public void actionPerformed(final ActionEvent e) {
@@ -94,7 +94,7 @@ public class PanneauJeu extends JPanel implements IConfig {
 
         });
         
-        saveButton.addActionListener(new ActionListener() {
+        saveButton.addActionListener(new ActionListener() { //on affiche l'ecran de sauvegarde
         	
         	@Override
         	public void actionPerformed(final ActionEvent e) {
@@ -107,7 +107,7 @@ public class PanneauJeu extends JPanel implements IConfig {
         	}
         });
         
-        restartButton.addActionListener(new ActionListener() { //à enlever
+        restartButton.addActionListener(new ActionListener() { //on recommence une partie
         	
         	@Override
         	public void actionPerformed(final ActionEvent e) {
@@ -116,7 +116,7 @@ public class PanneauJeu extends JPanel implements IConfig {
         	}
         });
         
-        loadButton.addActionListener(new ActionListener() { //à enlever
+        loadButton.addActionListener(new ActionListener() { //affiche l'ecran de chargement d'une sauvegarde
         	
         	@Override
         	public void actionPerformed(final ActionEvent e) {
@@ -129,7 +129,7 @@ public class PanneauJeu extends JPanel implements IConfig {
         	}
         });
         
-        quitButton.addActionListener(new ActionListener() { //à enlever
+        quitButton.addActionListener(new ActionListener() { // on revient à l'écran d'accueil
         	
         	@Override
         	public void actionPerformed(final ActionEvent e) {
@@ -142,7 +142,7 @@ public class PanneauJeu extends JPanel implements IConfig {
         	}
         });
         
-        
+        //on ajoute les boutons à la barre d'outils
         barreoutil.addSeparator();
         barreoutil.add(button_fin_tour);
         barreoutil.addSeparator(); // Sépare les deux boutons
@@ -172,7 +172,7 @@ public class PanneauJeu extends JPanel implements IConfig {
         JPanel plat = new JPanel();
         plat.setLocation(0, HAUTEUR_BARRE_OUTIL);
         
-        addMouseListener(new MouseAdapter() {
+        addMouseListener(new MouseAdapter() { //on choisi un heros
             @Override
             public void mousePressed(MouseEvent e) {
                 for (int x = 0; x < LARGEUR_CARTE; x++) {
@@ -270,6 +270,8 @@ public class PanneauJeu extends JPanel implements IConfig {
 
     /**
      * Constructeur PanneauJeu
+     * @param pWindow
+     * @param pCarte
      */
     public PanneauJeu(JFrame pWindow, Carte pCarte) {
     	aWindow = pWindow;

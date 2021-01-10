@@ -26,24 +26,6 @@ public class FenetreJeu extends JPanel implements IConfig{
 		fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		fenetre.setVisible(true);
 		
-		
-		/*
-		fenetre.add(vPanneau);
-		fenetre.repaint();
-		fenetre.pack();
-		*/
-		/*
-		while(vPanneau.getCarte().getHerosRestant() != 0 && vPanneau.getCarte().getMonstreRestant() != 0){
-			System.out.println(""+vPanneau.getCarte().getHerosRestant());
-		}
- 
-		if (vPanneau.getCarte().getHerosRestant() == 0){
-            System.out.println("Perdu");
-        }
-        if (vPanneau.getCarte().getMonstreRestant() == 0){
-            System.out.println("Gagné");
-		}*/
-		
 	}
 
 }

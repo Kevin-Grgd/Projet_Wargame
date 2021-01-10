@@ -31,22 +31,41 @@ public abstract class Element implements Serializable{
 		this.pos = pos;
 	}
 	
+	/**
+	 * Donne le numero de l'image
+	 * @return skinNumber
+	 */
 	public int getSkinNumber() {
 	   	 return skinNumber;
-	    }
-	    
+	}
+	
+	/**
+	 * Mutateur du numero de l'image
+	 * @param skinNumber
+	 */
 	public void setSkinNumber(int skinNumber) {
 	   	this.skinNumber = skinNumber;
 	}
 	
+	/**
+	 * Donne le le chemin de l'image
+	 * @return url
+	 */
 	public String getUrl() {
 		return url;
 	}
 	
+	/**
+	 * Mutateur du chemin de l'image
+	 * @param url
+	 */
 	public void setUrl(String url) {
 		this.url = url;
 	}
 	
+	/**
+	 * Donne à l'élément son image
+	 */
 	public void setImage() {
 		try {
 			URL url = getClass().getResource(this.url);
@@ -56,6 +75,10 @@ public abstract class Element implements Serializable{
         }
 	}
 	
+	/**
+	 * Retourne l'image de l'element
+	 * @return img
+	 */
 	public BufferedImage getImage() {
 			return img;
 	}

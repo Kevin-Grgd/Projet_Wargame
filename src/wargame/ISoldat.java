@@ -29,7 +29,7 @@ public interface ISoldat {
 		public int getTir() {
 			return TIR;
 		}
-		public String getUrl() {
+		public String getUrl() { //chemin de l'image
 			return URL_IMAGE;
 		}
 		

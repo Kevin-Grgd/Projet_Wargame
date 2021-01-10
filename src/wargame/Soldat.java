@@ -14,7 +14,6 @@ public abstract class Soldat extends Element implements ISoldat {
 	 */
 	Soldat(ISoldat type) {
 		setType(type);
-		//aBufferedImage = type.getEnumImage();
 		setPoints(type.getPoints());
 		setPortee(type.getPortee());
 		setPuissance(type.getPuissance());

@@ -24,15 +24,16 @@ public class Hexagone extends JComponent implements IConfig{
      * @param posY Sa position en y
      */
     public Hexagone(Polygon pHexa, Position pos) {
-        int xCenter = LARGEUR_FENETRE - (LARGEUR_CARTE+1) * NB_PIX_CASE + NB_PIX_CASE/4;//Pour centrer la carte dans la fenetre
+        int xCenter = LARGEUR_FENETRE - (LARGEUR_CARTE+1) * NB_PIX_CASE + NB_PIX_CASE/4; //Pour centrer la carte dans la fenetre
         int yCenter = HAUTEUR_BARRE_OUTIL + HAUTEUR_FENETRE/2 - (HAUTEUR_CARTE/2)*NB_PIX_CASE + NB_PIX_CASE/2;
-        int xOffSet = NB_PIX_CASE / 2;//decalage pour les lignes impaires
+        int xOffSet = NB_PIX_CASE / 2; //decalage pour les lignes impaires
         
         if(pHexa == null) {
         	int x, y;
         	int decalageX = NB_PIX_CASE * pos.getX(); //decalage des cases en fonction de (posX, posY)
         	int decalageY = ((int) (NB_PIX_CASE * 0.75)) * pos.getY();
-        	if(pos.getY() % 2 == 0) {
+        	
+        	if(pos.getY() % 2 == 0) { //decalage de cases en X en fonction de Y
         		for(int i = 0 ; i < 6 ; i++) {
         			x = (int) ((xCenter + decalageX) + (NB_PIX_CASE/2+3) * Math.sin(i*2*Math.PI/6));
         			y = (int) ((yCenter + decalageY) + (NB_PIX_CASE/2) * Math.cos(i*2*Math.PI/6));
@@ -50,6 +51,7 @@ public class Hexagone extends JComponent implements IConfig{
         else {
         	Hexa = pHexa;
         }
+        //On donne une image d'herbe à l'hexagone
         	try {
         		String vUrlString = "/resources/grass#.png".replace('#',  Integer.toString(pos.getGrassNumber()).charAt(0));
         		URL url = getClass().getResource(vUrlString);
@@ -110,20 +112,21 @@ public class Hexagone extends JComponent implements IConfig{
      */
     public void seDessiner(Graphics g, Position pos){
         super.paintComponent(g);
-        if(!(pos.getVisible())){
+        
+        if(!(pos.getVisible())){ //dessine le brouillard de guerre
             g.setColor(COULEUR_INCONNU);
             g.drawPolygon(Hexa);
             g.fillPolygon(Hexa);
         }
 
         else{
-        	aImage.drawHexa(g);
+        	aImage.drawHexa(g); //dessine l'herbe
         	
-            if(pos.getElement() != null){
+            if(pos.getElement() != null){ //Dessine l'element s'il y en a un
             	new Image(pos.getElement().getImage(),Hexa).drawHexa(g);
             }
             
-            if(pos.getElement() instanceof Heros) {
+            if(pos.getElement() instanceof Heros) {  //Permet de savoir si un heros a déjà joué
             	Heros heros = (Heros) pos.getElement();
             	if(heros.getJoue()) {
             		 Color vWhiteOpa = new Color(0,0,0,180);
@@ -132,7 +135,7 @@ public class Hexagone extends JComponent implements IConfig{
             	}
             }
       
-            g.setColor(Color.BLACK);
+            g.setColor(Color.BLACK); //dessine le contour de l'hexagone
             g.drawPolygon(Hexa);
         }
 

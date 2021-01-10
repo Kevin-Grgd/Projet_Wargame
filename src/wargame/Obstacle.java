@@ -16,7 +16,7 @@ public class Obstacle extends Element {
 			return values()[(int)(Math.random()*values().length)];
 		}
 		
-		public String getUrl() {
+		public String getUrl() { //chemin de l'image
 			return URL_IMAGE;
 		}
 	}
@@ -27,7 +27,7 @@ public class Obstacle extends Element {
 	 */
 	Obstacle(TypeObstacle type) {
 		TYPE = type;
-		setSkinNumber(1 + (int) (Math.random()*2));
+		setSkinNumber(1 + (int) (Math.random()*2)); //donne un numero d'image aleatoire
 		setUrl(type.getUrl().replace('#',  Integer.toString(getSkinNumber()).charAt(0)));
 		setImage();
 	}

@@ -45,18 +45,34 @@ public class Carte extends JPanel implements IConfig, ICarte {
         ajoutSoldat();
     }
     
+    /**
+     * Accesseur du nom de la sauvegarde
+     * @return Le nom de la sauvegarde
+     */
     public String getSaveName() {
-    	return this.saveName;
+    	return saveName;
     }
     
+    /**
+     * Mutateur du nom de la sauvegarde
+     * @param saveName Le nom de la sauvegarde
+     */
     public void setSaveName(String saveName) {
     	this.saveName = saveName;
     }
     
+    /**
+     * Accesseur du nombre de tours
+     * @return nbTours le nombre de tours
+     */
     public int getTours() {
-    	return this.nbTours;
+    	return nbTours;
     }
     
+    /**
+     * Mutateur du nombre de tours
+     * @param nbTours le nombre de tours à changer
+     */
     public void setTours(int nbTours) {
     	this.nbTours = nbTours;
     }
@@ -342,7 +358,7 @@ public class Carte extends JPanel implements IConfig, ICarte {
                         pHeros.setJoue(true);
                         if (vMonstre.getPoints() <= 0) { // Plus de points de vie, il décède
                             mort(vMonstre);
-                            this.setMonstreRestant(this.getMonstreRestant() -1);
+                            setMonstreRestant(getMonstreRestant() -1);
                             System.out.println(getMonstreRestant());
                             
                         }
@@ -357,6 +373,9 @@ public class Carte extends JPanel implements IConfig, ICarte {
     	}
     }
 
+    /**
+     * Dessine la carte
+     */
     public void toutDessiner(Graphics g) {
     	for (int x = 0; x < LARGEUR_CARTE ; x++) {
             for (int y = 0; y < HAUTEUR_CARTE ; y++) {
@@ -481,14 +500,19 @@ public class Carte extends JPanel implements IConfig, ICarte {
             } else { // Si on a trouvé un héros non loin on l'affronte
                 armeeMonstre[j].combat(vHerosTarget);
                 if (vHerosTarget.getPoints() <= 0){
-                    this.mort(vHerosTarget);
-                    this.setMonstreRestant(this.getMonstreRestant() - 1);
+                    mort(vHerosTarget);
+                    setMonstreRestant(getMonstreRestant() - 1);
                 }
             }
         }
         
     }
     
+    /**
+     * Effectue la sauvegarde à l'emplacement choisi
+     * @param numSave Le numero de la sauvegarde
+     * @param saveName Le nom de la sauvegarde
+     */
     public void Sauvegarde(int numSave, String saveName){
         //Save
         SaveFile vFile = new SaveFile(numSave, saveName, this);
@@ -505,6 +529,10 @@ public class Carte extends JPanel implements IConfig, ICarte {
         }
     }
     
+    /**
+     * Permet de recuperer la configuration de la sauvegarde choisi
+     * @param numSave Le numero de la sauvegarde
+     */
     public void Recharger(int numSave){
         //Load
         SaveFile vFile;
@@ -523,6 +551,8 @@ public class Carte extends JPanel implements IConfig, ICarte {
             monstre_restant = vFile.getMonstre_restant();
             heros_restant = vFile.getHeros_restant();
             nbTours = vFile.getTours();
+            
+            //On recharge les images des elements
             for(int i = 0 ; i < LARGEUR_CARTE ; i++)
             	for(int j = 0 ; j < HAUTEUR_CARTE ; j++)
                 	if(map[i][j].getElement() != null)

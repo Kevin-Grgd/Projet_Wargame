@@ -19,6 +19,6 @@ public class Monstre extends Soldat {
 	}
 
 	public String toString() {
-		return type.toString() + " " + ID;
+		return type.toString() + " " + ID + " " + getPosition();
 	}
 }
