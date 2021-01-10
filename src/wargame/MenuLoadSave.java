@@ -132,7 +132,7 @@ public class MenuLoadSave extends JPanel implements IConfig {
         this.addMouseWheelListener(new MouseWheelListener() {
         	@Override
             public void mouseWheelMoved(MouseWheelEvent e) {
-        		if (e.getWheelRotation() < 0) {
+        		if (e.getWheelRotation() > 0) { //Molette vers le bas
         			for (int i = 0; i < nbSave; i++) {
         				newPosY = aEnsemble_Boutons[i].getPosY() - 10;
         				if(aEnsemble_Boutons[nbSave-1].getPosY() >= (180+HAUTEUR_BOUTON_LOAD_SAVE)) {
@@ -140,7 +140,7 @@ public class MenuLoadSave extends JPanel implements IConfig {
         					repaint();
         				}
         			}
-        		} else {
+        		} else { //Molette vers le haut
         			for (int i = 0; i < nbSave; i++) {
         				newPosY = aEnsemble_Boutons[i].getPosY() + 10;
         				if(aEnsemble_Boutons[0].getPosY() <= (680-HAUTEUR_BOUTON_LOAD_SAVE)) {
