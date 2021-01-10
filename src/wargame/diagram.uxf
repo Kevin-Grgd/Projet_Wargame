@@ -4,10 +4,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>720</x>
-      <y>218</y>
+      <x>518</x>
+      <y>126</y>
       <w>124</w>
-      <h>228</h>
+      <h>214</h>
     </coordinates>
     <panel_attributes>&lt;&lt;interface&gt;&gt;
 wargame::IConfig
@@ -74,23 +74,20 @@ wargame::IConfig
 +BOUTON_LOAD_SELECTIONNE = new Color(59, 45, 18): Color
 +TEXTE_LOAD = new Color(186, 186, 186): Color
 +TEXTE_LOAD_SELECTIONNE = new Color(214, 203, 0): Color
-+TAILLE_TEXTE_FIELD = 80f: float
---
---
-</panel_attributes>
++TAILLE_TEXTE_FIELD = 80f: float</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>258</x>
-      <y>128</y>
+      <x>540</x>
+      <y>416</y>
       <w>86</w>
-      <h>144</h>
+      <h>134</h>
     </coordinates>
     <panel_attributes>wargame::Carte
 --
--serialVersionUID = 1L: long
+_-serialVersionUID = 1L: long_
 -hexagone: Hexagone[][]
 -map: Position[][]
 -armeeHeros: Heros[]
@@ -129,22 +126,20 @@ wargame::IConfig
 +visionOne(Position vPos, boolean pSet, int pVision): void
 +jouerSoldats(PanneauJeu pj): void
 +Sauvegarde(int numSave, String saveName): void
-+Recharger(int numSave): void
---
-</panel_attributes>
++Recharger(int numSave): void</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>0</x>
-      <y>308</y>
+      <x>684</x>
+      <y>598</y>
       <w>82</w>
-      <h>110</h>
+      <h>102</h>
     </coordinates>
     <panel_attributes>wargame::Position
 --
--serialVersionUID = 380845925989148507L: long
+_-serialVersionUID = 380845925989148507L: long_
 -x: int
 -y: int
 -elem: Element
@@ -173,59 +168,16 @@ wargame::IConfig
 +getGrassNumber(): int
 +setGrassNumber(int grassNumber): void
 +getAdjacents(): //retourne jusqu'à 6 cases adjacentes
-Position[]
---
-</panel_attributes>
+Position[]</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1018</x>
-      <y>218</y>
-      <w>86</w>
-      <h>100</h>
-    </coordinates>
-    <panel_attributes>wargame::PanneauJeu
---
--serialVersionUID = -5368279323161208181L: long
--aCarte: Carte
--aInfo: InfoBulle
--aPressedPosition: Position
--aPressedTarget: Position
--aDraggedUnit: Polygon
--aWindow: JFrame
--vTemp: PanneauJeu
--aMenuAccueil: MenuAccueil
--aMenuLoadSave: MenuLoadSave
--tour: JLabel
---
-+PanneauJeu(JFrame pWindow, Carte pCarte): ctor
-+Bouton(String s): JButton
-+toolBar(): JToolBar
-+plateau(): JPanel
-+getCarte(): Carte
-+setCarte(Carte pCarte): void
-#paintComponent(Graphics g): void
-+getPreferredSize(): Dimension
--markHasHover(MouseEvent e): void
-+herosTarget(boolean pSet): void
-+targetOne(Position vPos, boolean pSet, int pVision): void
-+herosRepos(): void
-+joueIA(): void
-+repaintThread(): void
-+focusPanel(): void
---
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>1070</x>
-      <y>418</y>
+      <x>690</x>
+      <y>722</y>
       <w>76</w>
-      <h>100</h>
+      <h>92</h>
     </coordinates>
     <panel_attributes>wargame::SaveFile
 --
@@ -255,175 +207,20 @@ Position[]
 +getArmeeMonstre(): Monstre[]
 +setArmeeMonstre(Monstre[] armeeMonstre): void
 +getArmeeHeros(): Heros[]
-+setArmeeHeros(Heros[] armeeHeros): void
---
-</panel_attributes>
++setArmeeHeros(Heros[] armeeHeros): void</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1068</x>
-      <y>318</y>
-      <w>56</w>
-      <h>96</h>
-    </coordinates>
-    <panel_attributes>wargame::MenuAccueil
---
--serialVersionUID = 1L: long
--img_BackgroundAccueil: Image
--logoJeu: Image
--aGame: PanneauJeu
--aWindow: JFrame
--aMenuLoadSave: MenuLoadSave
--aJouer = null: BoutonMenu
--aQuitter = null: BoutonMenu
--aCharger = null: BoutonMenu
--choixMusic: int
--playOnce: boolean
--audioClip: Clip
--keyDetected: int
--keyPushedOnce = false: boolean
--vTemp: MenuAccueil
---
-+MenuAccueil(JFrame pWindow): ctor
-+menu(): JPanel
-#paintComponent(Graphics g): void
--boutonHover(MouseEvent e): void
-+actionMenu(): void
-+focusPanel(): void
-+update(LineEvent e): void
-+playMusic(): void
--removeTarget(): void
--removeFocus(): void
---
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>720</x>
-      <y>448</y>
-      <w>172</w>
-      <h>92</h>
-    </coordinates>
-    <panel_attributes>wargame::MenuLoadSave
---
--serialVersionUID = 1L: long
-+aEnsemble_Boutons: BoutonLoadSave[]
--aCharger_Sauvegarder: BoutonMenu
--aRetour: BoutonMenu
--choixSave: int
--img_BackgroundLoadSave: Image
--img_LoadSave: Image
--aGame: PanneauJeu
--aWindow: JFrame
--aMenuAccueil: MenuAccueil
--aCharge: boolean
--vTemp: MenuLoadSave
--aAppel: int
--aCarte: Carte
--nbSave: int
--aNomSave: NomSave
--newPosY: int
---
-+MenuLoadSave(PanneauJeu pGame, JFrame pWindow, MenuAccueil pMenuAccueil, boolean pCharge, int pAppel): ctor
-+load(): JPanel
-#paintComponent(Graphics g): void
-+focusPanel(): void
--boutonHover(MouseEvent e): void
--actionMenu(): void
--getSaveNumber(): int
---
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>894</x>
-      <y>448</y>
-      <w>146</w>
-      <h>86</h>
-    </coordinates>
-    <panel_attributes>wargame::MenuFin
---
--serialVersionUID = 1L: long
--img_End: Image
--img_BackgroundFin: Image
--aGame: PanneauJeu
--aWindow: JFrame
--aMenuAccueil: MenuAccueil
--aRejouer = null: BoutonMenu
--aMainMenu = null: BoutonMenu
--aQuitter = null: BoutonMenu
--aVictory: boolean
--vTemp: MenuFin
--keyDetected: int
--keyPushedOnce: boolean
--aCarte: Carte
---
-+MenuFin(PanneauJeu pGame, JFrame pWindow, MenuAccueil pMenuAccueil, boolean pVictory): ctor
-+endScreen(): JPanel
-#paintComponent(Graphics g): void
--boutonHover(MouseEvent e): void
-+actionMenu(): void
-+focusPanel(): void
--removeTarget(): void
--removeFocus(): void
---
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>846</x>
-      <y>362</y>
-      <w>212</w>
-      <h>86</h>
-    </coordinates>
-    <panel_attributes>wargame::NomSave
---
--serialVersionUID = 1L: long
--aValider: BoutonMenu
--aRetour: BoutonMenu
--aGame: PanneauJeu
--aWindow: JFrame
--aMenuLoadSave: MenuLoadSave
--aMenuAccueil: MenuAccueil
--vTemp: NomSave
--aSaveNameSaisie: JTextField
--texte: String
--saveName: String
--img_BackgroundLoadSave: Image
--textFieldFont: Font
--textFieldWidth: int
--textFieldHeight: int
--choixSave: int
--aCarte: Carte
---
-+NomSave(PanneauJeu pGame, JFrame pWindow, MenuLoadSave pMenuLoadSave, MenuAccueil pMenuAccueil, Carte pCarte, int pChoixSave): ctor
-+saveName(): JPanel
-#paintComponent(Graphics g): void
--boutonHover(MouseEvent e): void
--actionMenu(): void
---
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>214</x>
-      <y>390</y>
+      <x>500</x>
+      <y>674</y>
       <w>76</w>
-      <h>86</h>
+      <h>80</h>
     </coordinates>
     <panel_attributes>/wargame::Soldat/
 --
--serialVersionUID = 6135340252482111515L: long
+_-serialVersionUID = 6135340252482111515L: long_
 -points: int
 -portee: int
 -puissance: int
@@ -445,87 +242,20 @@ Position[]
 +setType(ISoldat type): void
 +getTypeSoldat(): ISoldat
 +seRepose(): void
-+est_elu(): void
---
-</panel_attributes>
++est_elu(): void</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>720</x>
-      <y>542</y>
-      <w>78</w>
-      <h>80</h>
-    </coordinates>
-    <panel_attributes>wargame::BoutonLoadSave
---
--serialVersionUID = 1L: long
-+widthBouton = LARGEUR_BOUTON_LOAD_SAVE: int
-+heightBouton = HAUTEUR_BOUTON_LOAD_SAVE: int
-+posX: int
-+posY: int
-+numeroBouton: int
--texte: String
--isTarget = false: boolean
--isFocus = false: boolean
--boutonFont: Font
---
-+BoutonLoadSave(int pX, int pY, int i, String txt): ctor
-+getPosY(): int
-+setPosY(int posY): void
-+getNumero(): int
-+setNumero(int i): void
-+getFocus(): boolean
-+setFocus(boolean isFocus): void
-+getTarget(): boolean
-+setTarget(boolean isTarget): void
-#paintComponent(Graphics g): void
---
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>800</x>
-      <y>542</y>
-      <w>66</w>
-      <h>62</h>
-    </coordinates>
-    <panel_attributes>wargame::BoutonMenu
---
--serialVersionUID = 1L: long
-+widthBouton = LARGEUR_BOUTON: int
-+heightBouton: int
-+posX: int
-+posY: int
--texte: String
--isTarget = false: boolean
--isFocus = false: boolean
--boutonFont: Font
---
-+BoutonMenu(int pX, int pY, String txt): ctor
-+getFocus(): boolean
-+setFocus(boolean isFocus): void
-+getTarget(): boolean
-+setTarget(boolean isTarget): void
-#paintComponent(Graphics g): void
---
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>266</x>
-      <y>306</y>
+      <x>550</x>
+      <y>592</y>
       <w>76</w>
-      <h>56</h>
+      <h>50</h>
     </coordinates>
     <panel_attributes>/wargame::Element/
 --
--serialVersionUID = 4761294017398466739L: long
+_-serialVersionUID = 4761294017398466739L: long_
 -pos: Position
 -skinNumber: int
 -url: String
@@ -538,23 +268,21 @@ Position[]
 +getUrl(): String
 +setUrl(String url): void
 +setImage(): void
-+getImage(): BufferedImage
---
-</panel_attributes>
++getImage(): BufferedImage</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>160</x>
-      <y>490</y>
+      <x>452</x>
+      <y>776</y>
       <w>76</w>
-      <h>48</h>
+      <h>42</h>
     </coordinates>
     <panel_attributes>wargame::Heros
 --
--serialVersionUID = -8042494773455062650L: long
--numHeros = 64: int
+_-serialVersionUID = -8042494773455062650L: long_
+_-numHeros = 64: int_
 -ID: char
 -aSelected: boolean
 -aJoue = false: boolean
@@ -564,18 +292,16 @@ Position[]
 +isSelected(): boolean
 +setSelected(boolean pSelected): void
 +setJoue(boolean pJoue): void
-+getJoue(): boolean
---
-</panel_attributes>
++getJoue(): boolean</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>118</x>
-      <y>130</y>
+      <x>544</x>
+      <y>360</y>
       <w>78</w>
-      <h>48</h>
+      <h>42</h>
     </coordinates>
     <panel_attributes>&lt;&lt;interface&gt;&gt;
 wargame::ICarte
@@ -590,22 +316,20 @@ wargame::ICarte
 ~mort(Soldat perso): void
 ~actionHeros(Heros pHeros, Position pos2): boolean
 ~jouerSoldats(PanneauJeu pj): void
-~toutDessiner(Graphics g): void
---
-</panel_attributes>
+~toutDessiner(Graphics g): void</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>536</x>
-      <y>304</y>
+      <x>420</x>
+      <y>596</y>
       <w>76</w>
-      <h>46</h>
+      <h>40</h>
     </coordinates>
     <panel_attributes>wargame::Hexagone
 --
--serialVersionUID = 1905122041950251207L: long
+_-serialVersionUID = 1905122041950251207L: long_
 -Hexa = new Polygon(): Polygon
 -aImage: Image
 --
@@ -615,40 +339,16 @@ wargame::ICarte
 +setaImage(Image pImage): void
 +isContain(int x, int y): boolean
 +getHexagone(): Polygon
-+seDessiner(Graphics g, Position pos): void
---
-</panel_attributes>
++seDessiner(Graphics g, Position pos): void</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1086</x>
-      <y>524</y>
-      <w>70</w>
-      <h>36</h>
-    </coordinates>
-    <panel_attributes>wargame::InfoBulle
---
--x: int
--y: int
--aSoldat: Soldat
--offsetXCalculed: int
---
-+InfoBulle(Soldat pElement, int pX, int pY): ctor
-#paintComponent(Graphics g): void
--getPolyLife(): Polygon[]
---
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>156</x>
-      <y>394</y>
+      <x>438</x>
+      <y>674</y>
       <w>38</w>
-      <h>36</h>
+      <h>30</h>
     </coordinates>
     <panel_attributes>&lt;&lt;interface&gt;&gt;
 wargame::ISoldat
@@ -659,18 +359,16 @@ wargame::ISoldat
 ~getPortee(): int
 ~getPuissance(): int
 ~getTir(): int
-~getUrl(): String
---
-</panel_attributes>
+~getUrl(): String</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>384</x>
-      <y>308</y>
+      <x>268</x>
+      <y>602</y>
       <w>118</w>
-      <h>32</h>
+      <h>26</h>
     </coordinates>
     <panel_attributes>wargame::Image
 --
@@ -680,84 +378,326 @@ wargame::ISoldat
 +Image(BufferedImage pBackground, Polygon pPoly): ctor
 +Image(BufferedImage pBackground): ctor
 +getTexturedImage(BufferedImage src, Polygon shp, int x, int y): BufferedImage
-+drawHexa(Graphics g): void
---
-</panel_attributes>
++drawHexa(Graphics g): void</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>254</x>
-      <y>490</y>
+      <x>540</x>
+      <y>782</y>
       <w>76</w>
-      <h>28</h>
+      <h>24</h>
     </coordinates>
     <panel_attributes>wargame::Monstre
 --
--serialVersionUID = 8882225921225738227L: long
--numMonstre = 0: int
+_-serialVersionUID = 8882225921225738227L: long_
+_-numMonstre = 0: int_
 -ID: int
 --
 ~Monstre(): ctor
-+toString(): String
---
-</panel_attributes>
++toString(): String</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>320</x>
-      <y>390</y>
+      <x>594</x>
+      <y>674</y>
       <w>76</w>
-      <h>28</h>
+      <h>24</h>
     </coordinates>
     <panel_attributes>wargame::Obstacle
 --
--serialVersionUID = 8277957568171064957L: long
+_-serialVersionUID = 8277957568171064957L: long_
 -TYPE: TypeObstacle
 --
 ~Obstacle(TypeObstacle type): ctor
 ~Obstacle(): ctor
-+toString(): String
---
-</panel_attributes>
++toString(): String</panel_attributes>
     <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>598</x>
+      <y>640</y>
+      <w>6</w>
+      <h>38</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;170.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>560</x>
+      <y>640</y>
+      <w>6</w>
+      <h>38</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;170.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>552</x>
+      <y>752</y>
+      <w>6</w>
+      <h>34</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;150.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>510</x>
+      <y>752</y>
+      <w>6</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;120.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>474</x>
+      <y>690</y>
+      <w>30</w>
+      <h>6</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;130.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>578</x>
+      <y>400</y>
+      <w>6</w>
+      <h>20</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>432</x>
+      <y>338</y>
+      <w>90</w>
+      <h>262</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>430.0;10.0;20.0;10.0;10.0;1290.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>640</x>
+      <y>220</y>
+      <w>142</w>
+      <h>394</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;690.0;10.0;690.0;1950.0;630.0;1950.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>624</x>
+      <y>338</y>
+      <w>74</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>90.0;10.0;350.0;10.0;350.0;480.0;10.0;480.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>452</x>
+      <y>548</y>
+      <w>92</w>
+      <h>52</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;240.0;10.0;10.0;440.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>624</x>
+      <y>548</y>
+      <w>102</w>
+      <h>54</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>490.0;250.0;490.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>580</x>
+      <y>548</y>
+      <w>6</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;220.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>624</x>
+      <y>606</y>
+      <w>64</w>
+      <h>6</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;300.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>624</x>
+      <y>616</y>
+      <w>64</w>
+      <h>6</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>300.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>722</x>
+      <y>698</y>
+      <w>6</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;120.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>570</x>
+      <y>804</y>
+      <w>150</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;130.0;730.0;130.0;730.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>486</x>
+      <y>812</y>
+      <w>256</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;30.0;10.0;130.0;1260.0;130.0;1260.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>384</x>
+      <y>616</y>
+      <w>40</w>
+      <h>6</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;180.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>872</x>
-      <y>542</y>
-      <w>50</w>
-      <h>22</h>
+      <x>276</x>
+      <y>642</y>
+      <w>108</w>
+      <h>66</h>
     </coordinates>
-    <panel_attributes>wargame::Clavier
+    <panel_attributes>&lt;&lt;Enum&gt;&gt;
+Wargame::TypesH
 --
+NINJA
+SOLDAT
+SPADASSIN
+TANK
+TIREUR
 --
-+keyTyped(KeyEvent e): void
-+keyPressed(KeyEvent e): void
-+keyReleased(KeyEvent e): void
+-POINTS_DE_VIE: int
+-PORTEE_VISUELLE: int
+-PUISSANCE: int
+-TIR: int
+-URL: int
 --
-</panel_attributes>
+TypesH(points: int, portee: int, puissance: int, tir: int, pUrl: String): TypesH
+getPoints(): int
+getPortee();
+getPuissance(): int
+getTir(): int
+getUrl(): String
+getTypeHAlea(): TypesH</panel_attributes>
     <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>382</x>
+      <y>678</y>
+      <w>60</w>
+      <h>6</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>280.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>384</x>
+      <y>702</y>
+      <w>58</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>270.0;10.0;90.0;10.0;90.0;130.0;10.0;130.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>876</x>
-      <y>570</y>
-      <w>44</w>
-      <h>18</h>
+      <x>278</x>
+      <y>722</y>
+      <w>108</w>
+      <h>64</h>
     </coordinates>
-    <panel_attributes>wargame::FenetreJeu
+    <panel_attributes>&lt;&lt;Enum&gt;&gt;
+Wargame::TypesM
 --
--serialVersionUID = 1L: long
+BERSERK
+BETE
+MAGE
+GOBELIN
 --
-+main(String[] args): void
+-POINTS_DE_VIE: int
+-PORTEE_VISUELLE: int
+-PUISSANCE: int
+-TIR: int
+-URL: int
 --
-</panel_attributes>
+TypesM(points: int, portee: int, puissance: int, tir: int, pUrl: String): TypesM
+getPoints(): int
+getPortee();
+getPuissance(): int
+getTir(): int
+getUrl(): String
+getTypeMAlea(): TypesM</panel_attributes>
     <additional_attributes/>
   </element>
 </diagram>
