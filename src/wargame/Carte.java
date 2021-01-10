@@ -362,7 +362,6 @@ public class Carte extends JPanel implements IConfig, ICarte {
                         if (vMonstre.getPoints() <= 0) { // Plus de points de vie, il décède
                             mort(vMonstre);
                             setMonstreRestant(getMonstreRestant() -1);
-                            System.out.println(getMonstreRestant());
                             
                         }
                         return true;
