@@ -376,8 +376,6 @@ public class PanneauJeu extends JPanel implements IConfig {
         //Antialazing mais drop fps
         //Graphics2D g2d = (Graphics2D) g;
         //g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        
-        g.setColor(Color.WHITE);
 
         aCarte.toutDessiner(g);
 
@@ -390,7 +388,12 @@ public class PanneauJeu extends JPanel implements IConfig {
             aInfo.paintComponent(g);
         }
 
-        
+        g.setColor(new Color(128, 79, 54, 255));
+        g.fillRect(0, HAUTEUR_PLATEAU - HAUTEUR_BARRE_OUTIL, LARGEUR_FENETRE, 50);
+        g.setColor(Color.white);
+        g.drawString(aCarte.getHerosRestant() + " Heros restant" + (aCarte.getHerosRestant() > 1 ? "s" : ""), 50, HAUTEUR_PLATEAU - 25);
+        g.drawString(aCarte.getMonstreRestant() + (aCarte.getMonstreRestant() > 1 ? " Monstres restants" : " Monstre restant"), LARGEUR_FENETRE - 200, HAUTEUR_PLATEAU - 25);
+        repaintThread();
 
     }
 
