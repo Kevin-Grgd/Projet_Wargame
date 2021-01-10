@@ -131,10 +131,5 @@ public abstract class Soldat extends Element implements ISoldat {
 		if (getPoints() > type.getPoints()) {
 			setPoints(type.getPoints());
 		}
-	}
-
-	public void est_elu() {
-
-	}
-	
+	}	
 }
