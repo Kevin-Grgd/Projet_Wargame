@@ -27,7 +27,6 @@ public class Hexagone extends JComponent implements IConfig{
         int xCenter = LARGEUR_FENETRE - (LARGEUR_CARTE+1) * NB_PIX_CASE + NB_PIX_CASE/4;//Pour centrer la carte dans la fenetre
         int yCenter = HAUTEUR_BARRE_OUTIL + HAUTEUR_FENETRE/2 - (HAUTEUR_CARTE/2)*NB_PIX_CASE + NB_PIX_CASE/2;
         int xOffSet = NB_PIX_CASE / 2;//decalage pour les lignes impaires
-        aImage = null;
         
         if(pHexa == null) {
         	int x, y;
@@ -51,15 +50,15 @@ public class Hexagone extends JComponent implements IConfig{
         else {
         	Hexa = pHexa;
         }
-        try {
-            String vUrlString = "/resources/grass#.png".replace('#',  Integer.toString(pos.getGrassNumber()).charAt(0));
-            URL url = getClass().getResource(vUrlString);
-            BufferedImage aBackground = ImageIO.read(url); 
-            aImage = new Image(aBackground, Hexa);
+        	try {
+        		String vUrlString = "/resources/grass#.png".replace('#',  Integer.toString(pos.getGrassNumber()).charAt(0));
+        		URL url = getClass().getResource(vUrlString);
+        		BufferedImage aBackground = ImageIO.read(url); 
+        		aImage = new Image(aBackground, Hexa);
             
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        	} catch (IOException e) {
+        		e.printStackTrace();
+        	}
     }
     
     /**
@@ -121,15 +120,7 @@ public class Hexagone extends JComponent implements IConfig{
         	aImage.drawHexa(g);
         	
             if(pos.getElement() != null){
-            	try {
-                    String vUrlString = pos.getElement().getUrl().replace('#',  Integer.toString(pos.getElement().getSkinNumber()).charAt(0));
-                    URL url = getClass().getResource(vUrlString);
-                    BufferedImage aBackground = ImageIO.read(url); 
-                    Image vImage = new Image(aBackground, Hexa);
-                    vImage.drawHexa(g);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            	new Image(pos.getElement().getImage(),Hexa).drawHexa(g);
             }
             
             if(pos.getElement() instanceof Heros) {
