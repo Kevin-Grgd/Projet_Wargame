@@ -16,6 +16,8 @@ public class Heros extends Soldat {
 		aSelected = false;
 		ID = (char) ++numHeros;
 		setSkinNumber((int) (Math.random()*2));
+		setUrl(type.getUrl().replace('#',  Integer.toString(getSkinNumber()).charAt(0)));
+		setImage();
 	}
 
 	public String toString() {
@@ -53,5 +55,4 @@ public class Heros extends Soldat {
 	public boolean getJoue() {
 		return this.aJoue;
 	}
-
 }
