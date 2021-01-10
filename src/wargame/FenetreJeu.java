@@ -3,6 +3,7 @@ package wargame;
 import javax.swing.JPanel;
 import javax.swing.JFrame;
 import java.awt.Color;
+import java.io.File;
 
 public class FenetreJeu extends JPanel implements IConfig{
 
@@ -16,6 +17,14 @@ public class FenetreJeu extends JPanel implements IConfig{
 		fenetre.setLocation(POSITION_X, POSITION_Y);
 		fenetre.setBackground(Color.GRAY);
 		
+		
+		File vDossierSave = new File(System.getProperty("user.dir") + "/saves/");
+		System.out.println(System.getProperty("user.dir"));
+		// Si le dossier existe ou n'est pas un dossier
+		if (!vDossierSave.exists() || !vDossierSave.isDirectory()){
+			vDossierSave.mkdir();
+		}
+
 		MenuAccueil vMenuAccueil = new MenuAccueil(fenetre);
 		fenetre.add(vMenuAccueil);
 		vMenuAccueil.focusPanel();

@@ -46,7 +46,7 @@ public class SaveFile implements Serializable{
 
     public void setFileName(int numero) {
         String usrDirectory = System.getProperty("user.dir");
-        this.fileName = usrDirectory+"/src/saves/save" + numero + ".warsave";
+        this.fileName = usrDirectory+"/saves/save" + numero + ".warsave";
     }
     
     public Position[][] getCarte(){

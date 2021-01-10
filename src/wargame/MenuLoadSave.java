@@ -133,7 +133,6 @@ public class MenuLoadSave extends JPanel implements IConfig {
         	@Override
             public void mouseWheelMoved(MouseWheelEvent e) {
         		if (e.getWheelRotation() < 0) {
-        			System.out.println("Molette HAUT");
         			for (int i = 0; i < nbSave; i++) {
         				newPosY = aEnsemble_Boutons[i].getPosY() - 10;
         				if(aEnsemble_Boutons[nbSave-1].getPosY() >= (180+HAUTEUR_BOUTON_LOAD_SAVE)) {
@@ -142,7 +141,6 @@ public class MenuLoadSave extends JPanel implements IConfig {
         				}
         			}
         		} else {
-        			System.out.println("Molette BAS");
         			for (int i = 0; i < nbSave; i++) {
         				newPosY = aEnsemble_Boutons[i].getPosY() + 10;
         				if(aEnsemble_Boutons[0].getPosY() <= (680-HAUTEUR_BOUTON_LOAD_SAVE)) {
@@ -212,6 +210,7 @@ public class MenuLoadSave extends JPanel implements IConfig {
         }
         
         setLayout(new BorderLayout());
+        
         nbSave = getSaveNumber();
         this.add(load());
     }
@@ -342,9 +341,17 @@ public class MenuLoadSave extends JPanel implements IConfig {
         }
     }
 
-    private int getSaveNumber() {
+    private int getSaveNumber(){
         String usrDirectory = System.getProperty("user.dir");
-        nbSave = new File(usrDirectory+"/src/saves/").listFiles().length;
+        File vSauv = new File(usrDirectory + "/saves/");
+        if (vSauv.isDirectory()){
+            if (vSauv.list().length > 0){
+                nbSave = vSauv.listFiles().length;
+            }
+            else{
+                nbSave = 0;
+            }
+        }
         return nbSave;
     }
 }

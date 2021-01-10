@@ -25,7 +25,7 @@ public class Carte extends JPanel implements IConfig, ICarte {
     /**
      * Constructeur de la carte
     */
-    public Carte() {
+    public Carte(){
     	saveName = "";
         hexagone = new Hexagone[LARGEUR_CARTE][HAUTEUR_CARTE];
         map = new Position[LARGEUR_CARTE][HAUTEUR_CARTE];
@@ -522,8 +522,6 @@ public class Carte extends JPanel implements IConfig, ICarte {
            out.writeObject(vFile);
            System.out.println("Carte : saveGame : "+vFile.getFileName());
            System.out.println("Serialized data is saved in carte.ser");
-           System.out.println("nbTours sauvegarde :"+vFile.getTours());
-           System.out.println("nbTours en VRAI :"+this.getTours());
         } catch (IOException i) {
            i.printStackTrace();
         }
@@ -537,7 +535,7 @@ public class Carte extends JPanel implements IConfig, ICarte {
         //Load
         SaveFile vFile;
         String usrDirectory = System.getProperty("user.dir");
-        String loadGame = usrDirectory+"/src/saves/save" + numSave + ".warsave";
+        String loadGame = usrDirectory+"/saves/save" + numSave + ".warsave";
         System.out.println("Carte : loadGame : "+loadGame);
         
         try(FileInputStream fileIn = new FileInputStream(loadGame);
