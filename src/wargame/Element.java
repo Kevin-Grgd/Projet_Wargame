@@ -1,13 +1,19 @@
 package wargame;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.io.Serializable;
+import java.net.URL;
+
+import javax.imageio.ImageIO;
+
 
 public abstract class Element implements Serializable{
 	private static final long serialVersionUID = 4761294017398466739L;
 	private Position pos;
 	private int skinNumber;
 	private String url;
-	//protected transient BufferedImage aBufferedImage;
+	private transient BufferedImage img;
 	
 	/**
 	 * Donne la position de l'élément
@@ -39,5 +45,18 @@ public abstract class Element implements Serializable{
 	
 	public void setUrl(String url) {
 		this.url = url;
+	}
+	
+	public void setImage() {
+		try {
+			URL url = getClass().getResource(this.url);
+			img = ImageIO.read(url); 
+		} catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+	
+	public BufferedImage getImage() {
+			return img;
 	}
 }
