@@ -523,6 +523,11 @@ public class Carte extends JPanel implements IConfig, ICarte {
             monstre_restant = vFile.getMonstre_restant();
             heros_restant = vFile.getHeros_restant();
             nbTours = vFile.getTours();
+            for(int i = 0 ; i < LARGEUR_CARTE ; i++)
+            	for(int j = 0 ; j < HAUTEUR_CARTE ; j++)
+                	if(map[i][j].getElement() != null)
+                			map[i][j].getElement().setImage();
+                			
             System.out.println("Serialized data is load");
         } catch (IOException | ClassNotFoundException i) {
             i.printStackTrace();
