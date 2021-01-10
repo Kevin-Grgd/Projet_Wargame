@@ -139,7 +139,7 @@ public class Hexagone extends JComponent implements IConfig{
             g.drawPolygon(Hexa);
         }
 
-        if(pos.getFocus()){
+        if(pos.getFocus()){ //le heros sur lequel on a cliqué
             Color vWhiteOpa = new Color(1,0,0,70);
             g.setColor(vWhiteOpa);
             g.fillPolygon(Hexa);

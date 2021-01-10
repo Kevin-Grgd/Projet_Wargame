@@ -1,0 +1,763 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>2</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>720</x>
+      <y>218</y>
+      <w>124</w>
+      <h>228</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+wargame::IConfig
+--
++LARGEUR_CARTE = 25: int
++HAUTEUR_CARTE = 15: int
++NB_PIX_CASE = 50: int
++LARGEUR_FENETRE = (LARGEUR_CARTE + 2) * NB_PIX_CASE: int
++HAUTEUR_FENETRE = (HAUTEUR_CARTE + 1) * NB_PIX_CASE: int
++POSITION_X = 100: int
++POSITION_Y = 50: int
++NB_HEROS = 6: int
++NB_MONSTRES = 15: int
++NB_OBSTACLES = 20: int
++HAUTEUR_BARRE_OUTIL = 50: int
++LARGEUR_BARRE_OUTIL = LARGEUR_FENETRE: int
++HAUTEUR_PLATEAU = HAUTEUR_FENETRE - HAUTEUR_BARRE_OUTIL: int
++LARGEUR_PLATEAU = LARGEUR_FENETRE: int
++OFFSET_X_INFO = 15: int
++OFFSET_Y_INFO = 30: int
++ECART_INFO = 20: int
++LARGEUR_BARRE_PV = 120: int
++OFFSET_X = 50: int
++OFFSET_Y_SUP = 20: int
++OFFSET_Y_INF = 30: int
++LARGEUR_INFO_BULLE = LARGEUR_FENETRE / 20 + LARGEUR_BARRE_PV: int
++HAUTEUR_INFO_BULLE = HAUTEUR_FENETRE / 20 + (ECART_INFO * 4): int
++LARGEUR_BOUTON = LARGEUR_FENETRE / 3: int
++TAILLE_TEXTE_MENU = 20f: float
++BOUTON_CONTOUR = new Color(75, 50, 30): Color
++BOUTON_CONTOUR_SURVOLE = new Color(69, 69, 69): Color
++BOUTON_CONTOUR_SELECTIONNE = new Color(252, 93, 93): Color
++BOUTON_NORMAL = new Color(166, 118, 78): Color
++BOUTON_SURVOLE = new Color(2, 79, 107): Color
++BOUTON_SELECTIONNE = BOUTON_SURVOLE: Color
++TEXTE_NORMAL = Color.white: Color
++TEXTE_SELECTIONNE = new Color(252, 93, 93): Color
++NB_TEXTURE_OBSTACLE = 2: int
++MINIMAL_TIR_REQUIS = 5: int
++COULEUR_VIDE = Color.white: Color
++COULEUR_INCONNU = Color.darkGray: Color
++COULEUR_TEXTE = Color.black: Color
++COULEUR_MONSTRES = Color.black: Color
++COULEUR_HEROS = Color.red: Color
++COULEUR_HEROS_DEJA_JOUE = Color.pink: Color
++COULEUR_EAU = Color.blue: Color
++COULEUR_FORET = Color.green: Color
++COULEUR_ROCHER = Color.gray: Color
++MUSIC_1 = 1: int
++MUSIC_2 = 2: int
++CHARGER = true: boolean
++SAUVEGARDER = false: boolean
++JEU = 0: int
++MENU_ACCUEIL = 1: int
++NB_MAX_SAVE = 5: int
++LARGEUR_BOUTON_LOAD_SAVE = LARGEUR_FENETRE - (LARGEUR_FENETRE / 2): int
++HAUTEUR_BOUTON_LOAD_SAVE = 80: int
++TAILLE_TEXTE_LOAD_SAVE = 25f: float
++BOUTON_LOAD_CONTOUR = new Color(68, 92, 60): Color
++BOUTON_LOAD_CONTOUR_SURVOLE = new Color(40, 60, 35): Color
++BOUTON_LOAD_CONTOUR_SELECTIONNE = new Color(214, 203, 0): Color
++BOUTON_LOAD = new Color(138, 106, 39): Color
++BOUTON_LOAD_SURVOLE = new Color(92, 71, 28): Color
++BOUTON_LOAD_SELECTIONNE = new Color(59, 45, 18): Color
++TEXTE_LOAD = new Color(186, 186, 186): Color
++TEXTE_LOAD_SELECTIONNE = new Color(214, 203, 0): Color
++TAILLE_TEXTE_FIELD = 80f: float
+--
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>258</x>
+      <y>128</y>
+      <w>86</w>
+      <h>144</h>
+    </coordinates>
+    <panel_attributes>wargame::Carte
+--
+-serialVersionUID = 1L: long
+-hexagone: Hexagone[][]
+-map: Position[][]
+-armeeHeros: Heros[]
+-armeeMonstre: Monstre[]
+-heros_restant: int
+-monstre_restant: int
+-nbTours: int
+-saveName: String
+--
++Carte(): ctor
++getSaveName(): String
++setSaveName(String saveName): void
++getTours(): int
++setTours(int nbTours): void
++ajoutObstacle(): void
++ajoutSoldat(): void
++getHexagones(): Hexagone[][]
++getCarte(): Position[][]
++getArmeeHeros(): Heros[]
++getArmeeMonstre(): Monstre[]
++getElement(Position pos): Element
++getHerosRestant(): int
++setHerosRestant(int i): void
++getMonstreRestant(): int
++setMonstreRestant(int i): void
++trouvePositionVide(): Position
++trouvePositionVide(Position pos): Position
++trouveHeros(): Heros
++trouveHeros(Position pos): Heros
++trouveHerosTir(Monstre pMonstre): Heros
++deplaceSoldat(Position pos, Soldat soldat): boolean
++mort(Soldat perso): void
++actionHeros(Heros pHeros, Position pos2): boolean
++toutDessiner(Graphics g): void
++herosVision(boolean pSet): void
++visionOne(Position vPos, boolean pSet, int pVision): void
++jouerSoldats(PanneauJeu pj): void
++Sauvegarde(int numSave, String saveName): void
++Recharger(int numSave): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>0</x>
+      <y>308</y>
+      <w>82</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>wargame::Position
+--
+-serialVersionUID = 380845925989148507L: long
+-x: int
+-y: int
+-elem: Element
+-isVisible: boolean
+-aFocus = false: boolean
+-isTarget = false: boolean
+-grassNumber: int
+--
+~Position(int x, int y): ctor
++getX(): int
++getY(): int
++setX(int x): void
++setY(int y): void
++estValide(): boolean
++toString(): String
++estVoisine(Position pos): boolean
++distance(Position p): double
++getElement(): Element
++setElement(Element elem): void
++setVisible(boolean bool): void
++getVisible(): boolean
++getFocus(): boolean
++setFocus(boolean aFocus): void
++setTarget(boolean pTarget): void
++getTarget(): boolean
++getGrassNumber(): int
++setGrassNumber(int grassNumber): void
++getAdjacents(): //retourne jusqu'à 6 cases adjacentes
+Position[]
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1018</x>
+      <y>218</y>
+      <w>86</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>wargame::PanneauJeu
+--
+-serialVersionUID = -5368279323161208181L: long
+-aCarte: Carte
+-aInfo: InfoBulle
+-aPressedPosition: Position
+-aPressedTarget: Position
+-aDraggedUnit: Polygon
+-aWindow: JFrame
+-vTemp: PanneauJeu
+-aMenuAccueil: MenuAccueil
+-aMenuLoadSave: MenuLoadSave
+-tour: JLabel
+--
++PanneauJeu(JFrame pWindow, Carte pCarte): ctor
++Bouton(String s): JButton
++toolBar(): JToolBar
++plateau(): JPanel
++getCarte(): Carte
++setCarte(Carte pCarte): void
+#paintComponent(Graphics g): void
++getPreferredSize(): Dimension
+-markHasHover(MouseEvent e): void
++herosTarget(boolean pSet): void
++targetOne(Position vPos, boolean pSet, int pVision): void
++herosRepos(): void
++joueIA(): void
++repaintThread(): void
++focusPanel(): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1070</x>
+      <y>418</y>
+      <w>76</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>wargame::SaveFile
+--
+-serialVersionUID = 3517160801267666132L: long
+-map: Position[][]
+-armeeHeros: Heros[]
+-armeeMonstre: Monstre[]
+-heros_restant: int
+-monstre_restant: int
+-fileName: String
+-nbTours: int
+-saveName: String
+--
++SaveFile(int i, String saveName, Carte carte): ctor
++getTours(): int
++setTours(int nbTours): void
++getSaveName(): String
++setSaveName(String saveName): void
++getFileName(): String
++setFileName(int numero): void
++getCarte(): Position[][]
++setCarte(Position[][] map): void
++getMonstre_restant(): int
++setMonstre_restant(int monstre_restant): void
++getHeros_restant(): int
++setHeros_restant(int heros_restant): void
++getArmeeMonstre(): Monstre[]
++setArmeeMonstre(Monstre[] armeeMonstre): void
++getArmeeHeros(): Heros[]
++setArmeeHeros(Heros[] armeeHeros): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1068</x>
+      <y>318</y>
+      <w>56</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes>wargame::MenuAccueil
+--
+-serialVersionUID = 1L: long
+-img_BackgroundAccueil: Image
+-logoJeu: Image
+-aGame: PanneauJeu
+-aWindow: JFrame
+-aMenuLoadSave: MenuLoadSave
+-aJouer = null: BoutonMenu
+-aQuitter = null: BoutonMenu
+-aCharger = null: BoutonMenu
+-choixMusic: int
+-playOnce: boolean
+-audioClip: Clip
+-keyDetected: int
+-keyPushedOnce = false: boolean
+-vTemp: MenuAccueil
+--
++MenuAccueil(JFrame pWindow): ctor
++menu(): JPanel
+#paintComponent(Graphics g): void
+-boutonHover(MouseEvent e): void
++actionMenu(): void
++focusPanel(): void
++update(LineEvent e): void
++playMusic(): void
+-removeTarget(): void
+-removeFocus(): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>720</x>
+      <y>448</y>
+      <w>172</w>
+      <h>92</h>
+    </coordinates>
+    <panel_attributes>wargame::MenuLoadSave
+--
+-serialVersionUID = 1L: long
++aEnsemble_Boutons: BoutonLoadSave[]
+-aCharger_Sauvegarder: BoutonMenu
+-aRetour: BoutonMenu
+-choixSave: int
+-img_BackgroundLoadSave: Image
+-img_LoadSave: Image
+-aGame: PanneauJeu
+-aWindow: JFrame
+-aMenuAccueil: MenuAccueil
+-aCharge: boolean
+-vTemp: MenuLoadSave
+-aAppel: int
+-aCarte: Carte
+-nbSave: int
+-aNomSave: NomSave
+-newPosY: int
+--
++MenuLoadSave(PanneauJeu pGame, JFrame pWindow, MenuAccueil pMenuAccueil, boolean pCharge, int pAppel): ctor
++load(): JPanel
+#paintComponent(Graphics g): void
++focusPanel(): void
+-boutonHover(MouseEvent e): void
+-actionMenu(): void
+-getSaveNumber(): int
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>894</x>
+      <y>448</y>
+      <w>146</w>
+      <h>86</h>
+    </coordinates>
+    <panel_attributes>wargame::MenuFin
+--
+-serialVersionUID = 1L: long
+-img_End: Image
+-img_BackgroundFin: Image
+-aGame: PanneauJeu
+-aWindow: JFrame
+-aMenuAccueil: MenuAccueil
+-aRejouer = null: BoutonMenu
+-aMainMenu = null: BoutonMenu
+-aQuitter = null: BoutonMenu
+-aVictory: boolean
+-vTemp: MenuFin
+-keyDetected: int
+-keyPushedOnce: boolean
+-aCarte: Carte
+--
++MenuFin(PanneauJeu pGame, JFrame pWindow, MenuAccueil pMenuAccueil, boolean pVictory): ctor
++endScreen(): JPanel
+#paintComponent(Graphics g): void
+-boutonHover(MouseEvent e): void
++actionMenu(): void
++focusPanel(): void
+-removeTarget(): void
+-removeFocus(): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>846</x>
+      <y>362</y>
+      <w>212</w>
+      <h>86</h>
+    </coordinates>
+    <panel_attributes>wargame::NomSave
+--
+-serialVersionUID = 1L: long
+-aValider: BoutonMenu
+-aRetour: BoutonMenu
+-aGame: PanneauJeu
+-aWindow: JFrame
+-aMenuLoadSave: MenuLoadSave
+-aMenuAccueil: MenuAccueil
+-vTemp: NomSave
+-aSaveNameSaisie: JTextField
+-texte: String
+-saveName: String
+-img_BackgroundLoadSave: Image
+-textFieldFont: Font
+-textFieldWidth: int
+-textFieldHeight: int
+-choixSave: int
+-aCarte: Carte
+--
++NomSave(PanneauJeu pGame, JFrame pWindow, MenuLoadSave pMenuLoadSave, MenuAccueil pMenuAccueil, Carte pCarte, int pChoixSave): ctor
++saveName(): JPanel
+#paintComponent(Graphics g): void
+-boutonHover(MouseEvent e): void
+-actionMenu(): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>214</x>
+      <y>390</y>
+      <w>76</w>
+      <h>86</h>
+    </coordinates>
+    <panel_attributes>/wargame::Soldat/
+--
+-serialVersionUID = 6135340252482111515L: long
+-points: int
+-portee: int
+-puissance: int
+-tir: int
+#type: ISoldat
+--
+~Soldat(ISoldat type): ctor
++getPoints(): int
++setPoints(int points): void
++getPortee(): int
++setPortee(int portee): void
++getPuissance(): int
++setPuissance(int puissance): void
++getTir(): int
++setTir(int tir): void
++joueTour(int tour): void
++combat(Soldat soldat): void
++seDeplace(Position newPos): void
++setType(ISoldat type): void
++getTypeSoldat(): ISoldat
++seRepose(): void
++est_elu(): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>720</x>
+      <y>542</y>
+      <w>78</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>wargame::BoutonLoadSave
+--
+-serialVersionUID = 1L: long
++widthBouton = LARGEUR_BOUTON_LOAD_SAVE: int
++heightBouton = HAUTEUR_BOUTON_LOAD_SAVE: int
++posX: int
++posY: int
++numeroBouton: int
+-texte: String
+-isTarget = false: boolean
+-isFocus = false: boolean
+-boutonFont: Font
+--
++BoutonLoadSave(int pX, int pY, int i, String txt): ctor
++getPosY(): int
++setPosY(int posY): void
++getNumero(): int
++setNumero(int i): void
++getFocus(): boolean
++setFocus(boolean isFocus): void
++getTarget(): boolean
++setTarget(boolean isTarget): void
+#paintComponent(Graphics g): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>800</x>
+      <y>542</y>
+      <w>66</w>
+      <h>62</h>
+    </coordinates>
+    <panel_attributes>wargame::BoutonMenu
+--
+-serialVersionUID = 1L: long
++widthBouton = LARGEUR_BOUTON: int
++heightBouton: int
++posX: int
++posY: int
+-texte: String
+-isTarget = false: boolean
+-isFocus = false: boolean
+-boutonFont: Font
+--
++BoutonMenu(int pX, int pY, String txt): ctor
++getFocus(): boolean
++setFocus(boolean isFocus): void
++getTarget(): boolean
++setTarget(boolean isTarget): void
+#paintComponent(Graphics g): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>266</x>
+      <y>306</y>
+      <w>76</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>/wargame::Element/
+--
+-serialVersionUID = 4761294017398466739L: long
+-pos: Position
+-skinNumber: int
+-url: String
+-img: BufferedImage
+--
++getPosition(): Position
++setPosition(Position pos): void
++getSkinNumber(): int
++setSkinNumber(int skinNumber): void
++getUrl(): String
++setUrl(String url): void
++setImage(): void
++getImage(): BufferedImage
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>160</x>
+      <y>490</y>
+      <w>76</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>wargame::Heros
+--
+-serialVersionUID = -8042494773455062650L: long
+-numHeros = 64: int
+-ID: char
+-aSelected: boolean
+-aJoue = false: boolean
+--
+~Heros(): ctor
++toString(): String
++isSelected(): boolean
++setSelected(boolean pSelected): void
++setJoue(boolean pJoue): void
++getJoue(): boolean
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>118</x>
+      <y>130</y>
+      <w>78</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+wargame::ICarte
+--
+--
+~getElement(Position pos): Element
+~trouvePositionVide(): Position
+~trouvePositionVide(Position pos): Position
+~trouveHeros(): Heros
+~trouveHeros(Position pos): Heros
+~deplaceSoldat(Position pos, Soldat soldat): boolean
+~mort(Soldat perso): void
+~actionHeros(Heros pHeros, Position pos2): boolean
+~jouerSoldats(PanneauJeu pj): void
+~toutDessiner(Graphics g): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>536</x>
+      <y>304</y>
+      <w>76</w>
+      <h>46</h>
+    </coordinates>
+    <panel_attributes>wargame::Hexagone
+--
+-serialVersionUID = 1905122041950251207L: long
+-Hexa = new Polygon(): Polygon
+-aImage: Image
+--
++Hexagone(Polygon pHexa, Position pos): ctor
++Hexagone(Position pos): ctor
++getaImage(): Image
++setaImage(Image pImage): void
++isContain(int x, int y): boolean
++getHexagone(): Polygon
++seDessiner(Graphics g, Position pos): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1086</x>
+      <y>524</y>
+      <w>70</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>wargame::InfoBulle
+--
+-x: int
+-y: int
+-aSoldat: Soldat
+-offsetXCalculed: int
+--
++InfoBulle(Soldat pElement, int pX, int pY): ctor
+#paintComponent(Graphics g): void
+-getPolyLife(): Polygon[]
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>156</x>
+      <y>394</y>
+      <w>38</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+wargame::ISoldat
+--
+~TAUX_REGEN = 20: int
+--
+~getPoints(): int
+~getPortee(): int
+~getPuissance(): int
+~getTir(): int
+~getUrl(): String
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>384</x>
+      <y>308</y>
+      <w>118</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>wargame::Image
+--
+-aBackground: BufferedImage
+-aPoly: Polygon
+--
++Image(BufferedImage pBackground, Polygon pPoly): ctor
++Image(BufferedImage pBackground): ctor
++getTexturedImage(BufferedImage src, Polygon shp, int x, int y): BufferedImage
++drawHexa(Graphics g): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>254</x>
+      <y>490</y>
+      <w>76</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>wargame::Monstre
+--
+-serialVersionUID = 8882225921225738227L: long
+-numMonstre = 0: int
+-ID: int
+--
+~Monstre(): ctor
++toString(): String
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>320</x>
+      <y>390</y>
+      <w>76</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>wargame::Obstacle
+--
+-serialVersionUID = 8277957568171064957L: long
+-TYPE: TypeObstacle
+--
+~Obstacle(TypeObstacle type): ctor
+~Obstacle(): ctor
++toString(): String
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>872</x>
+      <y>542</y>
+      <w>50</w>
+      <h>22</h>
+    </coordinates>
+    <panel_attributes>wargame::Clavier
+--
+--
++keyTyped(KeyEvent e): void
++keyPressed(KeyEvent e): void
++keyReleased(KeyEvent e): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>876</x>
+      <y>570</y>
+      <w>44</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>wargame::FenetreJeu
+--
+-serialVersionUID = 1L: long
+--
++main(String[] args): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
