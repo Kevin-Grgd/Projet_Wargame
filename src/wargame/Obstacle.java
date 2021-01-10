@@ -1,4 +1,3 @@
-
 package wargame;
 
 public class Obstacle extends Element {
@@ -29,7 +28,8 @@ public class Obstacle extends Element {
 	Obstacle(TypeObstacle type) {
 		TYPE = type;
 		setSkinNumber(1 + (int) (Math.random()*2));
-		setUrl(type.getUrl());
+		setUrl(type.getUrl().replace('#',  Integer.toString(getSkinNumber()).charAt(0)));
+		setImage();
 	}
 
 	/**
@@ -43,5 +43,4 @@ public class Obstacle extends Element {
 	public String toString() {
 		return getPosition() + " " + TYPE;
 	}
-	
 }
