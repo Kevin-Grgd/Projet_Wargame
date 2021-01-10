@@ -30,8 +30,12 @@ public class MenuFin extends JPanel implements IConfig {
     private transient MenuFin vTemp;
     private transient int keyDetected;
     private transient boolean keyPushedOnce;
-    private transient Carte aCarte;
+    
 
+    /**
+     * 
+     * @return Le menu de fin
+     */
     public JPanel endScreen() {
         JPanel endScreen = new JPanel();
         
@@ -94,6 +98,7 @@ public class MenuFin extends JPanel implements IConfig {
 
 			@Override
 			public void keyTyped(KeyEvent e) {
+                // Empty
 			}
 			
 			@Override
@@ -152,7 +157,10 @@ public class MenuFin extends JPanel implements IConfig {
 							}
 							removeFocus();
 							keyPushedOnce = true;
-							break;
+                            break;
+                            
+                        default:
+                            break;
 					}
 					repaint();
 				}
@@ -176,6 +184,13 @@ public class MenuFin extends JPanel implements IConfig {
         return endScreen;
     }
 
+    /**
+     * Constructeur
+     * @param pGame Panneau de jeu de base
+     * @param pWindow Fenetre où afficher
+     * @param pMenuAccueil Menu d'accueil pour faire le lien
+     * @param pVictory Booléen pour savoir quel écran afficher
+     */
     public MenuFin(PanneauJeu pGame, JFrame pWindow, MenuAccueil pMenuAccueil, boolean pVictory) {
         this.aGame = pGame;
         this.aWindow = pWindow;
@@ -246,7 +261,11 @@ public class MenuFin extends JPanel implements IConfig {
 		}
 	}
 
+    /**
+     * Sert aux boutons du menu
+     */
     public void actionMenu() {
+        Carte aCarte;
         if (aRejouer.getTarget()) {
             try {
                 Thread.sleep(50);

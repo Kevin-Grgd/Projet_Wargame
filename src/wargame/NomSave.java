@@ -33,21 +33,21 @@ public class NomSave extends JPanel implements IConfig {
     private transient NomSave vTemp;
     private transient JTextField aSaveNameSaisie;
     private transient String texte;
-    private transient String saveName;
     private transient Image img_BackgroundLoadSave;
     private transient Font textFieldFont;
-    private transient int textFieldWidth;
-    private transient int textFieldHeight;
     private transient int choixSave;
     private transient Carte aCarte;
     
     public JPanel saveName() {
 
-        JPanel saveName = new JPanel();
+        JPanel vSaveName = new JPanel();
 
-        saveName.setOpaque(false);
-        saveName.setPreferredSize(new Dimension(LARGEUR_FENETRE, HAUTEUR_FENETRE));
+        vSaveName.setOpaque(false);
+        vSaveName.setPreferredSize(new Dimension(LARGEUR_FENETRE, HAUTEUR_FENETRE));
         
+        int textFieldWidth;
+        int textFieldHeight;
+
         //Recuperation taille texte
         FontMetrics metrics = aSaveNameSaisie.getFontMetrics(textFieldFont);
         textFieldWidth = metrics.stringWidth(texte);
@@ -59,7 +59,7 @@ public class NomSave extends JPanel implements IConfig {
         aSaveNameSaisie.setHorizontalAlignment(JTextField.CENTER);
 
         this.add(aSaveNameSaisie);
-        saveName.repaint();
+        vSaveName.repaint();
 
         vTemp = this;
 
@@ -103,10 +103,10 @@ public class NomSave extends JPanel implements IConfig {
 		* FIN GESTION SOURIS
 		**/
 
-        return saveName;
+        return vSaveName;
     }
 
-    public NomSave(PanneauJeu pGame, JFrame pWindow, MenuLoadSave pMenuLoadSave, MenuAccueil pMenuAccueil,  Carte pCarte, int pChoixSave) {
+    public NomSave(PanneauJeu pGame, JFrame pWindow, MenuAccueil pMenuAccueil,  Carte pCarte, int pChoixSave) {
     	aGame = pGame;
         aWindow = pWindow;
         aMenuAccueil = pMenuAccueil;
@@ -176,7 +176,7 @@ public class NomSave extends JPanel implements IConfig {
     }
 
     private void actionMenu() {
-
+        String saveName;
         if (aValider.getTarget()) {
             try {
 				Thread.sleep(50);

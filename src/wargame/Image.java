@@ -8,8 +8,8 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 public class Image{
-	private transient BufferedImage aBackground;
-    private transient Polygon aPoly;
+	private BufferedImage aBackground;
+    private Polygon aPoly;
 
     /**
      * Constructeur

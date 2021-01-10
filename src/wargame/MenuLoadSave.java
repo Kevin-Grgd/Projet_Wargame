@@ -35,10 +35,13 @@ public class MenuLoadSave extends JPanel implements IConfig {
     private transient int aAppel;
     private transient Carte aCarte;
     private transient int nbSave;
-    private transient NomSave aNomSave;
     private transient int newPosY;
     
     
+    /**
+     * 
+     * @return Retourne l'affichage du menu
+     */
     public JPanel load() {
 
         JPanel load = new JPanel();
@@ -132,7 +135,7 @@ public class MenuLoadSave extends JPanel implements IConfig {
         this.addMouseWheelListener(new MouseWheelListener() {
         	@Override
             public void mouseWheelMoved(MouseWheelEvent e) {
-        		if (e.getWheelRotation() > 0) { //Molette vers le bas
+        		if (e.getWheelRotation() < 0) {
         			for (int i = 0; i < nbSave; i++) {
         				newPosY = aEnsemble_Boutons[i].getPosY() - 10;
         				if(aEnsemble_Boutons[nbSave-1].getPosY() >= (180+HAUTEUR_BOUTON_LOAD_SAVE)) {
@@ -140,7 +143,7 @@ public class MenuLoadSave extends JPanel implements IConfig {
         					repaint();
         				}
         			}
-        		} else { //Molette vers le haut
+        		} else {
         			for (int i = 0; i < nbSave; i++) {
         				newPosY = aEnsemble_Boutons[i].getPosY() + 10;
         				if(aEnsemble_Boutons[0].getPosY() <= (680-HAUTEUR_BOUTON_LOAD_SAVE)) {
@@ -267,11 +270,15 @@ public class MenuLoadSave extends JPanel implements IConfig {
         }
     }
 
+    /**
+     * Gère l'action des boutons du menu
+     */
     private void actionMenu() {
+        NomSave aNomSave;
+
         for (int i = 0; i < nbSave; i++) {
             if (aEnsemble_Boutons[i].getTarget()) {
                 choixSave = i+1;
-                //System.out.println("Partie numero "+choixSave+" selectionne");
             }
         }
 
@@ -308,7 +315,6 @@ public class MenuLoadSave extends JPanel implements IConfig {
             if (aCharge == CHARGER) {
 
             	if (nbSave > 0) {
-                    //System.out.println("Chargement partie numero "+choixSave);
                     aCarte.Recharger(choixSave);
                     aGame = new PanneauJeu(aWindow,aCarte);
                     aWindow.remove(vTemp);
@@ -330,8 +336,7 @@ public class MenuLoadSave extends JPanel implements IConfig {
             } else if (aCharge == SAUVEGARDER) {
 
                 if (choixSave > 0) {
-                    //System.out.println("Sauvegarder la partie sur le slot numero "+choixSave);
-                    aNomSave = new NomSave(aGame,aWindow,vTemp, aMenuAccueil,aCarte,choixSave);
+                    aNomSave = new NomSave(aGame,aWindow, aMenuAccueil,aCarte,choixSave);
                     aWindow.remove(vTemp);
                     aWindow.add(aNomSave);
                     aWindow.repaint();
@@ -341,6 +346,10 @@ public class MenuLoadSave extends JPanel implements IConfig {
         }
     }
 
+    /**
+     * 
+     * @return Le numéro de sauvegarde
+     */
     private int getSaveNumber(){
         String usrDirectory = System.getProperty("user.dir");
         File vSauv = new File(usrDirectory + "/saves/");

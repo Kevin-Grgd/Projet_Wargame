@@ -4,9 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-//import java.awt.Graphics2D;
 import java.awt.Polygon;
-//import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -79,7 +77,7 @@ public class PanneauJeu extends JPanel implements IConfig {
                 aCarte.setTours(aCarte.getTours() + 1);
                 tour.setText("Tour " + aCarte.getTours()); // Fin du tour, on incrémente de 1
                 joueIA(); // A l'IA de jouer
-                
+                vTemp.focusPanel(); // Pour pouvoir utiliser le clavier après
                 repaintThread();
             }
 
@@ -90,6 +88,7 @@ public class PanneauJeu extends JPanel implements IConfig {
             @Override
             public void actionPerformed(final ActionEvent e) {
                 herosRepos();
+                vTemp.focusPanel(); // Pour pouvoir utiliser le clavier après
             }
 
         });
@@ -111,7 +110,8 @@ public class PanneauJeu extends JPanel implements IConfig {
         	
         	@Override
         	public void actionPerformed(final ActionEvent e) {
-        		aCarte = new Carte();
+                aCarte = new Carte();
+                vTemp.focusPanel(); // Pour pouvoir utiliser le clavier après
         		repaintThread();
         	}
         });

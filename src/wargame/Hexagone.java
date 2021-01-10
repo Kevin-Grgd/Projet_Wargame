@@ -29,21 +29,22 @@ public class Hexagone extends JComponent implements IConfig{
         int xOffSet = NB_PIX_CASE / 2; //decalage pour les lignes impaires
         
         if(pHexa == null) {
-        	int x, y;
+            int x;
+            int y;
         	int decalageX = NB_PIX_CASE * pos.getX(); //decalage des cases en fonction de (posX, posY)
         	int decalageY = ((int) (NB_PIX_CASE * 0.75)) * pos.getY();
         	
         	if(pos.getY() % 2 == 0) { //decalage de cases en X en fonction de Y
         		for(int i = 0 ; i < 6 ; i++) {
-        			x = (int) ((xCenter + decalageX) + (NB_PIX_CASE/2+3) * Math.sin(i*2*Math.PI/6));
-        			y = (int) ((yCenter + decalageY) + (NB_PIX_CASE/2) * Math.cos(i*2*Math.PI/6));
+        			x = (int) ((xCenter + decalageX) + ((double)NB_PIX_CASE/2+3) * Math.sin(i*2*Math.PI/6));
+        			y = (int) ((yCenter + decalageY) + ((double)NB_PIX_CASE/2) * Math.cos(i*2*Math.PI/6));
         			Hexa.addPoint(x, y);
         		}
         	}
         	else {
         		for(int i = 0 ; i < 6 ; i++) {
-        			x = (int) ((xCenter + decalageX + xOffSet) + (NB_PIX_CASE/2+3) * Math.sin(i*2*Math.PI/6));
-        			y = (int) ((yCenter + decalageY) + (NB_PIX_CASE/2) * Math.cos(i*2*Math.PI/6));
+        			x = (int) ((xCenter + decalageX + xOffSet) + ((double)NB_PIX_CASE/2+3) * Math.sin(i*2*Math.PI/6));
+        			y = (int) ((yCenter + decalageY) + ((double)NB_PIX_CASE/2) * Math.cos(i*2*Math.PI/6));
         			Hexa.addPoint(x, y);
         		}	
         	}

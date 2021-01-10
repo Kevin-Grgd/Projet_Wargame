@@ -252,6 +252,11 @@ public class Carte extends JPanel implements IConfig, ICarte {
             return herosAdjacents.get((int) (Math.random()*herosAdjacents.size()));
     }
 
+    /**
+     * Fonction qui trouve un héros sur lequel tiré
+     * @param pMonstre qui doit faire l'action
+     * @return Le héros a attaqué
+     */
     public Heros trouveHerosTir(Monstre pMonstre){
         int vPortee = pMonstre.getPortee();
         Position vPos = pMonstre.getPosition();

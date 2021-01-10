@@ -68,8 +68,8 @@ public abstract class Element implements Serializable{
 	 */
 	public void setImage() {
 		try {
-			URL url = getClass().getResource(this.url);
-			img = ImageIO.read(url); 
+			URL vUrl = getClass().getResource(this.url);
+			img = ImageIO.read(vUrl); 
 		} catch (IOException e) {
             e.printStackTrace();
         }
