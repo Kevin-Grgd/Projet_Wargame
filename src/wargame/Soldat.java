@@ -6,7 +6,7 @@ public abstract class Soldat extends Element implements ISoldat {
 	private int portee;
 	private int puissance;
 	private int tir;
-	protected ISoldat type;
+	protected transient ISoldat type;
 
 	/**
 	 * Constructeur
