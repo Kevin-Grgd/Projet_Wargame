@@ -41,7 +41,7 @@ public abstract class Element implements Serializable{
 	
 	/**
 	 * Mutateur du numero de l'image
-	 * @param skinNumber
+	 * @param skinNumber Numéro du skin à afficher
 	 */
 	public void setSkinNumber(int skinNumber) {
 	   	this.skinNumber = skinNumber;
@@ -57,7 +57,7 @@ public abstract class Element implements Serializable{
 	
 	/**
 	 * Mutateur du chemin de l'image
-	 * @param url
+	 * @param url URL de l'image
 	 */
 	public void setUrl(String url) {
 		this.url = url;

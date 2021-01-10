@@ -122,7 +122,7 @@ public class Position implements IConfig, Serializable {
 	
 	/**
 	 * Modifie l'element si l'element n'est pas null on lui donne cette position
-	 * @param elem
+	 * @param elem Element à poser à cette position
 	 */
 	public void setElement(Element elem) {
 		this.elem = elem;
@@ -130,7 +130,10 @@ public class Position implements IConfig, Serializable {
 			elem.setPosition(this);
 	}
 	
-	
+	/**
+	 * 
+	 * @param bool Indique si cette position est visible ou non
+	 */
     public void setVisible(boolean bool){
         isVisible = bool;
     }

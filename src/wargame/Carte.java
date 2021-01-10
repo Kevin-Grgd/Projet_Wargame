@@ -79,7 +79,6 @@ public class Carte extends JPanel implements IConfig, ICarte {
 
     /**
      * Ajout des obstacles sur la carte
-     * @param pCarte Carte où ajouter les obstacles
      */
     public void ajoutObstacle() {
         for (int i = 0; i < NB_OBSTACLES; i++)
@@ -88,7 +87,6 @@ public class Carte extends JPanel implements IConfig, ICarte {
     
     /**
      * Ajout des soldats sur la carte
-     * @param pCarte Carte où ajouter les soldats
      */
     public void ajoutSoldat() {
         int x; 
@@ -380,6 +378,7 @@ public class Carte extends JPanel implements IConfig, ICarte {
 
     /**
      * Dessine la carte
+     * @param g Endroit où dessiner
      */
     public void toutDessiner(Graphics g) {
     	for (int x = 0; x < LARGEUR_CARTE ; x++) {

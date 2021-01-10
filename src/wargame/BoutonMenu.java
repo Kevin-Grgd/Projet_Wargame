@@ -25,9 +25,9 @@ public class BoutonMenu extends JComponent implements IConfig{
 
 	/**
 	 * Constructeur BoutonMenu
-	 * @param pX
-	 * @param pY
-	 * @param txt
+	 * @param pX Coordonnée en abscisse
+	 * @param pY Coordonnée en ordonnée
+	 * @param txt Texte à afficher
 	 */
 	public BoutonMenu( int pX, int pY,  String txt) {
 		posX = pX;
@@ -56,7 +56,7 @@ public class BoutonMenu extends JComponent implements IConfig{
 	
 	 /**
     * Le bouton est survole
-    * @param isFocus 
+    * @param isFocus Choisi si un bouton est visé
     */
 	public void setFocus(boolean isFocus) {
 		this.isFocus = isFocus;
@@ -72,7 +72,7 @@ public class BoutonMenu extends JComponent implements IConfig{
 	
 	/**
      * Le bouton est selectionne
-     * @param isTarget 
+     * @param isTarget Choisi si un bouton est ciblé
      */
 	public void setTarget(boolean isTarget) {
 		this.isTarget = isTarget;

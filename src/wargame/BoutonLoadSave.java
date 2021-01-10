@@ -26,9 +26,10 @@ public class BoutonLoadSave extends JComponent implements IConfig {
 
     /**
      * Constructeur BoutonLoadSave
-     * @param pX
-     * @param pY
-     * @param txt
+     * @param pX Position en abscisse
+     * @param pY Position en ordonnee
+     * @param i Numero de sauvegarde
+     * @param txt Texte a mettre
      */
     public BoutonLoadSave( int pX, int pY, int i, String txt) {
         posX = pX;
@@ -66,8 +67,8 @@ public class BoutonLoadSave extends JComponent implements IConfig {
     }
 
     /**
-     * D�finir le numero du bouton
-     * @param i
+     * Definir le numero du bouton
+     * @param i Numero du bouton
      */
     public void setNumero(int i) {
         this.numeroBouton = i;
@@ -83,7 +84,7 @@ public class BoutonLoadSave extends JComponent implements IConfig {
 
     /**
      * Le bouton est survole
-     * @param isFocus
+     * @param isFocus Indique si un bouton est vise ou non
      */
     public void setFocus(boolean isFocus) {
         this.isFocus = isFocus;
@@ -99,7 +100,7 @@ public class BoutonLoadSave extends JComponent implements IConfig {
 
     /**
      * Le bouton est selectionne
-     * @param isTarget
+     * @param isTarget Choisi si un bouton est ciblé
      */
     public void setTarget(boolean isTarget) {
         this.isTarget = isTarget;

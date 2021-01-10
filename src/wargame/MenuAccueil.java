@@ -202,8 +202,7 @@ public class MenuAccueil extends JPanel implements IConfig, LineListener {
 
 	/**
 	 * Constructeur MenuAccueil
-	 * @param pGame
-	 * @param pWindow
+	 * @param pWindow Fenetre où afficher le menu
 	 */
 	public MenuAccueil(JFrame pWindow) {
 		aWindow = pWindow;

@@ -112,9 +112,7 @@ public class PanneauJeu extends JPanel implements IConfig {
         	public void actionPerformed(final ActionEvent e) {
                 aCarte = new Carte();
                 vTemp.focusPanel(); // Pour pouvoir utiliser le clavier après
-                aCarte.setTours(aCarte.getTours());
-                tour.setText("Tour " + aCarte.getTours());
-        	repaintThread();
+        		repaintThread();
         	}
         });
         
@@ -272,8 +270,8 @@ public class PanneauJeu extends JPanel implements IConfig {
 
     /**
      * Constructeur PanneauJeu
-     * @param pWindow
-     * @param pCarte
+     * @param pWindow Fenetre actuelle
+     * @param pCarte Carte où jouer
      */
     public PanneauJeu(JFrame pWindow, Carte pCarte) {
     	aWindow = pWindow;

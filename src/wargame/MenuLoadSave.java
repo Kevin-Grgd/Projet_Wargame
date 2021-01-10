@@ -135,7 +135,7 @@ public class MenuLoadSave extends JPanel implements IConfig {
         this.addMouseWheelListener(new MouseWheelListener() {
         	@Override
             public void mouseWheelMoved(MouseWheelEvent e) {
-        		if (e.getWheelRotation() > 0) { //Molette vers le bas
+        		if (e.getWheelRotation() > 0) {
         			for (int i = 0; i < nbSave; i++) {
         				newPosY = aEnsemble_Boutons[i].getPosY() - 10;
         				if(aEnsemble_Boutons[nbSave-1].getPosY() >= (180+HAUTEUR_BOUTON_LOAD_SAVE)) {
@@ -143,7 +143,7 @@ public class MenuLoadSave extends JPanel implements IConfig {
         					repaint();
         				}
         			}
-        		} else { //Molette vers le haut
+        		} else {
         			for (int i = 0; i < nbSave; i++) {
         				newPosY = aEnsemble_Boutons[i].getPosY() + 10;
         				if(aEnsemble_Boutons[0].getPosY() <= (680-HAUTEUR_BOUTON_LOAD_SAVE)) {
@@ -163,10 +163,11 @@ public class MenuLoadSave extends JPanel implements IConfig {
 
     /**
      * Constructeur MenuLoadSave
-     * @param pGame
-     * @param pWindow
-     * @param pMenuAccueil
-     * @param pCharge
+     * @param pGame Panneau du jeu en cours
+     * @param pWindow Fenetre actuelle
+     * @param pMenuAccueil Menu d'accueil
+     * @param pCharge Savoir si on charge ou sauvegarde une partie
+     * @param pAppel Revenir au menu ou au jeu
      */
     public MenuLoadSave(PanneauJeu pGame, JFrame pWindow, MenuAccueil pMenuAccueil, boolean pCharge, int pAppel) {
         aGame = pGame;
@@ -245,7 +246,7 @@ public class MenuLoadSave extends JPanel implements IConfig {
 
     /**
 	 * Gestion dynamique des boutons au passage de la souris
-	 * @param e
+	 * @param e Evenement souris
 	 */
     private void boutonHover(MouseEvent e) {
         for (int i = 0; i < nbSave; i++) {

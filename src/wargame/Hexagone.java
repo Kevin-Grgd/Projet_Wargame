@@ -20,8 +20,7 @@ public class Hexagone extends JComponent implements IConfig{
     /**
      * Constructeur de l'hexagone
      * @param pHexa Le polygone concern�
-     * @param posX Sa position en x
-     * @param posY Sa position en y
+     * @param pos Position de l'hexagone
      */
     public Hexagone(Polygon pHexa, Position pos) {
         int xCenter = LARGEUR_FENETRE - (LARGEUR_CARTE+1) * NB_PIX_CASE + NB_PIX_CASE/4; //Pour centrer la carte dans la fenetre
@@ -66,11 +65,10 @@ public class Hexagone extends JComponent implements IConfig{
     
     /**
      * Constructeur de l'hexagone juste avec un polygone et une position
-     * @param pHexa Le polygone a dessin�
      * @param pPos Sa position
      */
-    public Hexagone(Position pos){
-        this(null, pos);        
+    public Hexagone(Position pPos){
+        this(null, pPos);        
     }
 
     /**
@@ -108,7 +106,7 @@ public class Hexagone extends JComponent implements IConfig{
     
     /**
      * Dessine l'hexagone
-     * @param g Endroit o� le dessiner
+     * @param g Endroit où le dessiner
      * @param pos La case a dessiner
      */
     public void seDessiner(Graphics g, Position pos){
