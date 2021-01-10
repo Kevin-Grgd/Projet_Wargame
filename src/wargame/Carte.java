@@ -423,64 +423,6 @@ public class Carte extends JPanel implements IConfig, ICarte {
         }
     }
 
-    
-
-    /**
-     * Fonction subsidiaire récursive pour donner/retirer la vision aux héros
-     * @param vPos Position de la case où mettre la vision
-     * @param pSet Mettre / Retirer la vision
-     * @param pVision Vision du héros de base
-     */
-    public void visionOne(Position vPos, boolean pSet, int pVision) {
-        if (pVision == 0) // Fin de la récursivité
-            return;
-
-        if (vPos.getX() - 1 >= 0) {
-            map[vPos.getX() - 1][vPos.getY()].setVisible(pSet);
-            visionOne(new Position(vPos.getX() - 1, vPos.getY()), pSet, pVision - 1);
-        }
-        if (vPos.getX() + 1 < LARGEUR_CARTE) {
-            map[vPos.getX() + 1][vPos.getY()].setVisible(pSet);
-            visionOne(new Position(vPos.getX() + 1, vPos.getY()), pSet, pVision - 1);
-
-        }
-        if (vPos.getY() - 1 >= 0) {
-            map[vPos.getX()][vPos.getY() - 1].setVisible(pSet);
-            visionOne(new Position(vPos.getX(), vPos.getY() - 1), pSet, pVision - 1);
-
-        }
-        if (vPos.getY() + 1 < HAUTEUR_CARTE) {
-            map[vPos.getX()][vPos.getY() + 1].setVisible(pSet);
-            visionOne(new Position(vPos.getX(), vPos.getY() + 1), pSet, pVision - 1);
-
-        }
-
-        if (vPos.getY() % 2 != 0) { // Ligne impaire
-
-            if (vPos.getX() + 1 < LARGEUR_CARTE && vPos.getY() + 1 < HAUTEUR_CARTE) {
-                map[vPos.getX() + 1][vPos.getY() + 1].setVisible(pSet);
-                visionOne(new Position(vPos.getX() + 1, vPos.getY() + 1), pSet, pVision - 1);
-
-            }
-            if (vPos.getX() + 1 < LARGEUR_CARTE && vPos.getY() - 1 >= 0) {
-                map[vPos.getX() + 1][vPos.getY() - 1].setVisible(pSet);
-                visionOne(new Position(vPos.getX() + 1, vPos.getY() - 1), pSet, pVision - 1);
-
-            }
-        } else { // Ligne paire
-            if (vPos.getX() - 1 >= 0 && vPos.getY() + 1 < HAUTEUR_CARTE) {
-                map[vPos.getX() - 1][vPos.getY() + 1].setVisible(pSet);
-                visionOne(new Position(vPos.getX() - 1, vPos.getY() + 1), pSet, pVision - 1);
-
-            }
-            if (vPos.getX() - 1 >= 0 && vPos.getY() - 1 >= 0) {
-                map[vPos.getX() - 1][vPos.getY() - 1].setVisible(pSet);
-                visionOne(new Position(vPos.getX() - 1, vPos.getY() - 1), pSet, pVision - 1);
-
-            }
-        }
-    }
-
     // Les héros n'ayant pas jouer se reposent, les monstres jouent
     /**
      * Fonction de fin de tour - Fais jouer les monstres
